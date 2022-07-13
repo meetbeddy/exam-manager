@@ -11,11 +11,12 @@ export const Nav = styled.div`
     flex-direction: row;
     width: auto;
     height: 162.58px;
-    margin: 0;
+    margin: 0 20px 0;
     box-sizing: border-box;
 
     // text-align:center;
   }
+
   .logo {
     width: 20%;
     border-radius: 154px;
@@ -25,6 +26,7 @@ export const Nav = styled.div`
       height: 104.64px;
     }
   }
+
   .name-tag {
     width: 50%;
     margin: auto 0;

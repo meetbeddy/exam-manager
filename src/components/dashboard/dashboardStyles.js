@@ -18,7 +18,7 @@ export const DashboardContainer = styled.div`
 
 export const AsideContainer = styled.div`
   display: flex;
-  width: 25%;
+  width: 20%;
   text-align: center;
   .menu {
     margin: 120px 0px 0px 0px;

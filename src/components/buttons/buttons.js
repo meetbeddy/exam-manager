@@ -32,3 +32,24 @@ export const AsideButton = styled.li`
     bottom: 80px;
   }
 `;
+
+export const LargeButton = styled.button`
+  height: 2.313em;
+  width: 12.313em;
+  border-radius: 5px;
+  padding: 10px, 22px, 10px, 22px;
+  background-color: ${(props) => props.color || "#fff"};
+  margin: 8px;
+  span {
+    margin: 8px;
+  }
+`;
+
+export const MedButton = styled.button`
+  height: 29px;
+  width: 81px;
+  border-radius: 5px;
+  padding: 8px, 19px, 8px, 19px;
+  background-color: ${(props) => props.color || "#fff"};
+  //   border: ${(props) => props.color || "#fff"};
+`;
