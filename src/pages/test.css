@@ -1,0 +1,96 @@
+
+::selection{
+  color: #fff;
+  background: #4285f4;
+}
+.select-wrapper{
+  position: relative;
+  width: 322px;
+ 
+}
+.select-btn, li{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  
+}
+.select-btn{
+  height: 38px;
+  width: 100%;
+  border-radius: 0px;
+  padding: 0 10px;
+  font-size: 22px;
+  background: #fff;
+  justify-content: space-between;
+  border: 1px solid #D8D6DE;
+  border-radius: 7px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  color:#5E5873;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+text-align: center;
+}
+.select-btn p{
+  margin: auto 0;
+
+}
+.select-btn span{
+  width:10%;
+  padding: 0;
+  border-left: 1px solid #D8D6DE;
+  box-sizing: border-box;
+  
+
+}
+/* .select-btn i{
+  font-size: 31px;
+  transition: transform 0.3s linear;
+} */
+/* .wrapper.active .select-btn i{
+  transform: rotate(-180deg);
+} */
+.content{
+  width:100%;
+  max-height: 176px;
+  padding: 5px;
+  margin-top: 10px;
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  overflow-y: scroll;
+}
+
+
+
+.content .options{
+  margin-top: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 7px;
+}
+.options::-webkit-scrollbar{
+  width: 5px;
+}
+.options::-webkit-scrollbar-track{
+  background: #f1f1f1;
+  border-radius: 25px;
+}
+.options::-webkit-scrollbar-thumb{
+  background: #ccc;
+  border-radius: 25px;
+}
+.options::-webkit-scrollbar-thumb:hover{
+  background: #b3b3b3;
+}
+.options li{
+  height: 40px;
+  padding: 0 13px;
+  font-size: 21px;
+}
+.options li:hover, li.selected{
+  border-radius: 5px;
+  background: #f2f2f2;
+}
