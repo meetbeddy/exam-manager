@@ -1,8 +1,17 @@
 import React from "react";
-import { Row, Dropdown } from "react-bootstrap";
+import { Row, Accordion, ToggleButton } from "react-bootstrap";
 import styled from "styled-components";
-import { LargeButton, MedButton } from "../components/buttons/buttons";
-import { CancelIcon, EditIcon, SaveIcon } from "../components/icons/icons";
+import {
+  LargeButton,
+  MedButton,
+  SwitchButton,
+} from "../components/buttons/buttons";
+import {
+  CancelIcon,
+  EditIcon,
+  LockIcon,
+  SaveIcon,
+} from "../components/icons/icons";
 import {
   CustomSelect,
   InputField,
@@ -45,10 +54,16 @@ const Div = styled.div`
     font-size: 16px;
     line-height: 24px;
   }
-  .badge-row {
+  .badge-row,
+  .accordion-row {
     display: flex;
     flex-direction: row;
     position: relative;
+    width: 100%;
+    .label,
+    .button-row {
+      width: 50%;
+    }
   }
   .school-badge {
     height: 135.5314483642578px;
@@ -244,7 +259,9 @@ function TestPage() {
                 <span className="mr-4">
                   Starts: 29 Oct, 2022 - Ends: 30 Jun, 2023{" "}
                 </span>{" "}
-                <EditIcon className="edit" />
+                <span className="edit">
+                  <EditIcon />
+                </span>
               </p>
             </div>
           </div>
@@ -269,7 +286,107 @@ function TestPage() {
         </div>
         <div className="card-body">
           <div className="row mt-0">
-            <RowBox />
+            <Accordion>
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>
+                  <div className="accordion-row label">
+                    <p className="fw-bold col-lg-6">
+                      1st term examination{" "}
+                      <span className="border-1 border-start  p-1 fw-normal">
+                        <i>Report submission - Active - 5 class remaining</i>{" "}
+                      </span>
+                      <span className="m-0">
+                        <LockIcon />
+                      </span>
+                    </p>
+                    <div className="accordion-row button-row">
+                      <SwitchButton id="1" label="Offer this examination" />
+                      <SwitchButton id="2" label="Currently Active" />
+                    </div>
+                  </div>
+                </Accordion.Header>
+                <Accordion.Body>some content</Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="2">
+                <Accordion.Header>
+                  <div className="accordion-row label ">
+                    <p className="fw-bold col-lg-6">
+                      2nd term examination{" "}
+                      {/* <span className="border-4 border-start  p-1 fw-normal">
+                        <i>Report submission - Active - 5 class remaining</i>{" "}
+                      </span>
+                      <span>
+                        <LockIcon />
+                      </span> */}
+                    </p>
+                    <div className="accordion-row button-row">
+                      <SwitchButton id="3" label="Offer this examination" />
+                      <SwitchButton id="4" label="Currently Active" />
+                    </div>
+                  </div>
+                </Accordion.Header>
+                <Accordion.Body>some content</Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="2">
+                <Accordion.Header>
+                  <div className="accordion-row label ">
+                    <p className="fw-bold col-lg-6">
+                      3rd term examination{" "}
+                      {/* <span className="border-4 border-start  p-1 fw-normal">
+                        <i>Report submission - Active - 5 class remaining</i>{" "}
+                      </span>
+                      <span>
+                        <LockIcon />
+                      </span> */}
+                    </p>
+                    <div className="accordion-row button-row">
+                      <SwitchButton id="5" label="Offer this examination" />
+                      <SwitchButton id="6" label="Currently Active" />
+                    </div>
+                  </div>
+                </Accordion.Header>
+                <Accordion.Body>some content</Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </div>
+        </div>
+      </Div>
+      <Div className="mt-4">
+        <div className="card-header">
+          <Row>
+            <div className="col-lg-7">
+              <p>School - Details</p>
+            </div>
+            <div className="col-lg-5">
+              <LargeButton className="btn btn-warning" color="#F2994A">
+                Add new session
+              </LargeButton>
+
+              <LargeButton className="btn btn-success" color={`#28C76F`}>
+                Make new session
+              </LargeButton>
+            </div>
+          </Row>
+        </div>
+        <div className="card-body ">
+          <div className="row mt-0">
+            <div className="col-lg-8">
+              <CustomSelect
+                handleSelected={handleSelected}
+                selected={selected}
+                options={options}
+              />
+            </div>
+            <div className="col-lg-4">
+              <p className="ml-4">
+                <span className="mr-4">
+                  Starts: 29 Oct, 2022 - Ends: 30 Jun, 2023{" "}
+                </span>{" "}
+                <span className="edit">
+                  <EditIcon />
+                </span>
+              </p>
+            </div>
           </div>
         </div>
       </Div>

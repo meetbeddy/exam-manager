@@ -69,3 +69,60 @@ export const EditIcon = () => {
     </svg>
   );
 };
+
+export const ArrowDownIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-chevron-down"
+      viewBox="0 0 16 16"
+    >
+      {" "}
+      <path
+        fill-rule="evenodd"
+        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+      />{" "}
+    </svg>
+  );
+};
+
+export const LockIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M19 10H18V7C18 3.7 15.3 1 12 1C8.7 1 6 3.7 6 7V10H5C3.3 10 2 11.3 2 13V20C2 21.7 3.3 23 5 23H19C20.7 23 22 21.7 22 20V13C22 11.3 20.7 10 19 10ZM8 7C8 4.8 9.8 3 12 3C14.2 3 16 4.8 16 7V10H8V7ZM19 21C19.6 21 20 20.6 20 20V13C20 12.4 19.6 12 19 12H5C4.4 12 4 12.4 4 13V20C4 20.6 4.4 21 5 21H19Z"
+        fill="black"
+      />
+      <mask
+        id="mask0_0_18656"
+        style={{ maskType: "alpha" }}
+        maskUnits="userSpaceOnUse"
+        x="2"
+        y="1"
+        width="20"
+        height="22"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M19 10H18V7C18 3.7 15.3 1 12 1C8.7 1 6 3.7 6 7V10H5C3.3 10 2 11.3 2 13V20C2 21.7 3.3 23 5 23H19C20.7 23 22 21.7 22 20V13C22 11.3 20.7 10 19 10ZM8 7C8 4.8 9.8 3 12 3C14.2 3 16 4.8 16 7V10H8V7ZM19 21C19.6 21 20 20.6 20 20V13C20 12.4 19.6 12 19 12H5C4.4 12 4 12.4 4 13V20C4 20.6 4.4 21 5 21H19Z"
+          fill="black"
+        />
+      </mask>
+      <g mask="url(#mask0_0_18656)">
+        <rect width="24" height="24" fill="#6E6B7B" />
+      </g>
+    </svg>
+  );
+};

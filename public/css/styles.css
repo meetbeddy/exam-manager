@@ -4834,10 +4834,20 @@ textarea.form-control-lg {
 }
 
 .accordion-header {
+  min-height: 58.63px;
+  height: fit-content;
+  border: 1px solid #D8D6DE;
   margin-bottom: 0;
+  border-radius: 7px;
 }
 
+.accordion-header p {
+  margin:0;
+}
+
+
 .accordion-item {
+  margin-top:5px;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
