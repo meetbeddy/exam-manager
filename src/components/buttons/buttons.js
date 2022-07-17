@@ -1,5 +1,8 @@
+import React, { Children } from "react";
 import styled from "styled-components";
+import { Dropdown } from "react-bootstrap";
 import "./button.css";
+import { ArrowDownIcon, LockIcon, OpenLockIcon } from "../icons/icons";
 
 export const AsideButton = styled.li`
   position: relative;
@@ -55,6 +58,23 @@ export const LargeButton = styled.button`
   }
 `;
 
+export const TagButton = styled.div`
+  position: relative;
+  height: 24px;
+  width: 67px;
+  background: #f8b25f;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #000;
+  text-align: left !important;
+  .icon {
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
+  }
+`;
 export const MedButton = styled.button`
   height: 29px;
   width: auto;
@@ -86,3 +106,50 @@ export function SwitchButton({ id, label }) {
     </ol>
   );
 }
+
+export const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+  <a
+    href="#0"
+    ref={ref}
+    onClick={(e) => {
+      e.preventDefault();
+      onClick(e);
+    }}
+    className="border-1"
+    style={{ color: "#4F4F4F", fontSize: "12px", lineHeight: "24px" }}
+  >
+    {/* Render custom icon here */}
+    {children === "Editing Prevented" ? <LockIcon /> : <OpenLockIcon />}
+    {"  "}
+    {children} <ArrowDownIcon />
+  </a>
+));
+
+export const MyToggle = () => {
+  const [selected, setSelected] = React.useState("Can Edit Result");
+
+  return (
+    <Dropdown>
+      <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+        {selected}
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item
+          eventKey="1"
+          onClick={(e) => setSelected(e.target.name)}
+          name="Can Edit Result"
+        >
+          Open Edit Result
+        </Dropdown.Item>
+        <Dropdown.Item
+          eventKey="2"
+          name="Editing Prevented"
+          onClick={(e) => setSelected(e.target.name)}
+        >
+          Lock Edit Result
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+};

@@ -1,6 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import "../../pages/test.css";
+import { ArrowDownIcon } from "../icons/icons";
 
 export function InputField({
   label,
@@ -13,15 +14,16 @@ export function InputField({
   error,
   require,
   handleShow,
+  inputMargin,
   showPass,
   read,
 }) {
   return (
     <>
       <Form.Group controlId={`formBasic${name}`} className={className}>
-        <Form.Label className="mb-1"> {label}</Form.Label>
+        <Form.Label className="mb-0"> {label}</Form.Label>
         <Form.Control
-          className="mb-3 p-2"
+          className={`mb-${inputMargin} p-2`}
           type={type}
           name={name}
           placeholder={placeholder}
@@ -43,7 +45,11 @@ export function CustomSelect({ selected, options, handleSelected }) {
   return (
     <div className="select-wrapper">
       <div className="select-btn" onClick={() => setShow(!show)}>
-        <p>{selected ? selected : options[0]}</p> <span> &#8964;</span>
+        <p>{selected ? selected : options[0]}</p>{" "}
+        <span>
+          {" "}
+          <ArrowDownIcon />
+        </span>
       </div>
       {show && (
         <div className="content">

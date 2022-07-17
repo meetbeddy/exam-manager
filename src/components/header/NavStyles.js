@@ -2,25 +2,20 @@ import styled from "styled-components";
 
 export const Nav = styled.div`
   position: relative;
-  max-width: 100%;
   height: 162.58px;
+  width: 100%;
   background: #ebe9f1;
 
   .nav-container {
-    display: flex;
-    flex-direction: row;
-    width: auto;
+    width: 95%;
     height: 162.58px;
-    margin: 0 20px 0;
+    margin: 0 25px 0;
     box-sizing: border-box;
-
-    // text-align:center;
   }
 
   .logo {
-    width: 20%;
     border-radius: 154px;
-    margin: auto;
+    margin: auto 0;
     img {
       width: 108.69px;
       height: 104.64px;
@@ -28,7 +23,6 @@ export const Nav = styled.div`
   }
 
   .name-tag {
-    width: 50%;
     margin: auto 0;
 
     p {
@@ -37,6 +31,7 @@ export const Nav = styled.div`
       font-weight: 300;
       font-size: 35px;
       line-height: 41px;
+      color: black;
       span {
         font-weight: 700;
       }
@@ -44,7 +39,6 @@ export const Nav = styled.div`
   }
 
   .nav-button {
-    width: 20%;
-    margin: auto;
+    margin: auto 0;
   }
 `;
