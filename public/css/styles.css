@@ -11561,7 +11561,7 @@ body {
   padding: 1.25rem 2rem;
   font-family: "Varela Round", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 80%;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   letter-spacing: 0.15rem;
   border: 0;
 }

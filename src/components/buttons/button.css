@@ -1,9 +1,9 @@
 
 :root {
-    --white: #e8e9ed;
+    --white: #ffff;
     --gray: #6E6B7B;
     --blue: #18172c;
-    --green: #00d084;
+    --green: #27AE60;
     --pink: #ff4b77;
   }
 ol {
@@ -25,13 +25,13 @@ ol {
   .switches {
     /* max-width: 18px; */
     width: auto;
-    height: 18px;
+    height: 24px;
     /* margin: 50px auto 0; */
 
     color: var(--gray);
     /* background: var(--blue); */
     font-size: 12px;
-    line-height: 18px;
+    /* line-height: 18px; */
 
   }
   
@@ -60,7 +60,7 @@ ol {
     height: 18px;
     align-items: center;
     justify-content: space-between;
-    padding: 5px;
+    padding: 15px;
   }
   
   .switches span:last-child {
@@ -81,10 +81,10 @@ ol {
   }
   
   .switches span:last-child::before {
-    left: 1px;
-    top: 3px;
-    width: 14px;
-    height: 14px;
+    left: 4px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
     background: var(--white);
     border-radius: 50%;
     z-index: 1;
