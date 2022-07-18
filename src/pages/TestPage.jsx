@@ -17,11 +17,7 @@ import {
   SaveIcon,
   XIcon,
 } from "../components/icons/icons";
-import {
-  CustomSelect,
-  InputField,
-  RowBox,
-} from "../components/inputfield/InputField";
+import { CustomSelect, InputField } from "../components/inputfield/InputField";
 
 const Div = styled.div`
   margin: 90px 10px 0px;
