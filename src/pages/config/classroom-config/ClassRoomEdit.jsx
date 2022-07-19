@@ -11,12 +11,15 @@ import {
 } from "../../../components/icons/icons";
 
 function ClassRoomEdit({ handleSwitch }) {
-  const [classDetails, setClassDetails] = React.useState([
-    { className: "Year 1", section: ["A1", "A2", "B"], capacity: 17 },
-    { className: "Year 2", section: ["A1", "A2", "B"], capacity: 10 },
-  ]);
+  const init = JSON.parse(localStorage.getItem("class-details"))
+    ? JSON.parse(localStorage.getItem("class-details"))
+    : [
+        { className: "Year 1", section: ["A1", "A2", "B"], capacity: 17 },
+        { className: "Year 2", section: ["A1", "A2", "B"], capacity: 10 },
+      ];
+  const [classDetails, setClassDetails] = React.useState();
   React.useEffect(() => {
-    setClassDetails(JSON.parse(localStorage.getItem("class-details")));
+    setClassDetails(init);
   }, []);
 
   const clone = () => {
@@ -114,7 +117,7 @@ function ClassRoomEdit({ handleSwitch }) {
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
-              {classDetails.map((detail, key) => {
+              {classDetails?.map((detail, key) => {
                 const editField = (value, colName) => {
                   const cloneDetails = clone();
 

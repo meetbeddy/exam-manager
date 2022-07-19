@@ -3,7 +3,10 @@ import { LargeButton } from "../../../components/buttons/buttons";
 import { Div } from "../configStyles";
 
 function ClassRoom({ handleSwitch }) {
-  const classDetails = JSON.parse(localStorage.getItem("class-details"));
+  const classDetails = JSON.parse(localStorage.getItem("class-details")) || [
+    { className: "Year 1", section: ["A1", "A2", "B"], capacity: 17 },
+    { className: "Year 2", section: ["A1", "A2", "B"], capacity: 10 },
+  ];
 
   return (
     <Div className="card">
