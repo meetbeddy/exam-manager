@@ -15,16 +15,18 @@ function SessionExamEdit() {
       <div className="card-header">
         <Row>
           <div className="col-lg-6 col-xl-7">
-            <p className="text-bold">Session Examination</p>
+            <h4 className="mt-4">Session Examinations</h4>
           </div>
           <div className="col-lg-6 col-xl-5">
-            <LargeButton className="btn btn-warning" color="#F2994A">
-              Add new session
-            </LargeButton>
+            <div className="float-end">
+              <LargeButton className="btn btn-warning" color="#F2994A">
+                Add new session
+              </LargeButton>
 
-            <LargeButton className="btn btn-success" color={`#28C76F`}>
-              Make new session
-            </LargeButton>
+              <LargeButton className="btn btn-success" color={`#28C76F`}>
+                Make new session
+              </LargeButton>
+            </div>
           </div>
         </Row>
       </div>

@@ -57,6 +57,11 @@ export const Div = styled.div`
     height: 135.5314483642578px;
     width: 135.5314483642578px;
     border-radius: 10px;
+    img {
+      height: 135.5314483642578px;
+      width: 135.5314483642578px;
+      border-radius: 10px;
+    }
   }
   .badge-row-buttons {
     position: absolute;

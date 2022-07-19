@@ -2,16 +2,23 @@ import React from "react";
 import { LargeButton } from "../../../components/buttons/buttons";
 import { Div } from "../configStyles";
 
-function SchoolDetails({ handleSwitch }) {
+function SchoolDetails({ handleSwitch, defaultDetail }) {
+  const schoolbadge = localStorage.getItem("school-badge");
+  const [schoolDetails, setSchoolDetails] = React.useState(
+    JSON.parse(localStorage.getItem("school-details")) || defaultDetail
+  );
+
   return (
     <Div className="card">
       <div className="card-header">
         <div className="row ">
           <div className="col-lg-6 d-flex">
-            <p className="mb-0">Enginx Connect Nursery and Primary School</p>
-            <span>
-              <div className="btn bg-success bg-opacity-75 pill">active</div>
-            </span>
+            <p className="mb-0">{schoolDetails.schoolName}</p>
+            <div className="demo-inline-spacing ms-2">
+              <span className="badge rounded-pill bg-label-success text-gray text-muted">
+                Active <i className="bx bx-dots-vertical-rounded" />
+              </span>
+            </div>
           </div>
           <div className="col-lg-6 ">
             <LargeButton
@@ -30,31 +37,32 @@ function SchoolDetails({ handleSwitch }) {
           <div className="m-auto row m-4">
             <div className="col-lg-8 d-flex">
               <img
-                src="../assets/img/school-logo-2.png"
+                src={
+                  schoolbadge ? schoolbadge : "../assets/img/school-logo-2.png"
+                }
                 alt="school-logo"
                 className="school-badge"
               />
               <div className="m-2 w-50">
-                <p className="fw-bold">
-                  Enginx Connect Nursery & Primary School{" "}
-                </p>
+                <p className="fw-bold">{schoolDetails.schoolName}</p>
                 <p className="fw-normal fs-6 mt-2">Elementary School</p>
               </div>
             </div>
             <div className="col-lg-4 mt-2">
               <p className="fw-normal fs-6 mb-0">
-                <i className="text-primary bx bx-home-alt-2" /> 7B, Adekula
-                fajuyi , Ikeja GRA, Lagos.
+                <i className="text-primary bx bx-home-alt-2" />{" "}
+                {schoolDetails.address}
               </p>
               <p className="fw-normal fs-6 mb-0">
-                <i class="text-primary bx bx-phone"></i> +23490X XXX XXXX
+                <i class="text-primary bx bx-phone"></i> +234
+                {schoolDetails.mobileNumber}
               </p>
               <p className="fw-normal fs-6 mb-0">
                 <i class="text-primary bx bx-mobile"></i> +23490X XXX XXXX
               </p>
               <p className="fw-normal fs-6 mb-0">
                 <i class="text-primary bx bx-envelope"></i>{" "}
-                info@enginxconnect.com
+                {schoolDetails.email}
               </p>
             </div>
           </div>

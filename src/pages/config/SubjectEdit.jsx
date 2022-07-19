@@ -10,7 +10,7 @@ function SubjectEdit() {
       <div className="card-header">
         <Row>
           <div className="col-lg-6 col-xl-7">
-            <h4>Subjects</h4>
+            <h4 className="mt-4">Subjects</h4>
           </div>
           <div className="col-lg-6 col-xl-5">
             <div className="float-end">

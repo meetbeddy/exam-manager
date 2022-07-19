@@ -3,13 +3,23 @@ import SchoolDetailsEdit from "./school-detail-section/SchoolDetailsEdit";
 import SessionEdit from "./SessionEdit";
 import SessionExamEdit from "./SessionExamEdit";
 import SubjectEdit from "./SubjectEdit";
-import ClassRoomEdit from "./ClassRoomEdit";
+import ClassRoomEdit from "./classroom-config/ClassRoomEdit";
 import SchoolDetails from "./school-detail-section/SchoolDetails";
+import ClassRoom from "./classroom-config/ClassRoom";
 
 function ConfigPage() {
+  const defaultDetail = {
+    schoolName: "Enginx Connect Nursery and Primary School",
+    mobileNumber: "90xxxxxxxxx",
+    state: "Lagos",
+    email: "info@enginx.com",
+    address: "7B, Adekula fajuyi , Ikeja GRA, Lagos",
+    zipCode: "77738",
+  };
+
   const [switchView, setView] = React.useState({
     schoolDetails: false,
-    session: false,
+    classroom: false,
   });
 
   const handleSwitch = (e) => {
@@ -19,18 +29,27 @@ function ConfigPage() {
     });
   };
 
-  console.log(switchView.schoolDetails);
   return (
     <>
       {switchView.schoolDetails ? (
-        <SchoolDetailsEdit handleSwitch={handleSwitch} />
+        <SchoolDetailsEdit
+          handleSwitch={handleSwitch}
+          defaultDetail={defaultDetail}
+        />
       ) : (
-        <SchoolDetails handleSwitch={handleSwitch} />
+        <SchoolDetails
+          handleSwitch={handleSwitch}
+          defaultDetail={defaultDetail}
+        />
       )}
       <SessionEdit />
       <SessionExamEdit />
       <SubjectEdit />
-      <ClassRoomEdit />
+      {switchView.classroom ? (
+        <ClassRoomEdit handleSwitch={handleSwitch} />
+      ) : (
+        <ClassRoom handleSwitch={handleSwitch} />
+      )}
     </>
   );
 }
