@@ -6,7 +6,7 @@ import { DashboardContainer } from "./dashboardStyles";
 function Dashboard(props) {
   return (
     <DashboardContainer>
-      <NavBar />
+      {/* <NavBar /> */}
       <div className="main-layout">
         <Aside />
         <div className="main-content">
