@@ -1,7 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import "../../pages/test.css";
-import { ArrowDownIcon } from "../icons/icons";
+// import "../../pages/test.css";
+// import { ArrowDownIcon } from "../icons/icons";
 
 export function InputField({
   label,
@@ -40,38 +40,38 @@ export function InputField({
   );
 }
 
-export function CustomSelect({ selected, options, handleSelected }) {
-  const [show, setShow] = React.useState(false);
-  return (
-    <div className="select-wrapper">
-      <div className="select-btn" onClick={() => setShow(!show)}>
-        <p>{selected ? selected : options[0]}</p>{" "}
-        <span>
-          {" "}
-          <ArrowDownIcon />
-        </span>
-      </div>
-      {show && (
-        <div className="content">
-          <ul className="options">
-            {options.map((option, i) => (
-              <li
-                key={i}
-                onClick={(e) => {
-                  handleSelected(e.target.id);
-                  setShow(false);
-                }}
-                id={option}
-              >
-                {option}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-}
+// export function CustomSelect({ selected, options, handleSelected }) {
+//   const [show, setShow] = React.useState(false);
+//   return (
+//     <div className="select-wrapper">
+//       <div className="select-btn" onClick={() => setShow(!show)}>
+//         <p>{selected ? selected : options[0]}</p>{" "}
+//         <span>
+//           {" "}
+//           <ArrowDownIcon />
+//         </span>
+//       </div>
+//       {show && (
+//         <div className="content">
+//           <ul className="options">
+//             {options.map((option, i) => (
+//               <li
+//                 key={i}
+//                 onClick={(e) => {
+//                   handleSelected(e.target.id);
+//                   setShow(false);
+//                 }}
+//                 id={option}
+//               >
+//                 {option}
+//               </li>
+//             ))}
+//           </ul>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 
 export const RowBox = () => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import SchoolDetailsEdit from "./school-detail-section/SchoolDetailsEdit";
-import SessionEdit from "./SessionEdit";
+import SessionEdit from "./session-config/SessionEdit";
 import SessionExamEdit from "./SessionExamEdit";
 import SubjectEdit from "./SubjectEdit";
 import ClassRoomEdit from "./classroom-config/ClassRoomEdit";

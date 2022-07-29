@@ -2,9 +2,14 @@ import React from "react";
 import { Row, Form } from "react-bootstrap";
 import { Div } from "./configStyles";
 import { LargeButton } from "../../components/buttons/buttons";
-import { DeleteIcon, PlusIcon } from "../../components/icons/icons";
+import {
+  DeleteIcon,
+  PlusIcon,
+  SaveIcon,
+  CancelIcon,
+} from "../../components/icons/icons";
 
-function SubjectEdit() {
+function SubjectEdit({ handleSwitch }) {
   return (
     <Div className="mt-4">
       <div className="card-header">
@@ -14,12 +19,25 @@ function SubjectEdit() {
           </div>
           <div className="col-lg-6 col-xl-5">
             <div className="float-end">
-              <LargeButton className="btn btn-warning" color="#F2994A">
-                Add new session
+              <LargeButton className="btn btn-danger" color="#CE4040">
+                Discard Entries
+                <span className="btn-label">
+                  <CancelIcon />
+                </span>
               </LargeButton>
 
-              <LargeButton className="btn btn-success" color={`#28C76F`}>
-                Make new session
+              <LargeButton
+                className="btn btn-success"
+                color={`#28C76F`}
+                name="subjects"
+                onClick={(e) => {
+                  handleSwitch(e);
+                }}
+              >
+                Save Entries
+                <span>
+                  <SaveIcon />
+                </span>
               </LargeButton>
             </div>
           </div>

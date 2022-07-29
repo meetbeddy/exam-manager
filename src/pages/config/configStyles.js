@@ -1,17 +1,15 @@
 import styled from "styled-components";
 
 export const Div = styled.div`
-  margin: 90px 10px 0px;
   position: relative;
   display: flex;
   flex-direction: column;
-  min-width: 0;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
   border: 0 solid transparent !important;
   border-radius: 0.5rem;
-  box-shadow: 0px 4px 22px -9px rgba(0, 0, 0, 0.25);
+  // box-shadow: 0px 4px 22px -9px rgba(0, 0, 0, 0.25);
   color: #6e6b7b !important;
   .card-header {
     border-bottom: 1px solid #ebe9f1 !important;
@@ -49,26 +47,23 @@ export const Div = styled.div`
     position: relative;
     width: 100%;
     .label,
-    .button-row {
-      width: 50%;
-    }
+    // .button-row {
+    //   width: 50%;
+    // }
   }
   .school-badge {
-    height: 135.5314483642578px;
-    width: 135.5314483642578px;
+    height: 135.53px;
+    width: 135.53px;
     border-radius: 10px;
     img {
-      height: 135.5314483642578px;
-      width: 135.5314483642578px;
-      border-radius: 10px;
+      height: 100%;
+      width: 100%;
     }
   }
   .badge-row-buttons {
     position: absolute;
     left: 160px;
     top: 65px;
-    ont-family: "Montserrat";
-    font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 21px;

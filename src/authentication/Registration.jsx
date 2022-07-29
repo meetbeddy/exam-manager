@@ -5,6 +5,7 @@ import { InputField } from "../components/inputfield/InputField";
 import bg from "./assets/registration.png";
 import { BeatLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const override = {
   // display: "block",
@@ -27,6 +28,8 @@ const Styles = styled.div`
   }
 `;
 function Registration() {
+  const navigate = useNavigate();
+
   const [regData, setRegData] = React.useState({
     stage: 1,
     loading: false,
@@ -59,6 +62,12 @@ function Registration() {
     setTimeout(() => {
       regData.stage === 2 &&
         setRegData({ ...regData, stage: 3, loading: false, success: true });
+    }, 2000);
+    setTimeout(() => {
+      if (regData.stage === 3) {
+        setRegData({ ...regData, loading: false, success: true });
+        navigate("init-config");
+      }
     }, 2000);
   };
 

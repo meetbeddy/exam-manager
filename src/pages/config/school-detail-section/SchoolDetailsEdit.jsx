@@ -1,6 +1,6 @@
 import React from "react";
 import { Div } from "../configStyles";
-import { Row } from "react-bootstrap";
+import { Row, Form } from "react-bootstrap";
 import { LargeButton, MedButton } from "../../../components/buttons/buttons";
 import { CancelIcon, SaveIcon } from "../../../components/icons/icons";
 import UploadImageModal from "./UploadImageModal";
@@ -26,6 +26,7 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
     email: schooldetails.email,
     address: schooldetails.address,
     zipCode: schooldetails.zipCode,
+    schoolType: schooldetails.zipCode,
   });
 
   const [error, setError] = React.useState({});
@@ -42,6 +43,7 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
       email: "",
       address: "",
       zipCode: "",
+      schoolType: "",
     });
   };
 
@@ -85,10 +87,10 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
     <Div className="card">
       <div className="card-header">
         <Row>
-          <div className="col-lg-6 col-xl-7">
+          <div className="col-6 col-sm-12">
             <h4 className="mt-4">School - Details</h4>
           </div>
-          <div className="col-lg-6 col-xl-5">
+          <div className="col-6 col-sm-12">
             <div className="float-end">
               <LargeButton
                 className="btn btn-danger"
@@ -119,31 +121,59 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
         </Row>
       </div>
       <div className="card-body">
-        <div className="badge-row mt-4">
-          <div className="school-badge ">
-            <img
-              src={
-                schoolbadge ? schoolbadge : "../assets/img/school-logo-2.png"
-              }
-              alt="school-logo"
-            />
+        <div className=" mt-4 row">
+          <div className=" col-6">
+            <div className="d-flex position-relative">
+              <div className="school-badge">
+                <img
+                  src={
+                    schoolbadge
+                      ? schoolbadge
+                      : "../assets/img/school-logo-2.png"
+                  }
+                  alt="school-logo"
+                />
+              </div>
+
+              <div className="badge-row-buttons ">
+                <MedButton
+                  className="btn btn-warning"
+                  color="#F2994A"
+                  onClick={handleShow}
+                >
+                  Upload
+                </MedButton>
+                <MedButton
+                  className="btn btn-light btn-outline"
+                  border="#6e6b7b"
+                  onClick={() => localStorage.removeItem("school-badge")}
+                >
+                  Reset
+                </MedButton>
+                <p className="m-2">Allowed file types: png, jpg, jpeg.</p>
+              </div>
+            </div>
           </div>
-          <div className="badge-row-buttons">
-            <MedButton
-              className="btn btn-warning"
-              color="#F2994A"
-              onClick={handleShow}
-            >
-              Upload
-            </MedButton>
-            <MedButton
-              className="btn btn-light btn-outline"
-              border="#6e6b7b"
-              onClick={() => localStorage.removeItem("school-badge")}
-            >
-              Reset
-            </MedButton>
-            <p className="m-2">Allowed file types: png, jpg, jpeg.</p>
+
+          <div className="col-6 float-end">
+            <Form className="form">
+              <Form.Group
+                className="col-12"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Type of School</Form.Label>
+                <Form.Select
+                  aria-label="Default select example"
+                  onChange={handleChange}
+                  name="schoolType"
+                >
+                  <option>select</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </Form.Select>
+              </Form.Group>
+            </Form>
           </div>
         </div>
         <EditForm
