@@ -1,6 +1,6 @@
 import React from "react";
-import { InputField } from "../../../components/inputfield/InputField";
-import BasicModal from "../../../components/modal/Modal";
+import { InputField } from "../../../../components/inputfield/InputField";
+import BasicModal from "../../../../components/modal/Modal";
 
 export default function SessionModal({
   show,

@@ -1,7 +1,7 @@
 import React from "react";
 import ImagePreview from "./ImagePreview";
 import { Modal } from "react-bootstrap";
-import { MedButton } from "../../../components/buttons/buttons";
+import { MedButton } from "../../../../components/buttons/buttons";
 
 function UploadImageModal({ handleClose, show }) {
   const [postData, setPostData] = React.useState({

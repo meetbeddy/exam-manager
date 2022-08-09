@@ -1,5 +1,5 @@
 import React from "react";
-import { LargeButton } from "../../../components/buttons/buttons";
+import { LargeButton } from "../../../../components/buttons/buttons";
 import { Div } from "../configStyles";
 
 function SchoolDetails({ handleSwitch, defaultDetail }) {
@@ -12,8 +12,9 @@ function SchoolDetails({ handleSwitch, defaultDetail }) {
     <Div className="card">
       <div className="card-header">
         <div className="row ">
-          <div className="col-lg-6 d-flex">
-            <p className="mb-0">{schoolDetails.schoolName}</p>
+          <div className="col-6 d-flex ">
+            {" "}
+            <p className="mb-0 mt-4">{schoolDetails.schoolName}</p>
             <div className="demo-inline-spacing ms-2">
               <span className="badge rounded-pill bg-label-success text-gray text-muted">
                 Active <i className="bx bx-dots-vertical-rounded" />
@@ -22,8 +23,7 @@ function SchoolDetails({ handleSwitch, defaultDetail }) {
           </div>
           <div className="col-lg-6 ">
             <LargeButton
-              className="btn btn-warning float-end"
-              color="#F2994A"
+              className="btn btn-primary float-end"
               name="schoolDetails"
               onClick={(e) => handleSwitch(e)}
             >

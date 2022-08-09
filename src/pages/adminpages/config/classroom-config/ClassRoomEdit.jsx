@@ -1,14 +1,14 @@
 import React from "react";
 import { Div } from "../configStyles";
 import { Row, Form } from "react-bootstrap";
-import { LargeButton, TagButton } from "../../../components/buttons/buttons";
+import { LargeButton, TagButton } from "../../../../components/buttons/buttons";
 import {
   PlusIcon,
   XIcon,
   CancelIcon,
   SaveIcon,
   DeleteIcon,
-} from "../../../components/icons/icons";
+} from "../../../../components/icons/icons";
 
 function ClassRoomEdit({ handleSwitch }) {
   const init = JSON.parse(localStorage.getItem("class-details"))
@@ -75,12 +75,12 @@ function ClassRoomEdit({ handleSwitch }) {
     <Div className="mt-4">
       <div className="card-header">
         <Row>
-          <div className="col-lg-6 col-xl-7">
-            <h4>Classrooms</h4>
+          <div className="col-lg-6 col-xl-7 ">
+            <h4 className="mt-4">Classrooms</h4>
           </div>
           <div className="col-lg-6 col-xl-5">
             <div className="float-end">
-              <LargeButton className="btn btn-danger" color="#CE4040">
+              <LargeButton className="btn btn-outline-danger">
                 Discard Entries
                 <span className="btn-label">
                   <CancelIcon />
@@ -88,8 +88,7 @@ function ClassRoomEdit({ handleSwitch }) {
               </LargeButton>
 
               <LargeButton
-                className="btn btn-success"
-                color={`#28C76F`}
+                className="btn btn-primary"
                 name="classroom"
                 onClick={(e) => {
                   handleSave(e);
@@ -215,11 +214,7 @@ function ClassRoomEdit({ handleSwitch }) {
             </tbody>
           </table>
         </div>
-        <LargeButton
-          className="btn btn-warning"
-          color="#F2994A"
-          onClick={addClass}
-        >
+        <LargeButton className="btn btn-primary" onClick={addClass}>
           add class{" "}
           <span>
             <PlusIcon />

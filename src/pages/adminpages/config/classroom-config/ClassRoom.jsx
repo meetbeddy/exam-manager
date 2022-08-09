@@ -1,5 +1,5 @@
 import React from "react";
-import { LargeButton } from "../../../components/buttons/buttons";
+import { LargeButton } from "../../../../components/buttons/buttons";
 import { Div } from "../configStyles";
 
 function ClassRoom({ handleSwitch }) {
@@ -9,7 +9,7 @@ function ClassRoom({ handleSwitch }) {
   ];
 
   return (
-    <Div className="card">
+    <Div className="mt-4">
       <div className="card-header">
         <div className="row ">
           <div className="col-lg-6">
@@ -17,8 +17,7 @@ function ClassRoom({ handleSwitch }) {
           </div>
           <div className="col-lg-6 ">
             <LargeButton
-              className="btn btn-warning float-end"
-              color="#F2994A"
+              className="btn btn-primary float-end"
               name="classroom"
               onClick={(e) => handleSwitch(e)}
             >

@@ -22,6 +22,25 @@ export const Div = styled.div`
       backround: #f9f9f9;
     }
   }
+
+  .form {
+    margin-top: 40px;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #6e6b7b;
+    input {
+      height: 38px;
+    }
+    placeholder {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 24px;
+      color: #b9b9c3;
+    }
+  }
   h4 {
     font-family: "Montserrat";
     // font-style: normal;
@@ -69,24 +88,7 @@ export const Div = styled.div`
     line-height: 21px;
     color: #6e6b7b;
   }
-  .form {
-    margin-top: 40px;
-    font-family: "Montserrat";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
-    color: #6e6b7b;
-    input {
-      height: 38px;
-    }
-    placeholder {
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 24px;
-      color: #b9b9c3;
-    }
-  }
+  
   .edit {
     cursor: pointer;
   }

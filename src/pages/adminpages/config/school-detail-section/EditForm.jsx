@@ -1,10 +1,10 @@
 import React from "react";
-import { InputField } from "../../../components/inputfield/InputField";
+import { InputField } from "../../../../components/inputfield/InputField";
 import { Row } from "react-bootstrap";
 
 function EditForm({ inputValue, error, handleChange }) {
   return (
-    <div className="form">
+    <>
       <Row>
         <InputField
           label="School Name"
@@ -14,7 +14,7 @@ function EditForm({ inputValue, error, handleChange }) {
           onChange={handleChange}
           placeholder="Encinx connect high school"
           error={error.schoolName}
-          className="col-lg-6"
+          className="col-6"
           inputMargin={3}
           require={true}
         />
@@ -83,7 +83,7 @@ function EditForm({ inputValue, error, handleChange }) {
           require={true}
         />
       </Row>
-    </div>
+    </>
   );
 }
 

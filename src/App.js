@@ -5,7 +5,7 @@ import Dashboard from "./dashboard/Index";
 import InitConfig from "./pages/adminpages/initconfig/InitConfig";
 
 // import OldDashboard from "./components/dashboard/Dashboard";
-import ConfigPage from "./pages/config/ConfigPage";
+import ConfigPage from "./pages/adminpages/config/ConfigPage";
 
 function App() {
   return (

@@ -1,11 +1,15 @@
 import React from "react";
-import { Form, Alert } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import styled from "styled-components";
 import { InputField } from "../components/inputfield/InputField";
 import bg from "./assets/registration.png";
 import { BeatLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import { signup } from "../store/actions/authActions";
+import { clearNotifications } from "../store/actions/notificationsActions";
+import { useSelector, useDispatch } from "react-redux";
 
 const override = {
   // display: "block",
@@ -29,44 +33,70 @@ const Styles = styled.div`
 `;
 function Registration() {
   const navigate = useNavigate();
+  const notification = useSelector((state) => state.notification);
+  const dispatch = useDispatch();
 
   const [regData, setRegData] = React.useState({
     stage: 1,
     loading: false,
-    buttonTitle: ["verify me", "proceed", "finalize"],
-    secretCode: "",
-    schoolEmail: "",
-    password: "",
-    confirmPassword: "",
-    otp: "",
+    credential: "",
+    schoolName: "",
+    urlName: "",
+    code: "",
+    buttonTitle: ["proceed", "finalize"],
   });
 
   React.useEffect(() => {
     if (regData.success) toast.success("successful");
+    if (notification.success.message) {
+      toast.success("successful");
+      navigate("init-config");
+    }
+    if (notification?.errors?.message) {
+      const { message } = notification?.errors;
+      toast.error(message);
+      dispatch(clearNotifications());
+    }
 
     return setRegData({ ...regData, success: false });
-  }, [regData.success]);
+  }, [
+    dispatch,
+    navigate,
+    notification?.errors,
+    notification.success.message,
+    regData.success,
+  ]);
 
   const handleChange = (e) => {
     setRegData({ ...regData, [e.target.name]: e.target.value });
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (e, credential) => {
     setRegData({ ...regData, loading: true });
 
+    regData.stage !== 1 && e.preventDefault();
     setTimeout(() => {
-      regData.stage === 1 &&
-        setRegData({ ...regData, stage: 2, loading: false, success: true });
+      if (regData.stage === 1) {
+        setRegData({
+          ...regData,
+          stage: 2,
+          loading: false,
+          success: true,
+          credential,
+        });
+        return;
+      }
     }, 2000);
 
     setTimeout(() => {
-      regData.stage === 2 &&
-        setRegData({ ...regData, stage: 3, loading: false, success: true });
-    }, 2000);
-    setTimeout(() => {
-      if (regData.stage === 3) {
-        setRegData({ ...regData, loading: false, success: true });
-        navigate("init-config");
+      if (regData.stage === 2) {
+        setRegData({ ...regData, loading: false });
+        let formData = {};
+        formData.access_token = regData.credential;
+        formData.name = regData.schoolName;
+        formData.code = regData.code;
+        formData.url_name = regData.urlName;
+
+        dispatch(signup(formData));
       }
     }, 2000);
   };
@@ -151,53 +181,52 @@ function Registration() {
                       </div>
                     </div>
                   )}
+                  {/* -----------google signup ------------*/}
                   {regData.stage === 1 && (
-                    <InputField
-                      label="enter your secret to signup"
-                      type="text"
-                      name="schoolName"
-                      // value={inputValue.schoolName}
-                      onChange={handleChange}
-                      placeholder="XXXX-XXXX-XXXX-XXXX"
-                      // error={error.schoolName}
-                      className="col-lg-8"
-                      inputMargin={3}
-                      require={true}
+                    <GoogleLogin
+                      onSuccess={(credentialResponse) => {
+                        console.log(credentialResponse);
+
+                        handleSubmit(null, credentialResponse.credential);
+                      }}
+                      onError={() => {
+                        console.log("Login Failed");
+                      }}
                     />
                   )}
                   {regData.stage === 2 && (
                     <>
                       <InputField
-                        label="enter school email"
+                        label="School Name"
                         type="text"
-                        name="schoolEmail"
-                        // value={inputValue.schoolName}
+                        name="schoolName"
+                        value={regData.schoolName}
                         onChange={handleChange}
-                        placeholder="schoolemail@gmail.com"
+                        placeholder="school full name"
                         // error={error.schoolName}
                         className="col-lg-8 "
                         inputMargin={3}
                         require={true}
                       />
                       <InputField
-                        label="password"
-                        type="password"
-                        name="password"
-                        // value={inputValue.schoolName}
+                        label="school acronym"
+                        type="text"
+                        name="urlName"
+                        value={regData.urlName}
                         onChange={handleChange}
-                        placeholder="enter password"
+                        placeholder="school acronym"
                         // error={error.schoolName}
                         className="col-lg-8 "
                         inputMargin={3}
                         require={true}
                       />
                       <InputField
-                        label="Repeat Password"
-                        type="password"
-                        name="confirmPassword"
-                        // value={inputValue.schoolName}
+                        label="invitation code"
+                        type="text"
+                        name="code"
+                        value={regData.code}
                         onChange={handleChange}
-                        placeholder="repeat password"
+                        placeholder="enter invite code"
                         // error={error.schoolName}
                         className="col-lg-8 "
                         inputMargin={3}
@@ -205,7 +234,7 @@ function Registration() {
                       />
                     </>
                   )}
-                  {regData.stage === 3 && (
+                  {/* {regData.stage === 3 && (
                     <>
                       <Alert variant="transaprent" className="border col-lg-8 ">
                         <Alert.Heading>some email</Alert.Heading>
@@ -225,12 +254,14 @@ function Registration() {
                         require={true}
                       />
                     </>
-                  )}
+                  )} */}
 
-                  <button className="btn btn-primary ">
-                    {" "}
-                    {regData.buttonTitle[regData.stage - 1]}
-                  </button>
+                  {regData.stage !== 1 && (
+                    <button className="btn btn-primary ">
+                      {" "}
+                      {regData.buttonTitle[regData.stage - 1]}
+                    </button>
+                  )}
                 </Form>
               )}
             </div>

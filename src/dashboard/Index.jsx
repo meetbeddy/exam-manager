@@ -1,9 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
-// import SideNav from "./SideNav";
+import SideNav from "./SideNav";
 import init from "./init";
-import { ToggleIcon } from "../components/icons/icons";
 
 function Index(props) {
   React.useEffect(() => {
@@ -12,7 +11,7 @@ function Index(props) {
 
   const toggleCollapse = (e) => {
     e.preventDefault();
-    window.Helpers.toggleCollapsed(true);
+    window.Helpers.toggleCollapsed();
   };
   return (
     <div className="layout-wrapper layout-content-navbar layout-without-menu">
@@ -20,7 +19,7 @@ function Index(props) {
         {/* */}
         <div className="layout-page">
           <Header toggleCollapse={toggleCollapse} />
-
+          <SideNav toggleCollapse={toggleCollapse} />
           <div className="content-wrapper">
             {/* <!-- Content --> */}
 

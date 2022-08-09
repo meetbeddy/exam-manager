@@ -1,8 +1,8 @@
 import React from "react";
 import { Div } from "../configStyles";
 import { Row, Form } from "react-bootstrap";
-import { LargeButton, MedButton } from "../../../components/buttons/buttons";
-import { CancelIcon, SaveIcon } from "../../../components/icons/icons";
+import { LargeButton, MedButton } from "../../../../components/buttons/buttons";
+import { CancelIcon, SaveIcon } from "../../../../components/icons/icons";
 import UploadImageModal from "./UploadImageModal";
 
 import EditForm from "./EditForm";
@@ -93,8 +93,7 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
           <div className="col-6 col-sm-12">
             <div className="float-end">
               <LargeButton
-                className="btn btn-danger"
-                color="#CE4040"
+                className="btn btn-outline-danger"
                 onClick={() => clearForm()}
               >
                 Discard Entries
@@ -104,15 +103,14 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
               </LargeButton>
 
               <LargeButton
-                className="btn btn-success"
-                color={`#28C76F`}
+                className="btn btn-primary"
                 name="schoolDetails"
                 onClick={(e) => {
                   handleSave(e);
                 }}
               >
                 Save Entries
-                <span>
+                <span className="btn-label">
                   <SaveIcon />
                 </span>
               </LargeButton>
@@ -136,16 +134,11 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
               </div>
 
               <div className="badge-row-buttons ">
-                <MedButton
-                  className="btn btn-warning"
-                  color="#F2994A"
-                  onClick={handleShow}
-                >
+                <MedButton className="btn btn-primary" onClick={handleShow}>
                   Upload
                 </MedButton>
                 <MedButton
-                  className="btn btn-light btn-outline"
-                  border="#6e6b7b"
+                  className="btn btn-light btn-outline-primary"
                   onClick={() => localStorage.removeItem("school-badge")}
                 >
                   Reset
@@ -176,11 +169,13 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
             </Form>
           </div>
         </div>
-        <EditForm
-          inputValue={inputValue}
-          error={error}
-          handleChange={handleChange}
-        />
+        <div className="form">
+          <EditForm
+            inputValue={inputValue}
+            error={error}
+            handleChange={handleChange}
+          />
+        </div>
       </div>
       <UploadImageModal
         show={show}

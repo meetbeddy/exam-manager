@@ -36,10 +36,13 @@ function Header(props) {
 
   return (
     <nav
-      className="layout-navbar container-xxl navbar navbar-expand-xl  navbar-detached align-items-center bg-navbar-theme"
+      className="layout-navbar container-xxl navbar navbar-expand-xl p-2  navbar-detached align-items-center bg-navbar-theme"
       id="layout-navbar"
     >
-      <button className="p-1  m-3 border-0 rounded">
+      <button
+        className="p-0  m-1 border-0 rounded"
+        onClick={(e) => props.toggleCollapse(e)}
+      >
         <ToggleIcon />
       </button>
       <div
@@ -61,10 +64,10 @@ function Header(props) {
         {/* /Search */}
         <ul className="navbar-nav flex-row align-items-center ms-auto">
           {/* Place this tag where you want the button to render. */}
-          <li className="nav-item lh-1 me-3">
+          {/* <li className="nav-item lh-1 me-3">
             <a
               className="github-button"
-              href="https://github.com/themeselection/sneat-html-admin-template-free"
+              href="#"
               data-icon="octicon-star"
               data-size="large"
               data-show-count="true"
@@ -72,7 +75,7 @@ function Header(props) {
             >
               Star
             </a>
-          </li>
+          </li> */}
           {/* User */}
           <li className="nav-item navbar-dropdown dropdown-user dropdown">
             <a

@@ -1,9 +1,9 @@
 import React from "react";
-import ClassRoomEdit from "../../config/classroom-config/ClassRoomEdit";
-import SchoolDetailsEdit from "../../config/school-detail-section/SchoolDetailsEdit";
-import SessionEdit from "../../config/session-config/SessionEdit";
-import SessionExamEdit from "../../config/SessionExamEdit";
-import SubjectEdit from "../../config/SubjectEdit";
+import ClassRoomEdit from "../config/classroom-config/ClassRoomEdit";
+import SchoolDetailsEdit from "../config/school-detail-section/SchoolDetailsEdit";
+import SessionEdit from "../config/session-config/SessionEdit";
+import SessionExamEdit from "../config/sessionExam/SessionExamEdit";
+import SubjectEdit from "../config/subject-config/SubjectEdit";
 import withSplashScreen from "./withSplashScreen";
 
 const defaultDetail = {

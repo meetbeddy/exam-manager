@@ -1,8 +1,8 @@
 import React from "react";
 import { Div } from "../configStyles";
 import { Row, Form } from "react-bootstrap";
-import { LargeButton } from "../../../components/buttons/buttons";
-import { EditIcon } from "../../../components/icons/icons";
+import { LargeButton } from "../../../../components/buttons/buttons";
+import { EditIcon } from "../../../../components/icons/icons";
 import SessionModal from "./SessionModal";
 import updateLocale from "dayjs/plugin/updateLocale";
 import dayjs from "dayjs";
@@ -33,13 +33,12 @@ function SessionEdit({ handleSwitch, defaultDetail }) {
           </div>
           <div className="col-lg-6 col-xl-5">
             <div className="float-end">
-              <LargeButton className="btn btn-warning" color="#F2994A">
+              <LargeButton className="btn btn-outline-primary">
                 Add new session
               </LargeButton>
 
               <LargeButton
-                className="btn btn-success"
-                color={`#28C76F`}
+                className="btn btn-primary"
                 name="session"
                 onClick={(e) => {
                   handleSwitch(e);

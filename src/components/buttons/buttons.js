@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Dropdown } from "react-bootstrap";
 import "./button.css";
@@ -12,7 +12,7 @@ export const AsideButton = styled.li`
   box-shadow: 0px 4px 22px -9px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
   background: white;
-  font-family: "Roboto";
+  font-family: "Montserrat";
   font-style: bold;
   font-weight: 500;
   font-size: 31px;
@@ -42,10 +42,10 @@ export const LargeButton = styled.button`
   width: auto;
   border-radius: 5px;
   padding: 10px, 22px, 10px, 22px;
-  background-color: ${(props) => props.color || "#fff"};
-  color: #fff;
+  // background-color: ${(props) => props.color || "#fff"};
+  // color: #fff;
   margin: 8px;
-  font-family: ${(props) => props.fontFamily || "Roboto"};
+  font-family: font-family: Montserrat;
   font-size: ${(props) => props.fontSize || "18px"};
   line-height: ${(props) => props.lineHeight || "21px"};
   font-style: normal;
@@ -55,6 +55,7 @@ export const LargeButton = styled.button`
   letter-spacing: 0.4px;
   span {
     margin: 8px;
+   
   }
 `;
 
@@ -81,10 +82,10 @@ export const MedButton = styled.button`
   border-radius: 5px;
   margin: 5px;
   padding: 8px 19px 8px 19px;
-  background-color: ${(props) => props.color || "#fff"};
-  border: ${(props) => `1px solid ${props.border}` || "#fff"};
-  color: ${(props) => props.border || "#fff"};
-  font-family: "Roboto";
+  // background-color: ${(props) => props.color || "#fff"};
+  // border: ${(props) => `1px solid ${props.border}` || "#fff"};
+  // color: ${(props) => props.border || "#fff"};
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
   font-size: 11px;
@@ -93,11 +94,30 @@ export const MedButton = styled.button`
   letter-spacing: 0.366667px;
 `;
 
-export function SwitchButton({ id, label }) {
+export function SwitchButton({
+  id,
+  label,
+  checked,
+  type,
+  handleChange,
+  inputType,
+  name,
+  value,
+  disable,
+}) {
   return (
     <ol class="switches">
       <li>
-        <input type="checkbox" id={id} />
+        <input
+          type={inputType}
+          name={name}
+          id={id}
+          checked={checked}
+          value={value}
+          onChange={(e) => handleChange(e)}
+          className={type}
+          disabled={disable}
+        />
         <label for={id}>
           <span></span>
         </label>
