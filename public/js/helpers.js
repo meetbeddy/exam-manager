@@ -25,8 +25,8 @@ const Helpers = {
   // Root Element
   ROOT_EL: typeof window !== "undefined" ? document.documentElement : null,
 
-  // Large screens breakpoint
-  LAYOUT_BREAKPOINT: 1200,
+  // Large screens breakpoint //used to 1200
+  LAYOUT_BREAKPOINT: 2000,
 
   // Resize delay in milliseconds
   RESIZE_DELAY: 200,

@@ -2,28 +2,33 @@ import React from "react";
 import { LargeButton } from "../../../../components/buttons/buttons";
 import { Div } from "../configStyles";
 
-function SubjectConfig({ handleSwitch }) {
-  const [subjectDetails, setSubjectDetails] = React.useState([
+function PromotionConfig({ handleSwitch }) {
+  const gradingDetails = [
     {
-      subjectAbb: "MTH",
-      subject: "MATHEMATIC",
-      educator: "John Doe",
+      lowerPercent: 0,
+      upperPercent: 40,
+      condition: "repeat class",
     },
-  ]);
+    {
+      lowerPercent: 41,
+      upperPercent: 60,
+      condition: "promoted",
+    },
+  ];
   return (
     <Div className="mt-4">
       <div className="card-header">
         <div className="row ">
           <div className="col-lg-6">
-            <h4 className="mt-4">Subjects</h4>
+            <h4 className="mt-4">Promotion Condition</h4>
           </div>
           <div className="col-lg-6 ">
             <LargeButton
               className="btn btn-primary float-end"
-              name="subjects"
+              name="promotion"
               onClick={(e) => handleSwitch(e)}
             >
-              Edit Class
+              Edit Instruction
             </LargeButton>
           </div>
         </div>
@@ -33,18 +38,18 @@ function SubjectConfig({ handleSwitch }) {
           <table className="table">
             <thead className="table-light-gray">
               <tr>
-                <th>Abbreviation</th>
-                <th>Subject Name</th>
-                <th>Educator</th>
+                <th>Percentage {">"}=</th>
+                <th>Percentage {"<"}=</th>
+                <th>Condition</th>
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
-              {subjectDetails.map((detail, i) => {
+              {gradingDetails.map((detail, i) => {
                 return (
                   <tr key={i}>
-                    <td>{detail.subjectAbb}</td>
-                    <td>{detail.subject}</td>
-                    <td>{detail.educator}</td>
+                    <td>{detail.lowerPercent}%</td>
+                    <td>{detail.upperPercent}%</td>
+                    <td>{detail.condition}</td>
                   </tr>
                 );
               })}
@@ -56,4 +61,4 @@ function SubjectConfig({ handleSwitch }) {
   );
 }
 
-export default SubjectConfig;
+export default PromotionConfig;

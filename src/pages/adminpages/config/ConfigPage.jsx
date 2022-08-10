@@ -11,6 +11,8 @@ import { ColorConfigIcon } from "../../../components/icons/icons";
 import SubjectConfig from "./subject-config/SubjectConfig";
 import GradingEdits from "./grading-config/GradingEdits";
 import GradingConfig from "./grading-config/GradingConfig";
+import PromotionEdit from "./promotion-config/PromotionEdit";
+import PromotionConfig from "./promotion-config/PromotionConfig";
 
 function ConfigPage() {
   const defaultDetail = {
@@ -47,7 +49,7 @@ function ConfigPage() {
         <div aria-label="breadcrumb" className="align-items-center ">
           <ol className="breadcrumb breadcrumb-style1 m-auto ">
             <li className="breadcrumb-item">
-              <a href="javascript:void(0);">
+              <a href="#yueuu">
                 <i className="bx bx-home text-primary"></i>
               </a>
             </li>
@@ -83,6 +85,11 @@ function ConfigPage() {
         <GradingEdits handleSwitch={handleSwitch} />
       ) : (
         <GradingConfig handleSwitch={handleSwitch} />
+      )}
+      {switchView.promotion ? (
+        <PromotionEdit handleSwitch={handleSwitch} />
+      ) : (
+        <PromotionConfig handleSwitch={handleSwitch} />
       )}
     </>
   );

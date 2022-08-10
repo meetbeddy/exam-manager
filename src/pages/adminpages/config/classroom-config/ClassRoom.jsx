@@ -37,9 +37,9 @@ function ClassRoom({ handleSwitch }) {
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
-              {classDetails.map((detail) => {
+              {classDetails.map((detail, i) => {
                 return (
-                  <tr>
+                  <tr key={i}>
                     <td colSpan="1">{detail.className}</td>
                     <td colSpan="2">{detail.section.join(",")}</td>
                     <td colspan="1">

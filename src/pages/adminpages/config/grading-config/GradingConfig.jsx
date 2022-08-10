@@ -47,9 +47,9 @@ function GradingConfig({ handleSwitch }) {
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
-              {gradingDetails.map((detail) => {
+              {gradingDetails.map((detail, i) => {
                 return (
-                  <tr>
+                  <tr key={i}>
                     <td>{detail.lowerPercent}%</td>
                     <td>{detail.upperPercent}%</td>
                     <td>{detail.remark}</td>

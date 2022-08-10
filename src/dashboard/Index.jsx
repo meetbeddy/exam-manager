@@ -11,7 +11,7 @@ function Index(props) {
 
   const toggleCollapse = (e) => {
     e.preventDefault();
-    window.Helpers.toggleCollapsed();
+    window.Helpers.toggleCollapsed(true);
   };
   return (
     <div className="layout-wrapper layout-content-navbar layout-without-menu">

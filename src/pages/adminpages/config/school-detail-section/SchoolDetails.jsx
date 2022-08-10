@@ -54,14 +54,14 @@ function SchoolDetails({ handleSwitch, defaultDetail }) {
                 {schoolDetails.address}
               </p>
               <p className="fw-normal fs-6 mb-0">
-                <i class="text-primary bx bx-phone"></i> +234
+                <i className="text-primary bx bx-phone"></i> +234
                 {schoolDetails.mobileNumber}
               </p>
               <p className="fw-normal fs-6 mb-0">
-                <i class="text-primary bx bx-mobile"></i> +23490X XXX XXXX
+                <i className="text-primary bx bx-mobile"></i> +23490X XXX XXXX
               </p>
               <p className="fw-normal fs-6 mb-0">
-                <i class="text-primary bx bx-envelope"></i>{" "}
+                <i className="text-primary bx bx-envelope"></i>{" "}
                 {schoolDetails.email}
               </p>
             </div>

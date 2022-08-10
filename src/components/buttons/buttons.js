@@ -106,7 +106,7 @@ export function SwitchButton({
   disable,
 }) {
   return (
-    <ol class="switches">
+    <ol className="switches">
       <li>
         <input
           type={inputType}
@@ -118,7 +118,7 @@ export function SwitchButton({
           className={type}
           disabled={disable}
         />
-        <label for={id}>
+        <label htmlFor={id}>
           <span></span>
         </label>
         {label}

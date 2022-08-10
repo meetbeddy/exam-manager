@@ -80,26 +80,26 @@ function Header(props) {
           <li className="nav-item navbar-dropdown dropdown-user dropdown">
             <a
               className="nav-link dropdown-toggle hide-arrow"
-              href="javascript:void(0);"
+              href="#iii"
               data-bs-toggle="dropdown"
             >
               <div className="avatar avatar-online">
                 <img
                   src="../assets/img/avatars/1.png"
-                  alt
+                  alt="avatar"
                   className="w-px-40 h-auto rounded-circle"
                 />
               </div>
             </a>
             <ul className="dropdown-menu dropdown-menu-end">
               <li>
-                <a className="dropdown-item" href="#">
+                <a className="dropdown-item" href="#rr">
                   <div className="d-flex">
                     <div className="flex-shrink-0 me-3">
                       <div className="avatar avatar-online">
                         <img
                           src="../assets/img/avatars/1.png"
-                          alt
+                          alt="avatar"
                           className="w-px-40 h-auto rounded-circle"
                         />
                       </div>
@@ -115,19 +115,19 @@ function Header(props) {
                 <div className="dropdown-divider" />
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <a className="dropdown-item" href="#eee">
                   <i className="bx bx-user me-2" />
                   <span className="align-middle">My Profile</span>
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <a className="dropdown-item" href="#ee">
                   <i className="bx bx-cog me-2" />
                   <span className="align-middle">Settings</span>
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                {/* <a className="dropdown-item" href="#eeee">
                   <span className="d-flex align-items-center align-middle">
                     <i className="flex-shrink-0 bx bx-credit-card me-2" />
                     <span className="flex-grow-1 align-middle">Billing</span>
@@ -135,7 +135,7 @@ function Header(props) {
                       4
                     </span>
                   </span>
-                </a>
+                </a> */}
               </li>
               <li>
                 <div className="dropdown-divider" />

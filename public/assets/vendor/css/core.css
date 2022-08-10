@@ -15462,7 +15462,9 @@ html:not(.layout-footer-fixed) .content-wrapper {
     left: 16.25rem;
   }
 }
-@media (max-width: 1199.98px) {
+/* added this to fix sidenav issues with large screen  */
+  
+
   .layout-menu {
     position: fixed !important;
     top: 0 !important;
@@ -15500,7 +15502,48 @@ html:not(.layout-footer-fixed) .content-wrapper {
 .layout-menu-100vh .layout-overlay {
     height: 100vh !important;
   }
-}
+
+  /* end of edit */
+
+/* @media (min-width: 1199.98px) {
+  .layout-menu {
+    position: fixed !important;
+    top: 0 !important;
+    height: 100% !important;
+    left: 0 !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    transform: translate3d(-100%, 0, 0);
+    will-change: transform, -webkit-transform;
+  }
+  .layout-menu-expanded .layout-menu {
+    transform: translate3d(0, 0, 0) !important;
+  }
+
+  .layout-menu-expanded body {
+    overflow: hidden;
+  }
+
+  .layout-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100% !important;
+    left: 0;
+    display: none;
+    background: #435971;
+    opacity: 0.5;
+    cursor: pointer;
+  }
+  .layout-menu-expanded .layout-overlay {
+    display: block;
+  }
+
+  .layout-menu-100vh .layout-menu,
+.layout-menu-100vh .layout-overlay {
+    height: 100vh !important;
+  }
+} */
 .layout-navbar-fixed body:not(.modal-open) .layout-navbar-full .layout-navbar,
 .layout-menu-fixed body:not(.modal-open) .layout-navbar-full .layout-navbar,
 .layout-menu-fixed-offcanvas body:not(.modal-open) .layout-navbar-full .layout-navbar {
@@ -15525,9 +15568,10 @@ html:not(.layout-footer-fixed) .content-wrapper {
     z-index: 1099;
   }
 }
-@media (min-width: 1200px) {
+
+/* @media (min-width: 1200px) {
   .layout-navbar-full .layout-navbar {
-    z-index: 10;
+   z-index: 1100;
   }
   .layout-navbar-full .layout-menu {
     z-index: 9;
@@ -15550,7 +15594,19 @@ html:not(.layout-footer-fixed) .content-wrapper {
 .layout-menu-fixed-offcanvas body:not(.modal-open) .layout-content-navbar .layout-menu {
     z-index: 1080;
   }
+} */
+
+/* another edit  */
+
+.layout-menu {
+  z-index: 1100;
 }
+
+.layout-overlay {
+  z-index: 1099;
+}
+
+/* end of edit */
 .layout-menu-link-no-transition .layout-menu .menu-link,
 .layout-menu-link-no-transition .layout-menu-horizontal .menu-link {
   transition: none !important;
