@@ -8,6 +8,7 @@ import UploadModal from "./UploadModal";
 
 function Index() {
   const [userType, setUserType] = React.useState("student");
+  const [uploadType, setUploadType] = React.useState("");
 
   const handleChange = (e) => {
     setUserType(e.target.value);
@@ -20,7 +21,9 @@ function Index() {
   };
   const handleShow = (e) => {
     e.preventDefault();
+
     setShow(true);
+    setUploadType(e.target.name);
   };
   return (
     <>
@@ -56,6 +59,7 @@ function Index() {
               <a
                 className="dropdown-item"
                 href="null"
+                name="upload"
                 onClick={(e) => handleShow(e)}
               >
                 Upload .CSV file <i className="bx bxs-cloud-upload"></i>
@@ -67,7 +71,12 @@ function Index() {
               </a>
             </li>
             <li>
-              <a className="dropdown-item" href="#iei">
+              <a
+                className="dropdown-item"
+                href="#iei"
+                name="singleReg"
+                onClick={(e) => handleShow(e)}
+              >
                 Single User Reg <i className="bx bx-user"></i>
               </a>
             </li>
@@ -162,6 +171,8 @@ function Index() {
         // inputValue={inputValue}
         handleChange={handleChange}
         modalId="exLargeModal"
+        uploadType={uploadType}
+        userType={userType}
       />
     </>
   );

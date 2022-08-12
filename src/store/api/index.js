@@ -2,12 +2,6 @@ import axios from "axios";
 
 let baseURL = "http://api.educenty.com/v1";
 
-// if (process.env.NODE_ENV === "production") {
-//   baseURL = "https://api.educentyl.com/v1";
-// } else {
-//   baseURL = "http://localhost:5000";
-// }
-
 const API = axios.create({ baseURL });
 
 API.interceptors.request.use((req) => {
@@ -30,6 +24,8 @@ API.interceptors.request.use((req) => {
 // export const deletePost = (id) => API.delete(`/user/deletepost/${id}`);
 // export const signIn = (formData) => API.post("/user/signin", formData);
 export const signUp = (formData) => API.post("/users/auth/register/", formData);
+export const studentUpload = (formData) => API.post("/students/", formData);
+export const teacherUpload = (formData) => API.post("/users/", formData);
 // export const forgotpassword = (email) =>
 //   API.post("/user/forgotpassword", email);
 // export const resetpassword = (formdata) =>

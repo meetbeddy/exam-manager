@@ -4,38 +4,32 @@ import { Dropdown } from "react-bootstrap";
 import "./button.css";
 import { ArrowDownIcon, LockIcon, OpenLockIcon } from "../icons/icons";
 
-export const AsideButton = styled.li`
-  position: relative;
-  width: 238.66px;
-  height: 84.96px;
-  margin: 5px 0px;
-  box-shadow: 0px 4px 22px -9px rgba(0, 0, 0, 0.25);
-  border-radius: 6px;
-  background: white;
-  font-family: "Montserrat";
-  font-style: bold;
-  font-weight: 500;
-  font-size: 31px;
-  line-height: 36px;
-  text-align: center;
-  cursor: pointer;
-  color: #757575;
-
-  p {
-    width: fit-content;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-  span {
-    position: absolute;
-    left: 200px;
-    right: 0;
-    top: 0;
-    bottom: 80px;
-  }
-`;
+// export const FileInputButton = styled.input`
+//   .custom-file-input:-webkit-file-upload-button {
+//     visibility: hidden;
+//   }
+//   .custom-file-input::before {
+//     content: "Select some files";
+//     display: inline-block;
+//     background: linear-gradient(top, #f9f9f9, #e3e3e3);
+//     border: 1px solid #999;
+//     border-radius: 3px;
+//     padding: 5px 8px;
+//     outline: none;
+//     white-space: nowrap;
+//     -webkit-user-select: none;
+//     cursor: pointer;
+//     text-shadow: 1px 1px #fff;
+//     font-weight: 700;
+//     font-size: 10pt;
+//   }
+//   .custom-file-input:hover::before {
+//     border-color: black;
+//   }
+//   .custom-file-input:active::before {
+//     background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+//   }
+// `;
 
 export const LargeButton = styled.button`
   height: 2.313em;
@@ -62,7 +56,7 @@ export const LargeButton = styled.button`
 export const TagButton = styled.div`
   position: relative;
   height: 24px;
-  width: 67px;
+  width: 96px;
   background: #f8b25f;
   font-family: Montserrat;
   font-size: 12px;
@@ -144,6 +138,10 @@ export const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     {children} <ArrowDownIcon />
   </a>
 ));
+
+export const FileInputButton = () => {
+  <input type="file" className="custom-file-input" />;
+};
 
 export const MyToggle = () => {
   const [selected, setSelected] = React.useState("Can Edit Result");
