@@ -48,11 +48,13 @@ function SideNav(props) {
       <div className="menu-inner-shadow" />
       <ul className="menu-inner py-1">
         {/* Dashboard */}
-        <li className="menu-item border-bottom m-0">
+        <li
+          className="menu-item border-bottom m-0"
+          onClick={(e) => props.toggleCollapse(e)}
+        >
           <RouterNavLink
             to="/dashboard/class"
             className="menu-link d-flex m-0 p-1"
-            // onClick={(e) => props.toggleCollapse(e)}
           >
             <div className="avatar flex-shrink-0 me-3">
               <span className="avatar-initial rounded bg-label-primary border">
@@ -72,7 +74,10 @@ function SideNav(props) {
             </div>
           </RouterNavLink>
         </li>
-        <li className="menu-item border-bottom m-0">
+        <li
+          className="menu-item border-bottom m-0"
+          onClick={(e) => props.toggleCollapse(e)}
+        >
           <RouterNavLink
             to="/dashboard/users"
             className="menu-link d-flex m-0 p-1"
@@ -95,7 +100,10 @@ function SideNav(props) {
             </div>
           </RouterNavLink>
         </li>
-        <li className="menu-item border-bottom m-0">
+        <li
+          className="menu-item border-bottom m-0"
+          onClick={(e) => props.toggleCollapse(e)}
+        >
           <RouterNavLink
             to="/dashboard/reports"
             className="menu-link d-flex m-0 p-1"
@@ -118,7 +126,10 @@ function SideNav(props) {
             </div>
           </RouterNavLink>
         </li>
-        <li className="menu-item border-bottom m-0">
+        <li
+          className="menu-item border-bottom m-0"
+          onClick={(e) => props.toggleCollapse(e)}
+        >
           <RouterNavLink
             to="/dashboard/config"
             className="menu-link d-flex m-0 p-1"

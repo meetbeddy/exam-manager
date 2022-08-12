@@ -2,9 +2,9 @@ import React from "react";
 
 function SecondaryNav({ children }) {
   return (
-    <nav className="navbar navbar-example navbar-expand-lg navbar-light bg-transparent mb-3 align-items-center">
-      <div className=" my-2 d-flex  align-items-center">{children}</div>
-    </nav>
+    <div className="bg-transparent mb-2 w-100">
+      <div className=" my-2 d-flex  align-items-center ">{children}</div>
+    </div>
   );
 }
 

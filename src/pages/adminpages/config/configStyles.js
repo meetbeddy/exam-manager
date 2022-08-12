@@ -43,12 +43,6 @@ export const Div = styled.div`
   }
   h4 {
     font-family: "Montserrat";
-    // font-style: normal;
-    // font-weight: 500;
-    // font-size: 18px;
-    // line-height: 22px;
-
-    margin: auto;
     color: #5e5873;
   }
   p {

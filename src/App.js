@@ -1,10 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import Registration from "./authentication/Registration";
-// import Auth from "./auth/Index";
 import Dashboard from "./dashboard/Index";
+import UserManager from "./pages/adminpages/users/Index";
 import InitConfig from "./pages/adminpages/initconfig/InitConfig";
 
-// import OldDashboard from "./components/dashboard/Dashboard";
 import ConfigPage from "./pages/adminpages/config/ConfigPage";
 
 function App() {
@@ -17,11 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Registration />} />{" "}
         <Route path="init-config" element={<InitConfig />} />
-        {/* 
-        <Route path="/forgotpassword" element={<ForgotPassword />} />{" "}
-        <Route path="/passwordreset" element={<ResetMain />} />{" "}
-        <Route path="/signup" element={<Auth type="register" />} /> */}
         <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="users" element={<UserManager />} />
           {/* <Route index element={<MainDashboard />} />
           <Route path="profile/:id" element={<Profile />} />
           <Route path="cv-upload" element={<UploadCs />} />
