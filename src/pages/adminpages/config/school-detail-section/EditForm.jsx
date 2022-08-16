@@ -1,8 +1,15 @@
 import React from "react";
+import { Form } from "react-bootstrap";
 import { InputField } from "../../../../components/inputfield/InputField";
+import JsonData from "../../../../Data/data.json";
+
 import { Row } from "react-bootstrap";
 
 function EditForm({ inputValue, error, handleChange }) {
+  const [stateData, setStateData] = React.useState([]);
+  React.useEffect(() => {
+    setStateData(JsonData.NigerianStates);
+  }, []);
   return (
     <>
       <Row>
@@ -32,18 +39,26 @@ function EditForm({ inputValue, error, handleChange }) {
         />
       </Row>
       <Row>
-        <InputField
-          label="State"
-          type="text"
-          name="state"
-          value={inputValue.state}
-          onChange={handleChange}
-          placeholder="Enter state"
-          error={error.state}
-          className="col-lg-6"
-          inputMargin={3}
-          require={true}
-        />
+        <Form.Group className="col-6" controlId="exampleForm.ControlInput1">
+          <Form.Label className="mb-0">State</Form.Label>
+          <Form.Select
+            className="mb-3 p-2"
+            aria-label="Default select example"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            name="state"
+          >
+            <option> select state</option>
+            {stateData?.map((state) => {
+              return (
+                <option key={state.state} value={state.state}>
+                  {state.state}{" "}
+                </option>
+              );
+            })}
+          </Form.Select>
+        </Form.Group>
         <InputField
           label="Email"
           type="email"

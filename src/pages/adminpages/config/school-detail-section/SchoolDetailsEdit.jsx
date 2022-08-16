@@ -118,7 +118,6 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
     }
   };
 
-  console.log(inputValue);
   return (
     <Div className="card">
       <div className="card-header">
