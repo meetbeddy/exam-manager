@@ -1,26 +1,25 @@
 import * as api from "../api/index.js";
 
-// export const signin = (formData, router) => async (dispatch) => {
-//   try {
-//     const { data } = await api.signIn(formData);
-
-//     dispatch({ type: "AUTH", data });
-
-//     router("/dashboard");
-//   } catch (error) {
-//     dispatch({
-//       type: "GET_ERROR_MSG",
-//       payload: error?.response?.data,
-//     });
-//   }
-// };
-
 export const signup = (formData) => async (dispatch) => {
   try {
     const { data } = await api.signUp(formData);
 
     dispatch({ type: "AUTH", data });
-    dispatch({ type: "GET_SUCCESS_MESSAGE", payload: data });
+    dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+  } catch (error) {
+    dispatch({
+      type: "GET_ERROR_MSG",
+      payload: error?.response?.data,
+    });
+  }
+};
+
+export const signin = (formData) => async (dispatch) => {
+  try {
+    const { data } = await api.signIn(formData);
+
+    dispatch({ type: "AUTH", data });
+    dispatch({ type: "GET_SUCCESS_MSG", payload: data });
   } catch (error) {
     dispatch({
       type: "GET_ERROR_MSG",

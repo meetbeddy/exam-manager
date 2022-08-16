@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import ClassRoomEdit from "../config/classroom-config/ClassRoomEdit";
 import SchoolDetailsEdit from "../config/school-detail-section/SchoolDetailsEdit";
 import SessionEdit from "../config/session-config/SessionEdit";
@@ -22,6 +23,8 @@ function InitConfig() {
     examination: false,
     session: false,
   });
+
+  const { authData } = useSelector((state) => state.auth);
 
   const handleSwitch = (e) => {
     if (e.target.name === "schoolDetails")

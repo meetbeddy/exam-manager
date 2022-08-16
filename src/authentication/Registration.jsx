@@ -7,7 +7,7 @@ import { BeatLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import { signup } from "../store/actions/authActions";
+import { signup, signin } from "../store/actions/authActions";
 import { clearNotifications } from "../store/actions/notificationsActions";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -34,6 +34,7 @@ const Styles = styled.div`
 function Registration() {
   const navigate = useNavigate();
   const notification = useSelector((state) => state.notification);
+
   const dispatch = useDispatch();
 
   const [regData, setRegData] = React.useState({
@@ -43,14 +44,24 @@ function Registration() {
     schoolName: "",
     urlName: "",
     code: "",
-    buttonTitle: ["proceed", "finalize"],
   });
+
+  const { credential, urlName } = regData;
 
   React.useEffect(() => {
     if (regData.success) toast.success("successful");
-    if (notification.success.message) {
-      toast.success("successful");
-      navigate("init-config");
+    if (notification.success.message === "Registration is successful") {
+      setRegData((prevState) => {
+        return { ...prevState, loading: true, success: true };
+      });
+
+      dispatch(signin({ access_token: credential, url_name: urlName }));
+    }
+    if (notification.success.message === "Login is successful") {
+      setRegData((prevState) => {
+        return { ...prevState, loading: false, success: true };
+      });
+      navigate(`${urlName}/init-config`);
     }
     if (notification?.errors?.message) {
       const { message } = notification?.errors;
@@ -58,20 +69,26 @@ function Registration() {
       dispatch(clearNotifications());
     }
 
-    return setRegData({ ...regData, success: false });
+    return setRegData((prevState) => {
+      return { ...prevState, success: false };
+    });
   }, [
+    credential,
     dispatch,
     navigate,
     notification?.errors,
     notification.success.message,
     regData.success,
+    urlName,
   ]);
 
   const handleChange = (e) => {
     setRegData({ ...regData, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e, credential) => {
-    setRegData({ ...regData, loading: true });
+    setRegData((prevState) => {
+      return { ...prevState, loading: true };
+    });
 
     regData.stage !== 1 && e.preventDefault();
     setTimeout(() => {
@@ -147,43 +164,13 @@ function Registration() {
                           </div>
                         </div>
                       </div>
-
-                      <div className="d-flex mb-4 pb-1">
-                        <div className="avatar flex-shrink-0 me-3">
-                          <span
-                            className={
-                              regData.stage === 3
-                                ? `avatar-initial rounded bg-primary`
-                                : `avatar-initial rounded bg-label-secondary`
-                            }
-                          >
-                            <i className="bx bx-key" />
-                          </span>
-                        </div>
-                        <div className="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                          <div className="me-2">
-                            <h6
-                              className={
-                                regData.stage === 3
-                                  ? `text-primary mb-0`
-                                  : `text-secondary mb-0`
-                              }
-                            >
-                              <span className="text-capitalize">OTP </span> Key
-                              Activation
-                            </h6>
-                            <small className="text-muted">
-                              Find <span className="text-capitalize">OTP </span>{" "}
-                              in email
-                            </small>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   )}
                   {/* -----------google signup ------------*/}
                   {regData.stage === 1 && (
                     <GoogleLogin
+                      width="30px"
+                      text="signup_with"
                       onSuccess={(credentialResponse) => {
                         console.log(credentialResponse);
 
@@ -257,10 +244,7 @@ function Registration() {
                   )} */}
 
                   {regData.stage !== 1 && (
-                    <button className="btn btn-primary ">
-                      {" "}
-                      {regData.buttonTitle[regData.stage - 1]}
-                    </button>
+                    <button className="btn btn-primary "> finalize</button>
                   )}
                 </Form>
               )}

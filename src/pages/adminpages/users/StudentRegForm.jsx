@@ -4,7 +4,9 @@ import { Row, Form } from "react-bootstrap";
 import { TagButton } from "../../../components/buttons/buttons";
 import { XIcon } from "../../../components/icons/icons";
 import JsonData from "../../../Data/data.json";
+import BasicModal from "../../../components/modal/Modal";
 
+const subjects = ["MTH", "ENG", "CRK", "FRN"];
 function StudentRegForm({
   inputValue,
   error,
@@ -34,14 +36,24 @@ function StudentRegForm({
     );
   };
   // console.log(inputValue);
+
+  const [show, setShow] = React.useState(false);
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = (e) => {
+    e.preventDefault();
+
+    setShow(true);
+  };
   return (
     <>
       <Row>
         <InputField
           label="Surname"
           type="text"
-          name="surname"
-          // value={inputValue.schoolName}
+          name="last_name"
+          value={inputValue.last_name}
           onChange={handleChange}
           placeholder="enter surname"
           // error={error.schoolName}
@@ -52,8 +64,8 @@ function StudentRegForm({
         <InputField
           label="Middle name"
           type="text"
-          name="midName"
-          // value={inputValue.middleName}
+          name="middle_name"
+          value={inputValue.midddle_name}
           onChange={handleChange}
           placeholder="enter middle name"
           // error={error.middleName}
@@ -64,8 +76,8 @@ function StudentRegForm({
         <InputField
           label="First Name"
           type="text"
-          name="firstName"
-          // value={inputValue.firstName}
+          name="first_name"
+          value={inputValue.first_name}
           onChange={handleChange}
           placeholder="enter first name"
           // error={error.firstName}
@@ -91,8 +103,8 @@ function StudentRegForm({
         <InputField
           label="Mobile Number"
           type="number"
-          name="mobileNum"
-          // value={inputValue.mobileNum}
+          name="phone"
+          value={inputValue.phone}
           onChange={handleChange}
           placeholder="enter mobile number"
           // error={error.mobileNum}
@@ -104,7 +116,7 @@ function StudentRegForm({
           label="Email"
           type="email"
           name="email"
-          // value={inputValue.email}
+          value={inputValue.email}
           onChange={handleChange}
           placeholder="email@example.com"
           // error={error.email}
@@ -115,8 +127,8 @@ function StudentRegForm({
         <InputField
           label="Home Address"
           type="text"
-          name="homeAddress"
-          // value={inputValue.homeAddress}
+          name="address"
+          value={inputValue.address}
           onChange={handleChange}
           placeholder="enter home address"
           // error={error.homeAddress}
@@ -147,7 +159,7 @@ function StudentRegForm({
               handleChange(e);
               handleSetLga(e);
             }}
-            name="stateOfOrigin"
+            name="state_of_origin"
           >
             <option> select state</option>
             {stateData?.map((state) => {
@@ -202,7 +214,7 @@ function StudentRegForm({
                 className="mb-3 p-2"
                 aria-label="Default select example"
                 onChange={handleChange}
-                name="class"
+                name="student_class"
               >
                 <option>select</option>
                 <option value="Male">Male</option>
@@ -230,8 +242,8 @@ function StudentRegForm({
             <InputField
               label="Admission Number"
               type="text"
-              name="enrollmentNum"
-              // value={inputValue.schoolName}
+              name="enrollment_number"
+              value={inputValue.enrollment_number}
               onChange={handleChange}
               placeholder="enter admission number"
               // error={error.schoolName}
@@ -248,7 +260,7 @@ function StudentRegForm({
               className="users-list m-0  d-flex flex-wrap border p-0 rounded"
               style={{ minHeight: "30px" }}
             >
-              {inputValue?.subjectOffered.map((subject, tagKey) => (
+              {inputValue?.subject_offered.map((subject, tagKey) => (
                 <TagButton
                   className="m-1 p-1 rounded text-left d-flex "
                   key={tagKey}
@@ -260,8 +272,17 @@ function StudentRegForm({
                   </div>
                 </TagButton>
               ))}
+
+              <button
+                className="btn btn-outline-primary p-1 m-1 float-end"
+                onClick={handleShow}
+              >
+                {" "}
+                <i className="bx bx-plus-circle"></i>
+              </button>
             </div>
-            <input
+
+            {/* <input
               type="text"
               className="form-control p-2"
               id="exampleFormControlInput1"
@@ -277,7 +298,7 @@ function StudentRegForm({
                 background: "transparent",
                 borderBottom: "1px solid ",
               }}
-            />
+            /> */}
           </Row>
         </div>
       </Row>
@@ -287,8 +308,8 @@ function StudentRegForm({
         <InputField
           label="Surname"
           type="text"
-          name="pLastName"
-          // value={inputValue.schoolName}
+          name="parent_last_name"
+          value={inputValue.parent_last_name}
           onChange={handleChange}
           placeholder="enter surname"
           // error={error.schoolName}
@@ -299,8 +320,8 @@ function StudentRegForm({
         <InputField
           label="First Name"
           type="text"
-          name="pFirstName"
-          // value={inputValue.schoolName}
+          name="parent_first_name"
+          value={inputValue.parent_first_name}
           onChange={handleChange}
           placeholder="enter first name"
           // error={error.schoolName}
@@ -314,7 +335,7 @@ function StudentRegForm({
             className="mb-3 p-2"
             aria-label="Default select example"
             onChange={handleChange}
-            name="pGender"
+            name="parent_gender"
           >
             <option>select</option>
             <option value="Male">Male</option>
@@ -348,6 +369,19 @@ function StudentRegForm({
           require={true}
         />
       </Row>
+      <BasicModal handleClose={handleClose} show={show} title="select subjects">
+        <div className="d-flex flex-wrap border rounded">
+          {subjects.map((subject) => (
+            <button
+              className="btn btn-sm btn-outline-primary m-2"
+              name={subject}
+              onClick={addSubject}
+            >
+              {subject}
+            </button>
+          ))}
+        </div>
+      </BasicModal>
     </>
   );
 }

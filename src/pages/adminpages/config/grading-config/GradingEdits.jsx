@@ -12,14 +12,14 @@ import { Div } from "../configStyles";
 function GradingEdits({ handleSwitch }) {
   const [gradingDetails, setGradingDetails] = React.useState([
     {
-      lowerPercent: 0,
-      upperPercent: 40,
+      start_range: 0,
+      end_range: 40,
       remark: "fail",
       grade: "F",
     },
     {
-      lowerPercent: 41,
-      upperPercent: 60,
+      start_range: 41,
+      end_range: 60,
       remark: "pass",
       grade: "D",
     },
@@ -34,8 +34,8 @@ function GradingEdits({ handleSwitch }) {
   const addInstruction = () => {
     const cloneDetails = clone();
     cloneDetails.push({
-      lowerPercent: 70,
-      upperPercent: 100,
+      start_range: 70,
+      end_range: 100,
       remark: "promoted",
       grade: "A",
     });
@@ -129,8 +129,8 @@ function GradingEdits({ handleSwitch }) {
                     >
                       {detail.editing ? (
                         <Form.Control
-                          value={detail.lowerPercent}
-                          name="lowerPercent"
+                          value={detail.start_range}
+                          name="start_range"
                           onChange={(e) => {
                             editField(e.target.value, e.target.name);
                           }}
@@ -138,15 +138,15 @@ function GradingEdits({ handleSwitch }) {
                           style={{ width: "fit-content" }}
                         />
                       ) : (
-                        detail.lowerPercent
+                        detail.start_range
                       )}
                     </td>
                     <td>
                       {" "}
                       {detail.editing ? (
                         <Form.Control
-                          value={detail.upperPercent}
-                          name="upperPercent"
+                          value={detail.end_range}
+                          name="end_range"
                           onChange={(e) => {
                             editField(e.target.value, e.target.name);
                           }}
@@ -154,7 +154,7 @@ function GradingEdits({ handleSwitch }) {
                           style={{ width: "fit-content" }}
                         />
                       ) : (
-                        detail.upperPercent
+                        detail.end_range
                       )}
                     </td>
                     <td>

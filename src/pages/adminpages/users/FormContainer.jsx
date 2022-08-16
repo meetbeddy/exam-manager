@@ -3,38 +3,48 @@ import { Div } from "../config/configStyles";
 import { LargeButton, MedButton } from "../../../components/buttons/buttons";
 import { CancelIcon, SaveIcon } from "../../../components/icons/icons";
 import StudentRegForm from "./StudentRegForm";
+import TeacherRegForm from "./TeacherRegForm";
 
 function FormContainer({ userType }) {
   const [inputValue, setInputValue] = React.useState({
-    surname: "",
-    midName: "",
-    firstName: "",
+    last_name: "",
+    middle_name: "",
+    first_name: "",
     gender: "",
     mobileNum: "",
     email: "",
     nationality: "",
-    stateOfOrigin: "",
+    state_of_origin: "",
     country: "",
     lga: "",
-    homeAddress: "",
-    class: "",
+    address: "",
+    religion: "",
+    student_class: "",
     section: "",
-    enrollmentNum: "",
-    subjectOffered: [],
-    pFirstName: "",
-    pLastName: "",
-    pGender: "",
+    enrollment_number: "",
+    subject_offered: [],
+    parent_first_name: "",
+    parent_last_name: "",
+    parent_gender: "",
     pMobileNum: "",
-    pEmail: "",
+    parent_email: "",
     language: "",
+    classroom: "",
     image: "",
     imageError: "",
+    isClassTeacher: true,
   });
+
+  console.log(inputValue);
 
   const [error, setError] = React.useState({});
 
   const handleChange = (e) => {
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
+    if (e.target.type === "checkbox") {
+      setInputValue({ ...inputValue, [e.target.id]: e.target.checked });
+    } else {
+      setInputValue({ ...inputValue, [e.target.name]: e.target.value });
+    }
   };
 
   const addImage = async (e) => {
@@ -70,22 +80,28 @@ function FormContainer({ userType }) {
   };
 
   const addSubject = (e) => {
-    const { value } = e.target;
-    if (e.key === "Enter" && value) {
-      const subjects = [...inputValue.subjectOffered];
+    const { name } = e.target;
 
-      subjects.push(value);
+    const subjects = [...inputValue.subject_offered];
+    subjects.push(name);
 
-      setInputValue({ ...inputValue, subjectOffered: subjects });
+    setInputValue({ ...inputValue, subject_offered: subjects });
 
-      e.target.value = "";
-    }
+    // if (e.key === "Enter" && value) {
+    //   const subjects = [...inputValue.subjectOffered];
+
+    //   subjects.push(value);
+
+    //   setInputValue({ ...inputValue, subjectOffered: subjects });
+
+    //   e.target.value = "";
+    // }
   };
 
   const deleteSub = (tagKey) => {
-    let subjects = [...inputValue.subjectOffered];
+    let subjects = [...inputValue.subject_offered];
     subjects.splice(tagKey, 1);
-    setInputValue({ ...inputValue, subjectOffered: subjects });
+    setInputValue({ ...inputValue, subject_offered: subjects });
   };
 
   // const findError = () => {
@@ -124,7 +140,6 @@ function FormContainer({ userType }) {
     console.log();
   };
 
-  console.log(userType);
   return (
     <Div className="card">
       <div className="card-header">
@@ -175,7 +190,7 @@ function FormContainer({ userType }) {
                       ? inputValue.imageURL
                       : "../assets/img/school-logo-2.png"
                   }
-                  alt="school-logo"
+                  alt="profile"
                 />
               </div>
 
@@ -204,12 +219,21 @@ function FormContainer({ userType }) {
           </div>
         </div>
         <div className="form">
-          <StudentRegForm
-            inputValue={inputValue}
-            handleChange={handleChange}
-            addSubject={addSubject}
-            deleteSub={deleteSub}
-          />
+          {userType === "student" ? (
+            <StudentRegForm
+              inputValue={inputValue}
+              handleChange={handleChange}
+              addSubject={addSubject}
+              deleteSub={deleteSub}
+            />
+          ) : (
+            <TeacherRegForm
+              inputValue={inputValue}
+              handleChange={handleChange}
+              addSubject={addSubject}
+              deleteSub={deleteSub}
+            />
+          )}
         </div>
       </div>
     </Div>

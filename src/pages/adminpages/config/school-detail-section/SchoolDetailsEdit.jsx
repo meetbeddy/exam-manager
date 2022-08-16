@@ -4,6 +4,7 @@ import { Row, Form } from "react-bootstrap";
 import { LargeButton, MedButton } from "../../../../components/buttons/buttons";
 import { CancelIcon, SaveIcon } from "../../../../components/icons/icons";
 import UploadImageModal from "./UploadImageModal";
+import JsonData from "../../../../Data/data.json";
 
 import EditForm from "./EditForm";
 
@@ -19,14 +20,21 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
   };
   const handleShow = () => setShow(true);
 
+  const [stateData, setStateData] = React.useState([]);
+
+  React.useEffect(() => {
+    setStateData(JsonData.NigerianStates);
+  }, []);
+
   const [inputValue, setInputValue] = React.useState({
-    schoolName: schooldetails.schoolName,
-    mobileNumber: schooldetails.mobileNumber,
+    name: schooldetails.name,
+    phone: schooldetails.phone,
+    logo: "",
+    school_type: "",
     state: schooldetails.state,
     email: schooldetails.email,
     address: schooldetails.address,
-    zipCode: schooldetails.zipCode,
-    schoolType: schooldetails.zipCode,
+    zip_code: schooldetails.zip_code,
   });
 
   const [error, setError] = React.useState({});
@@ -34,28 +42,55 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
   const handleChange = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
+  const addImage = async (e) => {
+    const file = e?.target?.files[0];
+    const fileSize = file.size / 1024 / 1024;
 
+    setInputValue({
+      ...inputValue,
+      [[e?.target?.name] + "Error"]: null,
+    });
+
+    if (fileSize.toFixed(2) > 1) {
+      setInputValue({
+        ...inputValue,
+        [[e?.target?.name] + "Error"]: "file cannot exceed 1mb",
+        [e?.target?.name]: null,
+      });
+    } else {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setInputValue({
+          ...inputValue,
+          [[e?.target?.name] + "URL"]: URL.createObjectURL(file),
+          [e?.target?.name]: reader.result,
+          [[e?.target?.name] + "Error"]: null,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const clearForm = () => {
     setInputValue({
-      schoolName: "",
-      mobileNumber: "",
+      name: "",
+      phone: "",
       state: "",
       email: "",
       address: "",
-      zipCode: "",
+      zip_code: "",
       schoolType: "",
     });
   };
 
   const findErrors = () => {
-    const { schoolName, mobileNumber, state, email, address, zipCode } =
-      inputValue;
+    const { name, phone, state, email, address, zip_code } = inputValue;
     const newErrors = {};
-    if (!schoolName || schoolName === "") {
-      newErrors.schoolName = "field cannot be blank!";
+    if (!name || name === "") {
+      newErrors.name = "field cannot be blank!";
     }
-    if (!mobileNumber || mobileNumber === "") {
-      newErrors.mobileNumber = "field cannot be blank!";
+    if (!phone || phone === "") {
+      newErrors.phone = "field cannot be blank!";
     }
     if (!state || state === "") {
       newErrors.state = "field cannot be blank!";
@@ -66,8 +101,8 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
     if (!address || address === "") {
       newErrors.address = "field cannot be blank!";
     }
-    if (!zipCode || zipCode === "") {
-      newErrors.zipCode = "field cannot be blank!";
+    if (!zip_code || zip_code === "") {
+      newErrors.zip_code = "field cannot be blank!";
     }
     return newErrors;
   };
@@ -83,6 +118,7 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
     }
   };
 
+  console.log(inputValue);
   return (
     <Div className="card">
       <div className="card-header">
@@ -125,8 +161,8 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
               <div className="school-badge">
                 <img
                   src={
-                    schoolbadge
-                      ? schoolbadge
+                    inputValue.logoURL
+                      ? inputValue.logoURL
                       : "../assets/img/school-logo-2.png"
                   }
                   alt="school-logo"
@@ -134,16 +170,28 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
               </div>
 
               <div className="badge-row-buttons ">
-                <MedButton className="btn btn-primary" onClick={handleShow}>
-                  Upload
-                </MedButton>
+                <input
+                  type="file"
+                  className="custom-file-input"
+                  name="logo"
+                  onChange={(e) => addImage(e)}
+                ></input>
                 <MedButton
                   className="btn btn-light btn-outline-primary"
-                  onClick={() => localStorage.removeItem("school-badge")}
+                  onClick={() => {
+                    setInputValue({
+                      ...inputValue,
+                      logoURL: "",
+                    });
+                  }}
                 >
                   Reset
                 </MedButton>
-                <p className="m-2">Allowed file types: png, jpg, jpeg.</p>
+                {inputValue.imageError ? (
+                  <p className="m-2 text-danger">{inputValue.logoError}</p>
+                ) : (
+                  <p className="m-2">Allowed file types: png, jpg, jpeg.</p>
+                )}
               </div>
             </div>
           </div>
@@ -158,7 +206,7 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
                 <Form.Select
                   aria-label="Default select example"
                   onChange={handleChange}
-                  name="schoolType"
+                  name="school_type"
                 >
                   <option>select</option>
                   <option value="1">One</option>

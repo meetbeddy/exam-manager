@@ -8,9 +8,17 @@ const authReducer = (
     case "STOP_FETCHING":
       return { ...state, isLoading: false };
     case "AUTH":
-      localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
+      localStorage.setItem(
+        "educenty-user",
+        JSON.stringify({ ...action?.data })
+      );
 
-      return { ...state, authData: action.data, loading: false, errors: null };
+      return {
+        ...state,
+        authData: action.data.data,
+        loading: false,
+        errors: null,
+      };
 
     case "RESET_SUCCESS":
       return { ...state, success: action.payload };

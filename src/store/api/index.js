@@ -1,15 +1,26 @@
 import axios from "axios";
 
-let baseURL = "http://api.educenty.com/v1";
+let baseURL;
+
+const patharray = window.location.pathname.split("/");
+export const schoolId = patharray[1];
+
+if (process.env.NODE_ENV === "production") {
+  baseURL = "https://api.educenty.com/v1";
+} else {
+  baseURL = "http://178.62.30.193:8000/v1";
+}
 
 const API = axios.create({ baseURL });
 
 API.interceptors.request.use((req) => {
-  if (localStorage.getItem("profile")) {
-    req.headers.Authorization = `Bearer ${
-      JSON.parse(localStorage.getItem("profile")).token
+  if (localStorage.getItem("educenty-user")) {
+    req.headers.authorization = `${
+      JSON.parse(localStorage.getItem("educenty-user")).data.token.access
     }`;
   }
+  if (schoolId) req.headers.school = schoolId;
+  if (req.data.url_name) req.headers.school = req.data.url_name;
 
   return req;
 });
@@ -24,8 +35,12 @@ API.interceptors.request.use((req) => {
 // export const deletePost = (id) => API.delete(`/user/deletepost/${id}`);
 // export const signIn = (formData) => API.post("/user/signin", formData);
 export const signUp = (formData) => API.post("/users/auth/register/", formData);
+export const signIn = (formData) => API.post("/users/auth/login/", formData);
 export const studentUpload = (formData) => API.post("/students/", formData);
+export const addSchoolDetails = (formData) => API.patch(`/school/`, formData);
 export const teacherUpload = (formData) => API.post("/users/", formData);
+export const addGrades = (formData) => API.post("/grade_structures/", formData);
+export const addClasses = (formData) => API.post("/classes/", formData);
 // export const forgotpassword = (email) =>
 //   API.post("/user/forgotpassword", email);
 // export const resetpassword = (formdata) =>

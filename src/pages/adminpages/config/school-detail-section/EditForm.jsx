@@ -9,11 +9,11 @@ function EditForm({ inputValue, error, handleChange }) {
         <InputField
           label="School Name"
           type="text"
-          name="schoolName"
-          value={inputValue.schoolName}
+          name="name"
+          value={inputValue.name}
           onChange={handleChange}
           placeholder="Encinx connect high school"
-          error={error.schoolName}
+          error={error.name}
           className="col-6"
           inputMargin={3}
           require={true}
@@ -21,11 +21,11 @@ function EditForm({ inputValue, error, handleChange }) {
         <InputField
           label="Mobile"
           type="number"
-          name="mobileNumber"
-          value={inputValue.mobileNumber}
+          name="phone"
+          value={inputValue.phone}
           onChange={handleChange}
           placeholder="enter mobile number"
-          error={error.mobileNumber}
+          error={error.phone}
           className="col-lg-6"
           inputMargin={3}
           require={true}
@@ -73,11 +73,11 @@ function EditForm({ inputValue, error, handleChange }) {
         <InputField
           label="Zip Code"
           type="text"
-          name="zipCode"
-          value={inputValue.zipCode}
+          name="zip_code"
+          value={inputValue.zip_code}
           onChange={handleChange}
           placeholder="enter zip code"
-          error={error.zipCode}
+          error={error.zip_code}
           className="col-lg-6"
           inputMargin={3}
           require={true}
