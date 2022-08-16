@@ -14,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Registration />} />{" "}
         <Route path="/:id/signin" element={<SignIn />} />{" "}
+        <Route path="/:id" element={<SignIn />} />
         <Route path="/:id/init-config" element={<InitConfig />} />
         <Route path={`/${schoolId}/dashboard`} element={<Dashboard />}>
           <Route path="users" element={<UserManager />} />

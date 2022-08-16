@@ -6,6 +6,7 @@ import {
   MenuClassIcon,
   MenuConfigIcon,
 } from "../components/icons/icons";
+import { schoolId } from "../store/api";
 
 function SideNav(props) {
   // const [user, setUser] = React.useState(
@@ -52,10 +53,7 @@ function SideNav(props) {
           className="menu-item border-bottom m-0"
           onClick={(e) => props.toggleCollapse(e)}
         >
-          <RouterNavLink
-            to="/dashboard/class"
-            className="menu-link d-flex m-0 p-1"
-          >
+          <RouterNavLink to="class" className="menu-link d-flex m-0 p-1">
             <div className="avatar flex-shrink-0 me-3">
               <span className="avatar-initial rounded bg-label-primary border">
                 <MenuClassIcon />
@@ -78,10 +76,7 @@ function SideNav(props) {
           className="menu-item border-bottom m-0"
           onClick={(e) => props.toggleCollapse(e)}
         >
-          <RouterNavLink
-            to="/dashboard/users"
-            className="menu-link d-flex m-0 p-1"
-          >
+          <RouterNavLink to="users" className="menu-link d-flex m-0 p-1">
             <div className="avatar flex-shrink-0 me-3">
               <span className="avatar-initial rounded bg-label-primary border">
                 <MenuUserIcon />
@@ -104,10 +99,7 @@ function SideNav(props) {
           className="menu-item border-bottom m-0"
           onClick={(e) => props.toggleCollapse(e)}
         >
-          <RouterNavLink
-            to="/dashboard/reports"
-            className="menu-link d-flex m-0 p-1"
-          >
+          <RouterNavLink to="reports" className="menu-link d-flex m-0 p-1">
             <div className="avatar flex-shrink-0 me-3">
               <span className="avatar-initial rounded bg-label-primary border">
                 <MenuReportIcon />
@@ -130,10 +122,7 @@ function SideNav(props) {
           className="menu-item border-bottom m-0"
           onClick={(e) => props.toggleCollapse(e)}
         >
-          <RouterNavLink
-            to="/dashboard/config"
-            className="menu-link d-flex m-0 p-1"
-          >
+          <RouterNavLink to="config" className="menu-link d-flex m-0 p-1">
             <div className="avatar flex-shrink-0 me-3">
               <span className="avatar-initial rounded bg-label-primary border">
                 <MenuConfigIcon />
