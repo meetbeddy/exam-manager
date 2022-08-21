@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import FormContainer from "./FormContainer";
+import BulkUpload from "./bulkupload/BulkUpload";
+import FormContainer from "./singleupload/FormContainer";
 
 function UploadModal({ show, handleClose, title, uploadType, userType }) {
   return (
@@ -12,7 +13,7 @@ function UploadModal({ show, handleClose, title, uploadType, userType }) {
         {uploadType === "singleReg" ? (
           <FormContainer userType={userType} />
         ) : (
-          <h1>Bulk Upload coming soon</h1>
+          <BulkUpload />
         )}
       </Modal.Body>
     </Modal>

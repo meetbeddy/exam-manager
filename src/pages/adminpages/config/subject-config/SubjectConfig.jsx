@@ -23,7 +23,7 @@ function SubjectConfig({ handleSwitch }) {
               name="subjects"
               onClick={(e) => handleSwitch(e)}
             >
-              Edit Class
+              Edit Subject
             </LargeButton>
           </div>
         </div>

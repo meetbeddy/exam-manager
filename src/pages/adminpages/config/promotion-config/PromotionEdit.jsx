@@ -8,7 +8,17 @@ import {
   CancelIcon,
 } from "../../../../components/icons/icons";
 import { Div } from "../configStyles";
+import { addsclassdetails } from "../../../../store/actions/adminActions";
+import { BeatLoader } from "react-spinners";
+import { ToastContainer, toast } from "react-toastify";
+import { clearNotifications } from "../../../../store/actions/notificationsActions";
+import { useSelector, useDispatch } from "react-redux";
 
+const override = {
+  // display: "block",
+  margin: "auto",
+  borderColor: "yellow",
+};
 function PromotionEdit({ handleSwitch }) {
   const [gradingDetails, setGradingDetails] = React.useState([
     {
@@ -22,6 +32,21 @@ function PromotionEdit({ handleSwitch }) {
       condition: "promoted",
     },
   ]);
+
+  const dispatch = useDispatch();
+  const notification = useSelector((state) => state.notification);
+  const { isLoading } = useSelector((state) => state.config);
+
+  React.useEffect(() => {
+    if (notification.success.message) {
+      toast.success(notification.success.message);
+    }
+    if (notification?.errors?.message) {
+      const { message } = notification?.errors;
+      toast.error(message);
+    }
+    dispatch(clearNotifications());
+  }, [dispatch, notification?.errors, notification.success.message]);
 
   const clone = () => {
     const details = gradingDetails.map((item) => ({
@@ -44,6 +69,20 @@ function PromotionEdit({ handleSwitch }) {
     cloneDetails.splice(key, 1);
     setGradingDetails(cloneDetails);
   };
+
+  const handleSubmit = () => {
+    dispatch();
+  };
+
+  if (isLoading)
+    return (
+      <BeatLoader
+        color="#242526"
+        loading={isLoading}
+        cssOverride={override}
+        size={50}
+      />
+    );
   return (
     <Div className="mt-4">
       <div className="card-header">
@@ -97,6 +136,16 @@ function PromotionEdit({ handleSwitch }) {
                   // Trigger re-render
                   setGradingDetails(cloneDetails);
                 };
+
+                if (isLoading)
+                  return (
+                    <BeatLoader
+                      color="#242526"
+                      loading={isLoading}
+                      cssOverride={override}
+                      size={50}
+                    />
+                  );
                 return (
                   <tr
                     key={key}
@@ -184,6 +233,27 @@ function PromotionEdit({ handleSwitch }) {
                         detail.condition
                       )}
                     </td>
+                    <td>
+                      {
+                        <span
+                          style={{
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            const details = gradingDetails.map((i) => ({
+                              ...i,
+                              editing: detail.editing && i === detail,
+                            }));
+
+                            details[key].editing = true;
+
+                            setGradingDetails(details);
+                          }}
+                        >
+                          <i className="bx bx-edit"></i>
+                        </span>
+                      }
+                    </td>
 
                     <td>
                       <span
@@ -206,6 +276,7 @@ function PromotionEdit({ handleSwitch }) {
           </span>
         </LargeButton>
       </div>
+      <ToastContainer position="top-right" />
     </Div>
   );
 }

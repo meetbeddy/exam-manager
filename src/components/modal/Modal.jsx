@@ -2,7 +2,6 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 
 function BasicModal({ show, handleClose, title, id, ...props }) {
-  console.log(id);
   return (
     <Modal id={id} show={show} onHide={handleClose}>
       <Modal.Header closeButton>

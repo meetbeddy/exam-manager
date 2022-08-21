@@ -15,11 +15,6 @@ function SchoolDetails({ handleSwitch, defaultDetail }) {
           <div className="col-6 d-flex ">
             {" "}
             <p className="mb-0 mt-4">{schoolDetails.schoolName}</p>
-            <div className="demo-inline-spacing ms-2">
-              <span className="badge rounded-pill bg-label-success text-gray text-muted">
-                Active <i className="bx bx-dots-vertical-rounded" />
-              </span>
-            </div>
           </div>
           <div className="col-lg-6 ">
             <LargeButton

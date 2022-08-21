@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 import SecondaryNav from "../../../components/nav/SecondaryNav";
 import { MenuUserIcon } from "../../../components/icons/icons";
 import { LargeButton } from "../../../components/buttons/buttons";
-import StudentTable from "./StudentTable";
+import StudentTable from "./tables/StudentTable";
 import UploadModal from "./UploadModal";
 
 function Index() {

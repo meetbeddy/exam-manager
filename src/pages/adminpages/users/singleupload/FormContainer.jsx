@@ -1,7 +1,7 @@
 import React from "react";
-import { Div } from "../config/configStyles";
-import { LargeButton, MedButton } from "../../../components/buttons/buttons";
-import { CancelIcon, SaveIcon } from "../../../components/icons/icons";
+import { Div } from "../../config/configStyles";
+import { LargeButton, MedButton } from "../../../../components/buttons/buttons";
+import { CancelIcon, SaveIcon } from "../../../../components/icons/icons";
 import StudentRegForm from "./StudentRegForm";
 import TeacherRegForm from "./TeacherRegForm";
 
@@ -79,23 +79,23 @@ function FormContainer({ userType }) {
     }
   };
 
-  const addSubject = (e) => {
-    const { name } = e.target;
-
+  const addSubject = (e, selected) => {
     const subjects = [...inputValue.subject_offered];
-    subjects.push(name);
 
-    setInputValue({ ...inputValue, subject_offered: subjects });
+    if (selected.action === "clear") {
+      setInputValue({ ...inputValue, subject_offered: [] });
+    }
+    if (selected.action === "remove-value") {
+      const filter = subjects.filter(
+        (subject) => subject !== selected.removedValue.value
+      );
+      setInputValue({ ...inputValue, subject_offered: filter });
+    }
 
-    // if (e.key === "Enter" && value) {
-    //   const subjects = [...inputValue.subjectOffered];
-
-    //   subjects.push(value);
-
-    //   setInputValue({ ...inputValue, subjectOffered: subjects });
-
-    //   e.target.value = "";
-    // }
+    if (selected.action === "select-option") {
+      subjects.push(selected.option.value);
+      setInputValue({ ...inputValue, subject_offered: subjects });
+    }
   };
 
   const deleteSub = (tagKey) => {

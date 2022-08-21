@@ -3,28 +3,25 @@ import { Div } from "../configStyles";
 import { Row, Form } from "react-bootstrap";
 import { LargeButton, MedButton } from "../../../../components/buttons/buttons";
 import { CancelIcon, SaveIcon } from "../../../../components/icons/icons";
-import UploadImageModal from "./UploadImageModal";
-import JsonData from "../../../../Data/data.json";
+import { addschooldetails } from "../../../../store/actions/adminActions";
+import { BeatLoader } from "react-spinners";
+import { ToastContainer, toast } from "react-toastify";
+import { clearNotifications } from "../../../../store/actions/notificationsActions";
+import { useSelector, useDispatch } from "react-redux";
 
 import EditForm from "./EditForm";
 
+const override = {
+  // display: "block",
+  margin: "auto",
+  borderColor: "yellow",
+};
+
 function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
-  const schooldetails =
-    JSON.parse(localStorage.getItem("school-details")) || defaultDetail;
-
-  const schoolbadge = localStorage.getItem("school-badge");
-  const [show, setShow] = React.useState(false);
-
-  const handleClose = () => {
-    setShow(false);
-  };
-  const handleShow = () => setShow(true);
-
-  const [stateData, setStateData] = React.useState([]);
-
-  React.useEffect(() => {
-    setStateData(JsonData.NigerianStates);
-  }, []);
+  const dispatch = useDispatch();
+  const notification = useSelector((state) => state.notification);
+  const { isLoading } = useSelector((state) => state.config);
+  const schooldetails = defaultDetail;
 
   const [inputValue, setInputValue] = React.useState({
     name: schooldetails.name,
@@ -64,7 +61,7 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
         setInputValue({
           ...inputValue,
           [[e?.target?.name] + "URL"]: URL.createObjectURL(file),
-          [e?.target?.name]: reader.result,
+          [e?.target?.name]: file,
           [[e?.target?.name] + "Error"]: null,
         });
       };
@@ -82,6 +79,18 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
       schoolType: "",
     });
   };
+
+  React.useEffect(() => {
+    if (notification.success.message) {
+      toast.success(notification.success.message);
+      handleSwitch();
+    }
+    if (notification?.errors?.message) {
+      const { message } = notification?.errors;
+      toast.error(message);
+    }
+    dispatch(clearNotifications());
+  }, [dispatch, notification?.errors, notification.success.message]);
 
   const findErrors = () => {
     const { name, phone, state, email, address, zip_code } = inputValue;
@@ -113,11 +122,42 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
     if (Object.keys(newErrors).length > 0) {
       setError(newErrors);
     } else {
-      localStorage.setItem("school-details", JSON.stringify(inputValue));
-      handleSwitch(e);
+      const {
+        name,
+        phone,
+        logo,
+        school_type,
+        state,
+        email,
+        address,
+        zip_code,
+      } = inputValue;
+
+      const formData = new FormData();
+
+      formData.append("name", name);
+      formData.append("phone", phone);
+      formData.append("logo", logo);
+      formData.append("school_type", school_type);
+      formData.append("state", state);
+      formData.append("email", email);
+      formData.append("address", address);
+      formData.append("zip_code", zip_code);
+
+      dispatch(addschooldetails(formData));
+      // handleSwitch(e);
     }
   };
 
+  if (isLoading)
+    return (
+      <BeatLoader
+        color="#242526"
+        loading={isLoading}
+        cssOverride={override}
+        size={50}
+      />
+    );
   return (
     <Div className="card">
       <div className="card-header">
@@ -207,10 +247,14 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
                   onChange={handleChange}
                   name="school_type"
                 >
-                  <option>select</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                  <option>select school type</option>
+                  <option value="Nursery School">Nursery School</option>
+                  <option value="Primary School">Primary School</option>
+                  <option value="Secondary School">Secondary School</option>
+                  <option value="Nursery and Primary School">
+                    Nursery and Primary School
+                  </option>
+                  <option value="K-12 School">K-12 School</option>
                 </Form.Select>
               </Form.Group>
             </Form>
@@ -224,11 +268,7 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
           />
         </div>
       </div>
-      <UploadImageModal
-        show={show}
-        handleShow={handleShow}
-        handleClose={handleClose}
-      />
+      <ToastContainer position="top-right" />
     </Div>
   );
 }

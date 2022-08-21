@@ -3,9 +3,9 @@ import { LargeButton } from "../../../../components/buttons/buttons";
 import { Div } from "../configStyles";
 
 function ClassRoom({ handleSwitch }) {
-  const classDetails = JSON.parse(localStorage.getItem("class-details")) || [
-    { className: "Year 1", section: ["A1", "A2", "B"], capacity: 17 },
-    { className: "Year 2", section: ["A1", "A2", "B"], capacity: 10 },
+  const classDetails = [
+    { level: "YEAR", number: 1, denomination: "A", capacity: 17 },
+    { level: "YEAR ", number: 1, denomination: "B", capacity: 10 },
   ];
 
   return (
@@ -31,18 +31,19 @@ function ClassRoom({ handleSwitch }) {
           <table className="table">
             <thead className="table-light-gray">
               <tr>
-                <th colSpan="1">Class Name</th>
-                <th colSpan="2">Sections</th>
-                <th>Total Capacity</th>
+                <th>Class Name</th>
+
+                <th>Section</th>
+                <th>Capacity</th>
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
               {classDetails.map((detail, i) => {
                 return (
                   <tr key={i}>
-                    <td colSpan="1">{detail.className}</td>
-                    <td colSpan="2">{detail.section.join(",")}</td>
-                    <td colspan="1">
+                    <td>{detail.level + detail.number}</td>
+                    <td>{detail.denomination}</td>
+                    <td>
                       <div>{detail.capacity}</div>
                     </td>
                   </tr>

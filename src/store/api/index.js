@@ -15,10 +15,11 @@ const API = axios.create({ baseURL });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("educenty-user")) {
-    req.headers.authorization = `${
+    req.headers.authorization = `Bearer ${
       JSON.parse(localStorage.getItem("educenty-user")).data.token.access
     }`;
   }
+
   if (schoolId) req.headers.school = schoolId;
   if (req.data.url_name) req.headers.school = req.data.url_name;
 
@@ -37,10 +38,15 @@ API.interceptors.request.use((req) => {
 export const signUp = (formData) => API.post("/users/auth/register/", formData);
 export const signIn = (formData) => API.post("/users/auth/login/", formData);
 export const studentUpload = (formData) => API.post("/students/", formData);
-export const addSchoolDetails = (formData) => API.patch(`/school/`, formData);
 export const teacherUpload = (formData) => API.post("/users/", formData);
+export const addSchoolDetails = (formData) => API.patch(`/schools/`, formData);
 export const addGrades = (formData) => API.post("/grade_structures/", formData);
 export const addClasses = (formData) => API.post("/classes/", formData);
+export const addSession = (formData) => API.post("/sessions/", formData);
+export const addSubjects = (formData) => API.post("/subjects/", formData);
+export const addGradeInstruction = (formData) =>
+  API.post("/grade_structure/", formData);
+
 // export const forgotpassword = (email) =>
 //   API.post("/user/forgotpassword", email);
 // export const resetpassword = (formdata) =>

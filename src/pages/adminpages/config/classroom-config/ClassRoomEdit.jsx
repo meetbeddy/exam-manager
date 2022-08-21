@@ -1,26 +1,40 @@
 import React from "react";
 import { Div } from "../configStyles";
 import { Row, Form } from "react-bootstrap";
-import { LargeButton, TagButton } from "../../../../components/buttons/buttons";
+import { LargeButton } from "../../../../components/buttons/buttons";
 import {
   PlusIcon,
-  XIcon,
   CancelIcon,
   SaveIcon,
   DeleteIcon,
 } from "../../../../components/icons/icons";
+import JsonData from "../../../../Data/data.json";
+import { addsclassdetails } from "../../../../store/actions/adminActions";
+import { BeatLoader } from "react-spinners";
+import { ToastContainer, toast } from "react-toastify";
+import { clearNotifications } from "../../../../store/actions/notificationsActions";
+import { useSelector, useDispatch } from "react-redux";
+
+const init = [
+  { level: "YEAR", number: 1, denomination: "A", capacity: 17 },
+  { level: "YEAR ", number: 1, denomination: "B", capacity: 10 },
+];
+
+const override = {
+  // display: "block",
+  margin: "auto",
+  borderColor: "yellow",
+};
 
 function ClassRoomEdit({ handleSwitch }) {
-  const init = JSON.parse(localStorage.getItem("class-details"))
-    ? JSON.parse(localStorage.getItem("class-details"))
-    : [
-        { className: "Year 1", section: ["A1", "A2", "B"], capacity: 17 },
-        { className: "Year 2", section: ["A1", "A2", "B"], capacity: 10 },
-      ];
   const [classDetails, setClassDetails] = React.useState();
   React.useEffect(() => {
     setClassDetails(init);
   }, []);
+
+  const dispatch = useDispatch();
+  const notification = useSelector((state) => state.notification);
+  const { isLoading } = useSelector((state) => state.config);
 
   const clone = () => {
     const details = classDetails.map((item) => ({
@@ -28,35 +42,48 @@ function ClassRoomEdit({ handleSwitch }) {
     }));
     return details;
   };
-  const addTag = (e, key) => {
-    const { value } = e.target;
-    if (e.key === "Enter" && value) {
-      const cloneDetails = clone();
-      let section = cloneDetails[key].section;
-      if (section) {
-        section.push(value);
-      } else {
-        section = [value];
-      }
-      cloneDetails[key].section = section;
-      setClassDetails(cloneDetails);
-      e.target.value = "";
-    }
-  };
 
-  const deleteTag = (rowKey, tagKey) => {
-    const cloneDetails = clone();
-    let section = cloneDetails[rowKey].section;
-    const updatedSection = section.splice(tagKey, 1);
-    cloneDetails[rowKey].section = updatedSection;
-    setClassDetails(cloneDetails);
-  };
+  // const addTag = (e, key) => {
+  //   const { value } = e.target;
+  //   if (e.key === "Enter" && value) {
+  //     const cloneDetails = clone();
+  //     let denomination = cloneDetails[key].denomination;
+  //     if (denomination) {
+  //       denomination.push(value);
+  //     } else {
+  //       denomination = [value];
+  //     }
+  //     cloneDetails[key].denomination = denomination;
+  //     setClassDetails(cloneDetails);
+  //     e.target.value = "";
+  //   }
+  // };
+
+  // const deleteTag = (rowKey, tagKey) => {
+  //   const cloneDetails = clone();
+  //   let denomination = cloneDetails[rowKey].denomination;
+  //   const updatedSection = denomination.splice(tagKey, 1);
+  //   cloneDetails[rowKey].denomination = updatedSection;
+  //   setClassDetails(cloneDetails);
+  // };
+
+  React.useEffect(() => {
+    if (notification.success.message) {
+      toast.success(notification.success.message);
+    }
+    if (notification?.errors?.message) {
+      const { message } = notification?.errors;
+      toast.error(message);
+    }
+    dispatch(clearNotifications());
+  }, [dispatch, notification?.errors, notification.success.message]);
 
   const addClass = () => {
     const cloneDetails = clone();
     cloneDetails.push({
-      className: "New Class",
-      section: [],
+      level: "PRY",
+      number: 1,
+      denomination: "A",
       capacity: 0,
     });
     setClassDetails(cloneDetails);
@@ -69,8 +96,18 @@ function ClassRoomEdit({ handleSwitch }) {
   };
 
   const handleSave = () => {
-    localStorage.setItem("class-details", JSON.stringify(classDetails));
+    dispatch(addsclassdetails(classDetails));
   };
+
+  if (isLoading)
+    return (
+      <BeatLoader
+        color="#242526"
+        loading={isLoading}
+        cssOverride={override}
+        size={50}
+      />
+    );
   return (
     <Div className="mt-4">
       <div className="card-header">
@@ -110,8 +147,10 @@ function ClassRoomEdit({ handleSwitch }) {
             <thead className="table-light-gray">
               <tr>
                 <th>Class Name</th>
-                <th>Sections</th>
-                <th>Total Capacity</th>
+                <th>Number</th>
+                <th>Section</th>
+                <th>Capacity</th>
+                <th></th>
                 <th></th>
               </tr>
             </thead>
@@ -127,66 +166,58 @@ function ClassRoomEdit({ handleSwitch }) {
                 };
 
                 return (
-                  <tr
-                    key={key}
-                    className={detail.editing ? "editing" : ""}
-                    onClick={() => {
-                      const details = classDetails.map((i) => ({
-                        ...i,
-                        editing: detail.editing && i === detail,
-                      }));
-
-                      details[key].editing = true;
-
-                      setClassDetails(details);
-                    }}
-                  >
+                  <tr key={key} className={detail.editing ? "editing" : ""}>
                     <td>
                       {detail.editing ? (
-                        <Form.Control
-                          value={detail.className}
-                          name="className"
+                        <Form.Select
+                          aria-label="Default select example"
+                          value={detail.level}
+                          name="level"
                           onChange={(e) => {
                             editField(e.target.value, e.target.name);
                           }}
-                          type="text"
-                          style={{ width: "fit-content" }}
-                        />
+                        >
+                          {JsonData.levels.map((level) => {
+                            return (
+                              <option key={level} value={level}>
+                                {level}{" "}
+                              </option>
+                            );
+                          })}
+                        </Form.Select>
                       ) : (
-                        detail.className
+                        detail.level
                       )}
                     </td>
                     <td>
-                      {
-                        <div>
-                          <div className="users-list m-0  d-flex  ">
-                            {detail?.section.map((section, tagKey) => (
-                              <TagButton
-                                className="m-1 p-1 rounded text-left d-flex "
-                                key={tagKey}
-                                onClick={() => deleteTag(key, tagKey)}
-                              >
-                                {section}
-                                <div className="icon">
-                                  <XIcon />
-                                </div>
-                              </TagButton>
-                            ))}
-                          </div>
-
-                          {detail.editing && (
-                            <Form.Control
-                              placeholder="enter class section and enter"
-                              // name="capacity"
-                              onKeyDown={(e) => {
-                                addTag(e, key);
-                              }}
-                              type="text"
-                              style={{ width: "fit-content" }}
-                            />
-                          )}
-                        </div>
-                      }
+                      {detail.editing ? (
+                        <Form.Control
+                          value={detail.number}
+                          name="number"
+                          onChange={(e) => {
+                            editField(e.target.value, e.target.name);
+                          }}
+                          type="number"
+                          style={{ width: "fit-content" }}
+                        />
+                      ) : (
+                        detail.number
+                      )}
+                    </td>
+                    <td>
+                      {detail.editing ? (
+                        <Form.Control
+                          value={detail.denomination}
+                          name="denomination"
+                          onChange={(e) => {
+                            editField(e.target.value, e.target.name);
+                          }}
+                          type="number"
+                          style={{ width: "fit-content" }}
+                        />
+                      ) : (
+                        detail.denomination
+                      )}
                     </td>
                     <td>
                       {detail.editing ? (
@@ -203,8 +234,35 @@ function ClassRoomEdit({ handleSwitch }) {
                         detail.capacity
                       )}
                     </td>
+
                     <td>
-                      <span onClick={() => deleteClass(key)}>
+                      {
+                        <span
+                          style={{
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            const details = classDetails.map((i) => ({
+                              ...i,
+                              editing: detail.editing && i === detail,
+                            }));
+
+                            details[key].editing = true;
+
+                            setClassDetails(details);
+                          }}
+                        >
+                          <i className="bx bx-edit"></i>
+                        </span>
+                      }
+                    </td>
+                    <td>
+                      <span
+                        onClick={() => deleteClass(key)}
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      >
                         <DeleteIcon />
                       </span>
                     </td>
@@ -221,6 +279,7 @@ function ClassRoomEdit({ handleSwitch }) {
           </span>
         </LargeButton>
       </div>
+      <ToastContainer position="top-right" />
     </Div>
   );
 }

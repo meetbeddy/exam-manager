@@ -1,6 +1,7 @@
 import React from "react";
 import SchoolDetailsEdit from "./school-detail-section/SchoolDetailsEdit";
 import SessionEdit from "./session-config/SessionEdit";
+import Session from "./session-config/Session";
 import SessionExamEdit from "./sessionExam/SessionExamEdit";
 import SubjectEdit from "./subject-config/SubjectEdit";
 import ClassRoomEdit from "./classroom-config/ClassRoomEdit";
@@ -29,9 +30,13 @@ function ConfigPage() {
     classroom: false,
     subjects: false,
     grading: false,
+    session: false,
   });
 
-  const handleSwitch = (e) => {
+  const [sessionData, setSessionData] = React.useState({ type: "", info: {} });
+
+  const handleSwitch = (e, data) => {
+    setSessionData({ ...sessionData, type: e.target.id, info: data });
     setView({
       ...switchView,
       [e.target.name]: !switchView[`${e.target.name}`],
@@ -68,8 +73,13 @@ function ConfigPage() {
           defaultDetail={defaultDetail}
         />
       )}
-      <SessionEdit />
-      <SessionExamEdit />
+      {/* <SessionEdit /> */}
+      {switchView.session ? (
+        <SessionEdit handleSwitch={handleSwitch} data={sessionData} />
+      ) : (
+        <Session handleSwitch={handleSwitch} />
+      )}
+      {/* <SessionExamEdit /> */}
       {switchView.subjects ? (
         <SubjectEdit handleSwitch={handleSwitch} />
       ) : (

@@ -24,7 +24,7 @@ function InitConfig() {
     session: false,
   });
 
-  const { authData } = useSelector((state) => state.auth);
+  // const { authData } = useSelector((state) => state.auth);
 
   const handleSwitch = (e) => {
     if (e.target.name === "schoolDetails")
@@ -68,12 +68,11 @@ function InitConfig() {
               defaultDetail={defaultDetail}
             />
           )}
+          {switchView.session && <SessionEdit handleSwitch={handleSwitch} />}
 
           {switchView.classroom && (
             <ClassRoomEdit handleSwitch={handleSwitch} />
           )}
-
-          {switchView.session && <SessionEdit handleSwitch={handleSwitch} />}
           {switchView.subjects && <SubjectEdit handleSwitch={handleSwitch} />}
           {switchView.examination && (
             <SessionExamEdit handleSwitch={handleSwitch} />

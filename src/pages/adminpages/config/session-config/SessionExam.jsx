@@ -4,7 +4,11 @@ import { Row, Accordion } from "react-bootstrap";
 import { MyToggle, SwitchButton } from "../../../../components/buttons/buttons";
 import { LockIcon } from "../../../../components/icons/icons";
 
-function SessionExamEdit({ session, activeTerm, handleChange }) {
+function SessionExam({ session, handleChange }) {
+  const offerFirstTerm = session?.terms?.includes("First Term");
+  const offerSecondTerm = session?.terms?.includes("Second Term");
+  const offerThirdTerm = session?.terms?.includes("Third Term");
+
   return (
     <>
       <div className="mt-4">
@@ -27,20 +31,23 @@ function SessionExamEdit({ session, activeTerm, handleChange }) {
                 <div className="col-6 ">
                   <div className="float-end d-flex">
                     <SwitchButton
-                      id="offerFirstTerm"
+                      id="First Term"
                       inputType="checkbox"
                       label="Offer this examination"
-                      checked={session.offerFirstTerm}
+                      checked={offerFirstTerm}
                       type="primary"
                       handleChange={handleChange}
+                      disable={true}
                     />
                     <SwitchButton
                       id="First Term"
                       inputType="radio"
                       name="active"
                       label="Currently Active"
-                      checked={activeTerm === "First Term" ? true : false}
-                      disable={!session.offerFirstTerm ? true : false}
+                      checked={
+                        session.active_term === "First Term" ? true : false
+                      }
+                      disable={true}
                       type="success"
                       handleChange={handleChange}
                     />
@@ -143,20 +150,23 @@ function SessionExamEdit({ session, activeTerm, handleChange }) {
                 <div className="col-6 ">
                   <div className="float-end d-flex">
                     <SwitchButton
-                      id="offerSecondTerm"
+                      id="Second Term"
                       inputType="checkbox"
                       label="Offer this examination "
-                      checked={session.offerSecondTerm}
+                      checked={offerSecondTerm}
                       type="primary"
                       handleChange={handleChange}
+                      disable={true}
                     />
                     <SwitchButton
-                      id="Second Term"
+                      id="secondTerm"
                       inputType="radio"
                       name="active"
                       label="Currently Active"
-                      disable={!session.offerSecondTerm ? true : false}
-                      checked={activeTerm === "Second Term" ? true : false}
+                      disable={true}
+                      checked={
+                        session.active_term === "Second Term" ? true : false
+                      }
                       type="success"
                       handleChange={handleChange}
                     />
@@ -177,17 +187,20 @@ function SessionExamEdit({ session, activeTerm, handleChange }) {
                       id="offerThirdTerm"
                       inputType="checkbox"
                       label="Offer this examination"
-                      checked={session.offerThirdTerm}
+                      checked={offerThirdTerm}
                       type="primary"
                       handleChange={handleChange}
+                      disable={true}
                     />
                     <SwitchButton
-                      id="Third Term"
+                      id="thirdTerm"
                       inputType="radio"
                       name="active"
                       label="Currently Active"
-                      disable={!session.offerThirdTerm ? true : false}
-                      checked={activeTerm === "Third Term" ? true : false}
+                      disable={true}
+                      checked={
+                        session.active_term === "Third Term" ? true : false
+                      }
                       type="success"
                       handleChange={handleChange}
                     />
@@ -203,4 +216,4 @@ function SessionExamEdit({ session, activeTerm, handleChange }) {
   );
 }
 
-export default SessionExamEdit;
+export default SessionExam;

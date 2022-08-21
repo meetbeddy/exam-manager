@@ -1,12 +1,16 @@
 import React from "react";
+import Select from "react-select";
 import { Row, Form } from "react-bootstrap";
-import { SwitchButton, TagButton } from "../../../components/buttons/buttons";
-import { XIcon } from "../../../components/icons/icons";
-import { InputField } from "../../../components/inputfield/InputField";
-import BasicModal from "../../../components/modal/Modal";
-import JsonData from "../../../Data/data.json";
+import { SwitchButton } from "../../../../components/buttons/buttons";
+import { InputField } from "../../../../components/inputfield/InputField";
+import JsonData from "../../../../Data/data.json";
 
-const subjects = ["MTH", "ENG", "CRK", "FRN"];
+const subjects = [
+  { value: "MTH", label: "MTH" },
+  { value: "ENG", label: "ENG" },
+  { value: "CRK", label: "CRK" },
+  { value: "FRN", label: "FRN" },
+];
 function TeacherRegForm({
   inputValue,
   error,
@@ -20,15 +24,6 @@ function TeacherRegForm({
     setStateData(JsonData.NigerianStates);
   }, []);
 
-  const [show, setShow] = React.useState(false);
-  const handleClose = () => {
-    setShow(false);
-  };
-  const handleShow = (e) => {
-    e.preventDefault();
-
-    setShow(true);
-  };
   return (
     <>
       <Row>
@@ -157,34 +152,17 @@ function TeacherRegForm({
           require={true}
         />
       </Row>
-      <Row className="mt-4">
-        <h4>
-          <h4 className="fs-5 fw-bold">Subject Teach</h4>
-        </h4>
-        <div
-          className="users-list m-0  d-flex flex-wrap border p-0 rounded"
-          style={{ minHeight: "30px" }}
-        >
-          {inputValue?.subject_offered.map((subject, tagKey) => (
-            <TagButton
-              className="m-1 p-1 rounded text-left d-flex "
-              key={tagKey}
-              onClick={() => deleteSub(tagKey)}
-            >
-              {subject}
-              <div className="icon">
-                <XIcon />
-              </div>
-            </TagButton>
-          ))}
-
-          <button
-            className="btn btn-outline-primary p-1 m-1 float-end"
-            onClick={handleShow}
-          >
-            {" "}
-            <i className="bx bx-plus-circle"></i>
-          </button>
+      <Row>
+        <div className="users-list m-0  d-flex flex-wrap border p-0 rounded">
+          <Select
+            className="col-12"
+            isMulti={true}
+            options={subjects}
+            name="subject_offered"
+            onChange={(e, selected) => {
+              addSubject(e, selected);
+            }}
+          />
         </div>
       </Row>
       <Row className="mt-4">
@@ -217,19 +195,6 @@ function TeacherRegForm({
           </Form.Group>
         )}
       </Row>
-      <BasicModal handleClose={handleClose} show={show} title="select subjects">
-        <div className="d-flex flex-wrap border rounded">
-          {subjects.map((subject) => (
-            <button
-              className="btn btn-sm btn-outline-primary m-2"
-              name={subject}
-              onClick={addSubject}
-            >
-              {subject}
-            </button>
-          ))}
-        </div>
-      </BasicModal>
     </>
   );
 }

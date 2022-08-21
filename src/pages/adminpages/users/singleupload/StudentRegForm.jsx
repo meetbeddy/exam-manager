@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { InputField } from "../../../components/inputfield/InputField";
+import { InputField } from "../../../../components/inputfield/InputField";
 import { Row, Form } from "react-bootstrap";
-import { TagButton } from "../../../components/buttons/buttons";
-import { XIcon } from "../../../components/icons/icons";
-import JsonData from "../../../Data/data.json";
-import BasicModal from "../../../components/modal/Modal";
+import Select from "react-select";
+import JsonData from "../../../../Data/data.json";
 
-const subjects = ["MTH", "ENG", "CRK", "FRN"];
+const subjects = [
+  { value: "MTH", label: "MTH" },
+  { value: "ENG", label: "ENG" },
+  { value: "CRK", label: "CRK" },
+  { value: "FRN", label: "FRN" },
+];
 function StudentRegForm({
   inputValue,
   error,
@@ -35,17 +38,7 @@ function StudentRegForm({
       })
     );
   };
-  // console.log(inputValue);
 
-  const [show, setShow] = React.useState(false);
-  const handleClose = () => {
-    setShow(false);
-  };
-  const handleShow = (e) => {
-    e.preventDefault();
-
-    setShow(true);
-  };
   return (
     <>
       <Row>
@@ -256,49 +249,17 @@ function StudentRegForm({
         <div className="col-4">
           <h4 className="fs-5 fw-bold">Subject Offered</h4>
           <Row>
-            <div
-              className="users-list m-0  d-flex flex-wrap border p-0 rounded"
-              style={{ minHeight: "30px" }}
-            >
-              {inputValue?.subject_offered.map((subject, tagKey) => (
-                <TagButton
-                  className="m-1 p-1 rounded text-left d-flex "
-                  key={tagKey}
-                  onClick={() => deleteSub(tagKey)}
-                >
-                  {subject}
-                  <div className="icon">
-                    <XIcon />
-                  </div>
-                </TagButton>
-              ))}
-
-              <button
-                className="btn btn-outline-primary p-1 m-1 float-end"
-                onClick={handleShow}
-              >
-                {" "}
-                <i className="bx bx-plus-circle"></i>
-              </button>
+            <div className="users-list m-0  d-flex flex-wrap border p-0 rounded">
+              <Select
+                className="col-12"
+                isMulti={true}
+                options={subjects}
+                name="subject_offered"
+                onChange={(e, selected) => {
+                  addSubject(e, selected);
+                }}
+              />
             </div>
-
-            {/* <input
-              type="text"
-              className="form-control p-2"
-              id="exampleFormControlInput1"
-              placeholder="enter subject and enter"
-              name="subjectOffered"
-              onKeyDown={(e) => {
-                addSubject(e);
-              }}
-              style={{
-                border: 0,
-                borderRadius: 0,
-                outline: 0,
-                background: "transparent",
-                borderBottom: "1px solid ",
-              }}
-            /> */}
           </Row>
         </div>
       </Row>
@@ -369,19 +330,6 @@ function StudentRegForm({
           require={true}
         />
       </Row>
-      <BasicModal handleClose={handleClose} show={show} title="select subjects">
-        <div className="d-flex flex-wrap border rounded">
-          {subjects.map((subject) => (
-            <button
-              className="btn btn-sm btn-outline-primary m-2"
-              name={subject}
-              onClick={addSubject}
-            >
-              {subject}
-            </button>
-          ))}
-        </div>
-      </BasicModal>
     </>
   );
 }

@@ -8,6 +8,30 @@
         "zipCode": "77738"
       },
 
+"levels":["KG","NUR","PRY","JS","SS","YEAR"],
+
+      "sessions":[
+        {
+          "start": "2021-10-03",
+          "end": "2022-10-02",
+          "name":"2021/2022",
+          "active": false,
+          "active_term": null,
+          "terms": ["First Term", "Second Term", "Third Term"]
+          
+        },
+        {
+          "start": "2022-10-03",
+          "end": "2023-10-02",
+          "name":"2022/2023",
+          "active": true,
+          "active_term": "First Term",
+          "terms": ["First Term", "Second Term", "Third Term"]
+          
+        }
+        
+      ],
+
       "NigerianStates": [
         {
           "state": "Adamawa",
