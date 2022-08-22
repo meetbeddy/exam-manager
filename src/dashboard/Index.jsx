@@ -3,11 +3,19 @@ import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import SideNav from "./SideNav";
 import init from "./init";
+import { fetchschooldetails } from "../store/actions/adminActions";
+import { useDispatch } from "react-redux";
 
 function Index(props) {
   React.useEffect(() => {
     init();
   }, []);
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(fetchschooldetails());
+  }, [dispatch]);
 
   const toggleCollapse = (e) => {
     e.preventDefault();

@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { signin } from "../store/actions/authActions";
+import { fetchschooldetails } from "../store/actions/adminActions";
 import { clearNotifications } from "../store/actions/notificationsActions";
 import { useSelector, useDispatch } from "react-redux";
 import { schoolId } from "../store/api";
@@ -35,7 +36,8 @@ const Styles = styled.div`
 function Registration() {
   const navigate = useNavigate();
   const notification = useSelector((state) => state.notification);
-  console.log(notification);
+  const { configs } = useSelector((state) => state.config);
+
   const dispatch = useDispatch();
 
   const [regData, setRegData] = React.useState({
@@ -44,16 +46,25 @@ function Registration() {
   });
 
   React.useEffect(() => {
+    if (configs.config?.length < 0)
+      navigate(`../${schoolId}/init-config`, { replace: true });
+    if (configs.config?.length > 0)
+      navigate(`../${schoolId}/dashboard/users`, { replace: true });
+  }, [configs.config?.length, navigate]);
+  React.useEffect(() => {
     if (notification.success.message) {
       toast.success("sign in success");
-      navigate(`../${schoolId}/dashboard/users`, { replace: true });
+      dispatch(fetchschooldetails());
+      // navigate(`../${schoolId}/dashboard/users`, { replace: true });
     }
     if (notification?.errors?.message) {
       const { message } = notification?.errors;
       toast.error(message);
     }
     dispatch(clearNotifications());
-    return setRegData({ ...regData, success: false });
+    return setRegData((prevState) => {
+      return { ...prevState, success: false };
+    });
   }, [
     dispatch,
     navigate,
@@ -65,17 +76,6 @@ function Registration() {
   const handleSubmit = (e, credential) => {
     setRegData({ ...regData, loading: true });
     dispatch(signin({ access_token: credential }));
-    // regData.stage !== 1 && e.preventDefault();
-    // setTimeout(() => {
-    //   if (regData.stage === 1) {
-    //     setRegData({
-    //       ...regData,
-    //       success: true,
-    //       credential,
-    //     });
-    //     return;
-    //   }
-    // }, 2000);
   };
 
   return (

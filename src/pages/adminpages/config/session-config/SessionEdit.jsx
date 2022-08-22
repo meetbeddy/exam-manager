@@ -64,14 +64,14 @@ function SessionEdit({ handleSwitch, data }) {
         offerSecondTerm: info?.terms?.includes("Second Term"),
         offerThirdTerm: info?.terms?.includes("Third Term"),
       });
-      setActiveTerm(info.active_term);
+      setActiveTerm(info?.active_term);
     }
   }, [
-    data.type,
-    info.active,
-    info.active_term,
-    info.end,
-    info.start,
+    data?.type,
+    info?.active,
+    info?.active_term,
+    info?.end,
+    info?.start,
     info?.terms,
   ]);
 

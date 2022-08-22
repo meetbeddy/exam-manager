@@ -21,13 +21,14 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
   const dispatch = useDispatch();
   const notification = useSelector((state) => state.notification);
   const { isLoading } = useSelector((state) => state.config);
+  console.log(isLoading);
   const schooldetails = defaultDetail;
 
   const [inputValue, setInputValue] = React.useState({
     name: schooldetails.name,
     phone: schooldetails.phone,
-    logo: "",
-    school_type: "",
+    logo: schooldetails.logo,
+    school_type: schooldetails.school_type,
     state: schooldetails.state,
     email: schooldetails.email,
     address: schooldetails.address,
@@ -79,6 +80,8 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
       schoolType: "",
     });
   };
+
+  console.log(notification);
 
   React.useEffect(() => {
     if (notification.success.message) {
@@ -202,6 +205,8 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
                   src={
                     inputValue.logoURL
                       ? inputValue.logoURL
+                      : inputValue.logo
+                      ? inputValue.logo
                       : "../assets/img/school-logo-2.png"
                   }
                   alt="school-logo"
@@ -221,6 +226,7 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
                     setInputValue({
                       ...inputValue,
                       logoURL: "",
+                      logo: schooldetails.logo,
                     });
                   }}
                 >
@@ -246,6 +252,7 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
                   aria-label="Default select example"
                   onChange={handleChange}
                   name="school_type"
+                  value={inputValue.school_type}
                 >
                   <option>select school type</option>
                   <option value="Nursery School">Nursery School</option>

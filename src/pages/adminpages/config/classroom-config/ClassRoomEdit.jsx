@@ -96,7 +96,7 @@ function ClassRoomEdit({ handleSwitch }) {
   };
 
   const handleSave = () => {
-    dispatch(addsclassdetails(classDetails));
+    dispatch(addsclassdetails({ data: classDetails }));
   };
 
   if (isLoading)
@@ -212,7 +212,7 @@ function ClassRoomEdit({ handleSwitch }) {
                           onChange={(e) => {
                             editField(e.target.value, e.target.name);
                           }}
-                          type="number"
+                          type="text"
                           style={{ width: "fit-content" }}
                         />
                       ) : (

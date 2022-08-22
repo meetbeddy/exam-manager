@@ -14,16 +14,10 @@ import GradingEdits from "./grading-config/GradingEdits";
 import GradingConfig from "./grading-config/GradingConfig";
 import PromotionEdit from "./promotion-config/PromotionEdit";
 import PromotionConfig from "./promotion-config/PromotionConfig";
+import { useSelector } from "react-redux";
 
 function ConfigPage() {
-  const defaultDetail = {
-    schoolName: "Enginx Connect Nursery and Primary School",
-    mobileNumber: "90xxxxxxxxx",
-    state: "Lagos",
-    email: "info@enginx.com",
-    address: "7B, Adekula fajuyi , Ikeja GRA, Lagos",
-    zipCode: "77738",
-  };
+  const { configs } = useSelector((state) => state.config);
 
   const [switchView, setView] = React.useState({
     schoolDetails: false,
@@ -42,6 +36,8 @@ function ConfigPage() {
       [e.target.name]: !switchView[`${e.target.name}`],
     });
   };
+
+  console.log(configs);
 
   return (
     <>
@@ -65,13 +61,10 @@ function ConfigPage() {
       {switchView.schoolDetails ? (
         <SchoolDetailsEdit
           handleSwitch={handleSwitch}
-          defaultDetail={defaultDetail}
+          defaultDetail={configs}
         />
       ) : (
-        <SchoolDetails
-          handleSwitch={handleSwitch}
-          defaultDetail={defaultDetail}
-        />
+        <SchoolDetails handleSwitch={handleSwitch} defaultDetail={configs} />
       )}
       {/* <SessionEdit /> */}
       {switchView.session ? (
@@ -81,25 +74,25 @@ function ConfigPage() {
       )}
       {/* <SessionExamEdit /> */}
       {switchView.subjects ? (
-        <SubjectEdit handleSwitch={handleSwitch} />
+        <SubjectEdit handleSwitch={handleSwitch} configs={configs} />
       ) : (
-        <SubjectConfig handleSwitch={handleSwitch} />
+        <SubjectConfig handleSwitch={handleSwitch} configs={configs} />
       )}
 
       {switchView.classroom ? (
-        <ClassRoomEdit handleSwitch={handleSwitch} />
+        <ClassRoomEdit handleSwitch={handleSwitch} configs={configs} />
       ) : (
-        <ClassRoom handleSwitch={handleSwitch} />
+        <ClassRoom handleSwitch={handleSwitch} configs={configs} />
       )}
       {switchView.grading ? (
-        <GradingEdits handleSwitch={handleSwitch} />
+        <GradingEdits handleSwitch={handleSwitch} configs={configs} />
       ) : (
-        <GradingConfig handleSwitch={handleSwitch} />
+        <GradingConfig handleSwitch={handleSwitch} configs={configs} />
       )}
       {switchView.promotion ? (
-        <PromotionEdit handleSwitch={handleSwitch} />
+        <PromotionEdit handleSwitch={handleSwitch} configs={configs} />
       ) : (
-        <PromotionConfig handleSwitch={handleSwitch} />
+        <PromotionConfig handleSwitch={handleSwitch} configs={configs} />
       )}
     </>
   );

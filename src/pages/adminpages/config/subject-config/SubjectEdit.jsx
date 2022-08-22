@@ -16,25 +16,28 @@ import { ToastContainer, toast } from "react-toastify";
 import { clearNotifications } from "../../../../store/actions/notificationsActions";
 import { useSelector, useDispatch } from "react-redux";
 
-const classList = [
-  { value: "MTH", label: "MTH" },
-  { value: "ENG", label: "ENG" },
-  { value: "CRK", label: "CRK" },
-  { value: "FRN", label: "FRN" },
-];
-
 const override = {
   // display: "block",
   margin: "auto",
   borderColor: "yellow",
 };
 
-function SubjectEdit({ handleSwitch }) {
+function SubjectEdit({ handleSwitch, configs }) {
+  const classList = [];
+
+  React.useEffect(() => {
+    configs.classes.forEach((clas) => {
+      return classList.push({
+        value: clas.id,
+        label: `${clas.level}  ${clas.number + clas.denomination}`,
+      });
+    });
+  });
   const [subjectDetails, setSubjectDetails] = React.useState([
     {
       abbreviation: "MTH",
       name: "MATHEMATIC",
-      subject_classes: [],
+      subjectClasses: [],
     },
   ]);
 
@@ -64,7 +67,7 @@ function SubjectEdit({ handleSwitch }) {
     cloneDetails.push({
       abbreviation: "SUB",
       name: `Subject+${cloneDetails.length + 1}`,
-      subject_classes: [],
+      subjectClasses: [],
     });
     setSubjectDetails(cloneDetails);
   };
@@ -80,10 +83,10 @@ function SubjectEdit({ handleSwitch }) {
 
     const subject = cloneDetails[key];
 
-    const classes = [...subject.subject_classes];
+    const classes = [...subject.subjectClasses];
 
     if (selected.action === "clear") {
-      cloneDetails[key].subject_classes = [];
+      cloneDetails[key].subjectClasses = [];
 
       setSubjectDetails(cloneDetails);
     }
@@ -91,28 +94,35 @@ function SubjectEdit({ handleSwitch }) {
       const filter = classes.filter(
         (name) => name !== selected.removedValue.value
       );
-      cloneDetails[key].subject_classes = filter;
+      cloneDetails[key].subjectClasses = filter;
       setSubjectDetails(cloneDetails);
-      // setSubjectDetails({ ...subjectDetails, subject_classes: filter });
+      // setSubjectDetails({ ...subjectDetails, subjectClasses: filter });
     }
 
     if (selected.action === "select-option") {
-      cloneDetails[key].subject_classes.push(selected.option.value);
+      cloneDetails[key].subjectClasses.push(selected.option.value);
       setSubjectDetails(cloneDetails);
-      // setSubjectDetails({ ...subjectDetails, subject_classes: classes });
+      // setSubjectDetails({ ...subjectDetails, subjectClasses: classes });
     }
   };
 
   const deleteTag = (rowKey, tagKey) => {
     const cloneDetails = clone();
-    let section = cloneDetails[rowKey].subject_classes;
-    const updatedSection = section.splice(tagKey, 1);
-    cloneDetails[rowKey].subject_classes = updatedSection;
+    let section = cloneDetails[rowKey].subjectClasses;
+    section.splice(tagKey, 1);
+    console.log(section);
+    cloneDetails[rowKey].subjectClasses = section;
     setSubjectDetails(cloneDetails);
   };
 
   const handleSave = () => {
-    dispatch(addsubjectdetails(subjectDetails));
+    subjectDetails.forEach((subject) => {
+      delete subject.editing;
+      // subjectDetails.subjectClasses.map((subClas) => {});
+      subject.subject_classes = subject.subjectClasses.join(" ");
+    });
+
+    dispatch(addsubjectdetails({ data: subjectDetails }));
   };
 
   if (isLoading)
@@ -142,7 +152,7 @@ function SubjectEdit({ handleSwitch }) {
 
               <LargeButton
                 className="btn btn-primary"
-                name="subject_classes"
+                name="subjectClasses"
                 onClick={(e) => {
                   handleSave();
                   // handleSwitch(e);
@@ -232,7 +242,7 @@ function SubjectEdit({ handleSwitch }) {
                         </div>
                       ) : (
                         <div className="users-list m-0  d-flex flex-wrap border p-0 rounded">
-                          {detail?.subject_classes?.map((section, tagKey) => (
+                          {detail?.subjectClasses?.map((section, tagKey) => (
                             <TagButton
                               className="m-1 p-1 rounded text-left d-flex "
                               key={tagKey}
@@ -296,6 +306,7 @@ function SubjectEdit({ handleSwitch }) {
           </span>
         </LargeButton>
       </div>
+      <ToastContainer position="top-right" />
     </Div>
   );
 }

@@ -8,7 +8,7 @@ import {
   CancelIcon,
 } from "../../../../components/icons/icons";
 import { Div } from "../configStyles";
-import { addsclassdetails } from "../../../../store/actions/adminActions";
+import { addgradedetails } from "../../../../store/actions/adminActions";
 import { BeatLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
 import { clearNotifications } from "../../../../store/actions/notificationsActions";
@@ -72,6 +72,8 @@ function GradingEdits({ handleSwitch }) {
     cloneDetails.splice(key, 1);
     setGradingDetails(cloneDetails);
   };
+
+  const handleSubmit = () => {};
 
   if (isLoading)
     return (
@@ -254,6 +256,7 @@ function GradingEdits({ handleSwitch }) {
           </span>
         </LargeButton>
       </div>
+      <ToastContainer position="top-right" />
     </Div>
   );
 }

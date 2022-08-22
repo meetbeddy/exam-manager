@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import ClassRoomEdit from "../config/classroom-config/ClassRoomEdit";
 import SchoolDetailsEdit from "../config/school-detail-section/SchoolDetailsEdit";
 import SessionEdit from "../config/session-config/SessionEdit";
-import SessionExamEdit from "../config/sessionExam/SessionExamEdit";
 import SubjectEdit from "../config/subject-config/SubjectEdit";
 import withSplashScreen from "./withSplashScreen";
 
@@ -24,7 +23,7 @@ function InitConfig() {
     session: false,
   });
 
-  // const { authData } = useSelector((state) => state.auth);
+  const { configs } = useSelector((state) => state.auth);
 
   const handleSwitch = (e) => {
     if (e.target.name === "schoolDetails")
@@ -75,7 +74,7 @@ function InitConfig() {
           )}
           {switchView.subjects && <SubjectEdit handleSwitch={handleSwitch} />}
           {switchView.examination && (
-            <SessionExamEdit handleSwitch={handleSwitch} />
+            <SessionEdit handleSwitch={handleSwitch} />
           )}
         </div>
       </div>

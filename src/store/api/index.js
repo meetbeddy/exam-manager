@@ -21,7 +21,7 @@ API.interceptors.request.use((req) => {
   }
 
   if (schoolId) req.headers.school = schoolId;
-  if (req.data.url_name) req.headers.school = req.data.url_name;
+  if (req.data?.url_name) req.headers.school = req?.data?.url_name;
 
   return req;
 });
@@ -40,6 +40,7 @@ export const signIn = (formData) => API.post("/users/auth/login/", formData);
 export const studentUpload = (formData) => API.post("/students/", formData);
 export const teacherUpload = (formData) => API.post("/users/", formData);
 export const addSchoolDetails = (formData) => API.patch(`/schools/`, formData);
+export const getSchoolDetails = () => API.get(`/schools/`);
 export const addGrades = (formData) => API.post("/grade_structures/", formData);
 export const addClasses = (formData) => API.post("/classes/", formData);
 export const addSession = (formData) => API.post("/sessions/", formData);

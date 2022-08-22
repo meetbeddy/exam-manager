@@ -3,10 +3,11 @@ import { LargeButton } from "../../../../components/buttons/buttons";
 import { Div } from "../configStyles";
 
 function SchoolDetails({ handleSwitch, defaultDetail }) {
-  const schoolbadge = localStorage.getItem("school-badge");
-  const [schoolDetails, setSchoolDetails] = React.useState(
-    JSON.parse(localStorage.getItem("school-details")) || defaultDetail
-  );
+  const [schoolDetails, setSchoolDetails] = React.useState();
+
+  React.useEffect(() => {
+    setSchoolDetails(defaultDetail);
+  }, [defaultDetail]);
 
   return (
     <Div className="card">
@@ -14,7 +15,7 @@ function SchoolDetails({ handleSwitch, defaultDetail }) {
         <div className="row ">
           <div className="col-6 d-flex ">
             {" "}
-            <p className="mb-0 mt-4">{schoolDetails.schoolName}</p>
+            <h4 className="mb-0 mt-4">{schoolDetails?.name}</h4>
           </div>
           <div className="col-lg-6 ">
             <LargeButton
@@ -33,31 +34,35 @@ function SchoolDetails({ handleSwitch, defaultDetail }) {
             <div className="col-lg-8 d-flex">
               <img
                 src={
-                  schoolbadge ? schoolbadge : "../assets/img/school-logo-2.png"
+                  schoolDetails?.logo
+                    ? schoolDetails?.logo
+                    : "../assets/img/school-logo-2.png"
                 }
                 alt="school-logo"
                 className="school-badge"
               />
               <div className="m-2 w-50">
-                <p className="fw-bold">{schoolDetails.schoolName}</p>
-                <p className="fw-normal fs-6 mt-2">Elementary School</p>
+                <p className="fw-bold">{schoolDetails?.name}</p>
+                <p className="fw-normal fs-6 mt-2 text-capitalize">
+                  {schoolDetails?.school_type}
+                </p>
               </div>
             </div>
-            <div className="col-lg-4 mt-2">
+            <div className="col-lg-4 mt-2 text-wrap">
               <p className="fw-normal fs-6 mb-0">
-                <i className="text-primary bx bx-home-alt-2" />{" "}
-                {schoolDetails.address}
+                <i className="text-primary bx bx-home" />{" "}
+                {schoolDetails?.address}
               </p>
               <p className="fw-normal fs-6 mb-0">
                 <i className="text-primary bx bx-phone"></i> +234
-                {schoolDetails.mobileNumber}
+                {schoolDetails?.mobileNumber}
               </p>
               <p className="fw-normal fs-6 mb-0">
                 <i className="text-primary bx bx-mobile"></i> +23490X XXX XXXX
               </p>
               <p className="fw-normal fs-6 mb-0">
                 <i className="text-primary bx bx-envelope"></i>{" "}
-                {schoolDetails.email}
+                {schoolDetails?.email}
               </p>
             </div>
           </div>
