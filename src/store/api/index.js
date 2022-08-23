@@ -41,12 +41,11 @@ export const studentUpload = (formData) => API.post("/students/", formData);
 export const teacherUpload = (formData) => API.post("/users/", formData);
 export const addSchoolDetails = (formData) => API.patch(`/schools/`, formData);
 export const getSchoolDetails = () => API.get(`/schools/`);
-export const addGrades = (formData) => API.post("/grade_structures/", formData);
 export const addClasses = (formData) => API.post("/classes/", formData);
 export const addSession = (formData) => API.post("/sessions/", formData);
 export const addSubjects = (formData) => API.post("/subjects/", formData);
 export const addGradeInstruction = (formData) =>
-  API.post("/grade_structure/", formData);
+  API.post("/subject_grades/", formData);
 
 // export const forgotpassword = (email) =>
 //   API.post("/user/forgotpassword", email);

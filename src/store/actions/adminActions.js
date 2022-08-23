@@ -5,7 +5,7 @@ export const addschooldetails = (post) => async (dispatch) => {
     const { data } = await api.addSchoolDetails(post);
 
     dispatch({ type: "ADD_CONFIG", payload: data });
-    dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+    dispatch({ type: "GET_SUCCESS_MSG", data });
     dispatch({ type: "END_LOADING" });
   } catch (error) {
     dispatch({ type: "END_LOADING" });
@@ -21,8 +21,6 @@ export const fetchschooldetails = () => async (dispatch) => {
     dispatch({ type: "START_LOADING" });
 
     const { data } = await api.getSchoolDetails();
-
-    console.log(data);
 
     dispatch({ type: "FETCH_ALL", payload: data });
     // dispatch({ type: "GET_SUCCESS_MSG", payload: data });
@@ -42,7 +40,7 @@ export const addsessiondetails = (post) => async (dispatch) => {
     const { data } = await api.addSession(post);
 
     dispatch({ type: "ADD_CONFIG", payload: data });
-    dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+    dispatch({ type: "GET_SUCCESS_MSG", data });
     dispatch({ type: "END_LOADING" });
   } catch (error) {
     dispatch({ type: "END_LOADING" });
@@ -59,7 +57,7 @@ export const addsclassdetails = (post) => async (dispatch) => {
     const { data } = await api.addClasses(post);
 
     dispatch({ type: "ADD_CONFIG", payload: data });
-    dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+    dispatch({ type: "GET_SUCCESS_MSG", data });
     dispatch({ type: "END_LOADING" });
   } catch (error) {
     dispatch({ type: "END_LOADING" });
@@ -75,8 +73,10 @@ export const addsubjectdetails = (post) => async (dispatch) => {
     dispatch({ type: "START_LOADING" });
     const { data } = await api.addSubjects(post);
 
+    console.log(data);
+
     dispatch({ type: "ADD_CONFIG", payload: data });
-    dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+    dispatch({ type: "GET_SUCCESS_MSG", data });
     dispatch({ type: "END_LOADING" });
   } catch (error) {
     dispatch({ type: "END_LOADING" });
@@ -93,7 +93,7 @@ export const addgradedetails = (post) => async (dispatch) => {
     const { data } = await api.addGradeInstruction(post);
 
     dispatch({ type: "ADD_CONFIG", payload: data });
-    dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+    dispatch({ type: "GET_SUCCESS_MSG", data });
     dispatch({ type: "END_LOADING" });
   } catch (error) {
     dispatch({ type: "END_LOADING" });

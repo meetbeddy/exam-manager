@@ -14,9 +14,14 @@ import GradingEdits from "./grading-config/GradingEdits";
 import GradingConfig from "./grading-config/GradingConfig";
 import PromotionEdit from "./promotion-config/PromotionEdit";
 import PromotionConfig from "./promotion-config/PromotionConfig";
-import { useSelector } from "react-redux";
+import { fetchschooldetails } from "../../../store/actions/adminActions";
+import { useSelector, useDispatch } from "react-redux";
 
 function ConfigPage() {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(fetchschooldetails());
+  }, [dispatch]);
   const { configs } = useSelector((state) => state.config);
 
   const [switchView, setView] = React.useState({
@@ -30,14 +35,14 @@ function ConfigPage() {
   const [sessionData, setSessionData] = React.useState({ type: "", info: {} });
 
   const handleSwitch = (e, data) => {
-    setSessionData({ ...sessionData, type: e.target.id, info: data });
+    if (data) setSessionData({ ...sessionData, type: e.target.id, info: data });
     setView({
       ...switchView,
       [e.target.name]: !switchView[`${e.target.name}`],
     });
   };
 
-  console.log(configs);
+  // console.log(configs);
 
   return (
     <>
@@ -70,7 +75,7 @@ function ConfigPage() {
       {switchView.session ? (
         <SessionEdit handleSwitch={handleSwitch} data={sessionData} />
       ) : (
-        <Session handleSwitch={handleSwitch} />
+        <Session handleSwitch={handleSwitch} configs={configs} />
       )}
       {/* <SessionExamEdit /> */}
       {switchView.subjects ? (

@@ -2,14 +2,18 @@ import React from "react";
 import { LargeButton } from "../../../../components/buttons/buttons";
 import { Div } from "../configStyles";
 
-function SubjectConfig({ handleSwitch }) {
-  const [subjectDetails, setSubjectDetails] = React.useState([
-    {
-      subjectAbb: "MTH",
-      subject: "MATHEMATIC",
-      educator: "John Doe",
-    },
-  ]);
+function SubjectConfig({ handleSwitch, configs }) {
+  console.log("subject_config", configs.subjects);
+  const subject = configs.subjects;
+
+  const [subjectDetails, setSubjectDetails] = React.useState();
+
+  React.useEffect(() => {
+    setSubjectDetails(subject);
+  }, [subject]);
+
+  let classList;
+
   return (
     <Div className="mt-4">
       <div className="card-header">
@@ -35,16 +39,22 @@ function SubjectConfig({ handleSwitch }) {
               <tr>
                 <th>Abbreviation</th>
                 <th>Subject Name</th>
-                <th>Educator</th>
+                <th>Subject Classes</th>
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
-              {subjectDetails.map((detail, i) => {
+              {subjectDetails?.map((detail, i) => {
+                classList = [];
+                detail?.subject_classes?.forEach((clas) => {
+                  return classList.push(
+                    `${clas?.level}  ${clas?.number + clas?.denomination}`
+                  );
+                });
                 return (
                   <tr key={i}>
-                    <td>{detail.subjectAbb}</td>
-                    <td>{detail.subject}</td>
-                    <td>{detail.educator}</td>
+                    <td>{detail.abbreviation}</td>
+                    <td>{detail.name}</td>
+                    <td>{classList.join(" , ")}</td>
                   </tr>
                 );
               })}

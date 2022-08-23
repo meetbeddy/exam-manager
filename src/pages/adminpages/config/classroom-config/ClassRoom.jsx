@@ -2,11 +2,8 @@ import React from "react";
 import { LargeButton } from "../../../../components/buttons/buttons";
 import { Div } from "../configStyles";
 
-function ClassRoom({ handleSwitch }) {
-  const classDetails = [
-    { level: "YEAR", number: 1, denomination: "A", capacity: 17 },
-    { level: "YEAR ", number: 1, denomination: "B", capacity: 10 },
-  ];
+function ClassRoom({ handleSwitch, configs }) {
+  const classDetails = configs?.classes;
 
   return (
     <Div className="mt-4">
@@ -38,13 +35,13 @@ function ClassRoom({ handleSwitch }) {
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
-              {classDetails.map((detail, i) => {
+              {classDetails?.map((detail, i) => {
                 return (
                   <tr key={i}>
-                    <td>{detail.level + detail.number}</td>
-                    <td>{detail.denomination}</td>
+                    <td>{detail?.level + detail?.number}</td>
+                    <td>{detail?.denomination}</td>
                     <td>
-                      <div>{detail.capacity}</div>
+                      <div>{detail?.capacity}</div>
                     </td>
                   </tr>
                 );

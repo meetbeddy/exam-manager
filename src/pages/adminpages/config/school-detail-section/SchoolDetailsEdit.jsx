@@ -21,7 +21,7 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
   const dispatch = useDispatch();
   const notification = useSelector((state) => state.notification);
   const { isLoading } = useSelector((state) => state.config);
-  console.log(isLoading);
+
   const schooldetails = defaultDetail;
 
   const [inputValue, setInputValue] = React.useState({
@@ -81,8 +81,6 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
     });
   };
 
-  console.log(notification);
-
   React.useEffect(() => {
     if (notification.success.message) {
       toast.success(notification.success.message);
@@ -93,7 +91,12 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
       toast.error(message);
     }
     dispatch(clearNotifications());
-  }, [dispatch, notification?.errors, notification.success.message]);
+  }, [
+    dispatch,
+    handleSwitch,
+    notification?.errors,
+    notification.success.message,
+  ]);
 
   const findErrors = () => {
     const { name, phone, state, email, address, zip_code } = inputValue;
@@ -171,8 +174,9 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
           <div className="col-6 col-sm-12">
             <div className="float-end">
               <LargeButton
+                name="schoolDetails"
                 className="btn btn-outline-danger"
-                onClick={() => clearForm()}
+                onClick={(e) => handleSwitch(e)}
               >
                 Discard Entries
                 <span className="btn-label">

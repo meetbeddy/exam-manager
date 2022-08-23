@@ -8,7 +8,10 @@ import {
   CancelIcon,
 } from "../../../../components/icons/icons";
 import { Div } from "../configStyles";
-import { addgradedetails } from "../../../../store/actions/adminActions";
+import {
+  addgradedetails,
+  fetchschooldetails,
+} from "../../../../store/actions/adminActions";
 import { BeatLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
 import { clearNotifications } from "../../../../store/actions/notificationsActions";
@@ -42,7 +45,9 @@ function GradingEdits({ handleSwitch }) {
   React.useEffect(() => {
     if (notification.success.message) {
       toast.success(notification.success.message);
+      dispatch(fetchschooldetails());
     }
+
     if (notification?.errors?.message) {
       const { message } = notification?.errors;
       toast.error(message);
@@ -73,7 +78,9 @@ function GradingEdits({ handleSwitch }) {
     setGradingDetails(cloneDetails);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    dispatch(addgradedetails({ data: gradingDetails }));
+  };
 
   if (isLoading)
     return (
@@ -93,7 +100,13 @@ function GradingEdits({ handleSwitch }) {
           </div>
           <div className="col-lg-6 ">
             <div className="float-end">
-              <LargeButton className="btn btn-outline-danger">
+              <LargeButton
+                className="btn btn-outline-danger"
+                name="grading"
+                onClick={(e) => {
+                  handleSwitch(e);
+                }}
+              >
                 Discard Entries
                 <span className="btn-label">
                   <CancelIcon />
@@ -104,7 +117,7 @@ function GradingEdits({ handleSwitch }) {
                 className="btn btn-primary"
                 name="grading"
                 onClick={(e) => {
-                  handleSwitch(e);
+                  handleSubmit();
                 }}
               >
                 Save Entries

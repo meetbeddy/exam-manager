@@ -45,7 +45,7 @@ function SessionExam({ session, handleChange }) {
                       name="active"
                       label="Currently Active"
                       checked={
-                        session.active_term === "First Term" ? true : false
+                        session?.active_term === "First Term" ? true : false
                       }
                       disable={true}
                       type="success"
@@ -165,7 +165,7 @@ function SessionExam({ session, handleChange }) {
                       label="Currently Active"
                       disable={true}
                       checked={
-                        session.active_term === "Second Term" ? true : false
+                        session?.active_term === "Second Term" ? true : false
                       }
                       type="success"
                       handleChange={handleChange}
@@ -199,7 +199,7 @@ function SessionExam({ session, handleChange }) {
                       label="Currently Active"
                       disable={true}
                       checked={
-                        session.active_term === "Third Term" ? true : false
+                        session?.active_term === "Third Term" ? true : false
                       }
                       type="success"
                       handleChange={handleChange}

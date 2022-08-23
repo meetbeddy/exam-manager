@@ -15,22 +15,17 @@ import { ToastContainer, toast } from "react-toastify";
 import { clearNotifications } from "../../../../store/actions/notificationsActions";
 import { useSelector, useDispatch } from "react-redux";
 
-const init = [
-  { level: "YEAR", number: 1, denomination: "A", capacity: 17 },
-  { level: "YEAR ", number: 1, denomination: "B", capacity: 10 },
-];
-
 const override = {
   // display: "block",
   margin: "auto",
   borderColor: "yellow",
 };
 
-function ClassRoomEdit({ handleSwitch }) {
+function ClassRoomEdit({ handleSwitch, configs }) {
   const [classDetails, setClassDetails] = React.useState();
   React.useEffect(() => {
-    setClassDetails(init);
-  }, []);
+    setClassDetails(configs.classes);
+  }, [configs.classes]);
 
   const dispatch = useDispatch();
   const notification = useSelector((state) => state.notification);
@@ -96,6 +91,10 @@ function ClassRoomEdit({ handleSwitch }) {
   };
 
   const handleSave = () => {
+    classDetails.forEach((clas) => {
+      delete clas.subject;
+      delete clas.teacher;
+    });
     dispatch(addsclassdetails({ data: classDetails }));
   };
 
@@ -117,7 +116,13 @@ function ClassRoomEdit({ handleSwitch }) {
           </div>
           <div className="col-lg-6 col-xl-5">
             <div className="float-end">
-              <LargeButton className="btn btn-outline-danger">
+              <LargeButton
+                className="btn btn-outline-danger"
+                name="classroom"
+                onClick={(e) => {
+                  handleSwitch(e);
+                }}
+              >
                 Discard Entries
                 <span className="btn-label">
                   <CancelIcon />
@@ -177,7 +182,7 @@ function ClassRoomEdit({ handleSwitch }) {
                             editField(e.target.value, e.target.name);
                           }}
                         >
-                          {JsonData.levels.map((level) => {
+                          {JsonData?.levels?.map((level) => {
                             return (
                               <option key={level} value={level}>
                                 {level}{" "}

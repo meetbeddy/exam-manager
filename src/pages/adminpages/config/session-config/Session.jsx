@@ -2,22 +2,22 @@ import React from "react";
 import { Div } from "../configStyles";
 import { Row, Form } from "react-bootstrap";
 import { LargeButton } from "../../../../components/buttons/buttons";
-import JsonData from "../../../../Data/data.json";
 import updateLocale from "dayjs/plugin/updateLocale";
 import dayjs from "dayjs";
 import SessionExam from "./SessionExam";
 dayjs.extend(updateLocale);
 
-function SessionEdit({ handleSwitch, defaultDetail }) {
-  const sessions = JsonData.sessions;
+function SessionEdit({ handleSwitch, configs }) {
+  const sessions = configs.session;
+
   const [session, setSession] = React.useState({});
 
   React.useEffect(() => {
-    setSession(sessions.filter((session) => session.active)[0]);
+    setSession(sessions?.filter((session) => session.current)[0]);
   }, [sessions]);
 
   const handleChange = (e) => {
-    const filter = sessions.filter(
+    const filter = sessions?.filter(
       (session) => e.target.value === session.name
     )[0];
     setSession(filter);
@@ -69,12 +69,12 @@ function SessionEdit({ handleSwitch, defaultDetail }) {
                   aria-label="Default select example"
                   onChange={handleChange}
                   name="selectedSession"
-                  value={session.name}
+                  value={session?.name}
                 >
                   <option>select academic session</option>
-                  {sessions.map((session) => {
+                  {sessions?.map((session, i) => {
                     return (
-                      <option key={session.name} value={session.name}>
+                      <option key={session?.name + i} value={session?.name}>
                         {session.name}{" "}
                       </option>
                     );
@@ -86,12 +86,11 @@ function SessionEdit({ handleSwitch, defaultDetail }) {
                 <input
                   className="form-check-input "
                   type="checkbox"
-                  defaultValue
                   id="defaultCheck3"
-                  checked={session.active}
+                  checked={session?.current}
                 />
                 <label className="form-check-label m-2" htmlFor="defaultCheck3">
-                  {session.active ? "current session" : "not current session"}
+                  {session?.current ? "current session" : "not current session"}
                 </label>
               </div>
             </div>
@@ -99,8 +98,8 @@ function SessionEdit({ handleSwitch, defaultDetail }) {
           <div className="col-6 ">
             <p className="ml-4 float-end">
               <span className="mr-4">
-                Starts: {dayjs(session.start).format("MMM D, YYYY")} - Ends:{" "}
-                {dayjs(session.end).format("MMM D, YYYY")}{" "}
+                Starts: {dayjs(session?.start).format("MMM D, YYYY")} - Ends:{" "}
+                {dayjs(session?.end).format("MMM D, YYYY")}{" "}
               </span>{" "}
             </p>
           </div>

@@ -10,7 +10,10 @@ import {
   CancelIcon,
   XIcon,
 } from "../../../../components/icons/icons";
-import { addsubjectdetails } from "../../../../store/actions/adminActions";
+import {
+  addsubjectdetails,
+  fetchschooldetails,
+} from "../../../../store/actions/adminActions";
 import { BeatLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
 import { clearNotifications } from "../../../../store/actions/notificationsActions";
@@ -25,36 +28,52 @@ const override = {
 function SubjectEdit({ handleSwitch, configs }) {
   const classList = [];
 
-  React.useEffect(() => {
-    configs.classes.forEach((clas) => {
-      return classList.push({
-        value: clas.id,
-        label: `${clas.level}  ${clas.number + clas.denomination}`,
-      });
+  let subject = configs?.subjects;
+
+  configs.classes.forEach((clas) => {
+    return classList.push({
+      ...clas,
+      value: clas.id,
+      label: `${clas.level}  ${clas.number + clas.denomination}`,
     });
   });
-  const [subjectDetails, setSubjectDetails] = React.useState([
-    {
-      abbreviation: "MTH",
-      name: "MATHEMATIC",
-      subjectClasses: [],
-    },
-  ]);
+
+  const [subjectDetails, setSubjectDetails] = React.useState([]);
+
+  React.useEffect(() => {
+    subject.forEach((sub) => {
+      let class_list = [];
+
+      sub?.subject_classes?.forEach((clas) => {
+        // console.log(clas);
+        class_list.push(clas?.id);
+      });
+
+      sub.subject_classes = class_list;
+    });
+    setSubjectDetails(subject);
+  }, [configs.subjects, subject]);
+
+  // console.log(subjectDetails);
 
   const dispatch = useDispatch();
   const notification = useSelector((state) => state.notification);
   const { isLoading } = useSelector((state) => state.config);
 
+  // console.log(notification);
   React.useEffect(() => {
-    if (notification.success.message) {
-      toast.success(notification.success.message);
+    if (notification?.success?.message) {
+      const { message } = notification?.success;
+
+      toast.success(message);
+      dispatch(fetchschooldetails());
     }
     if (notification?.errors?.message) {
       const { message } = notification?.errors;
       toast.error(message);
     }
     dispatch(clearNotifications());
-  }, [dispatch, notification?.errors, notification.success.message]);
+  }, [dispatch, notification?.errors, notification.success]);
 
   const clone = () => {
     const details = subjectDetails.map((item) => ({
@@ -62,12 +81,13 @@ function SubjectEdit({ handleSwitch, configs }) {
     }));
     return details;
   };
+
   const addSubject = () => {
     const cloneDetails = clone();
     cloneDetails.push({
       abbreviation: "SUB",
       name: `Subject+${cloneDetails.length + 1}`,
-      subjectClasses: [],
+      subject_classes: [],
     });
     setSubjectDetails(cloneDetails);
   };
@@ -83,10 +103,10 @@ function SubjectEdit({ handleSwitch, configs }) {
 
     const subject = cloneDetails[key];
 
-    const classes = [...subject.subjectClasses];
+    const classes = [...subject.subject_classes];
 
     if (selected.action === "clear") {
-      cloneDetails[key].subjectClasses = [];
+      cloneDetails[key].subject_classes = [];
 
       setSubjectDetails(cloneDetails);
     }
@@ -94,33 +114,31 @@ function SubjectEdit({ handleSwitch, configs }) {
       const filter = classes.filter(
         (name) => name !== selected.removedValue.value
       );
-      cloneDetails[key].subjectClasses = filter;
+      cloneDetails[key].subject_classes = filter;
       setSubjectDetails(cloneDetails);
-      // setSubjectDetails({ ...subjectDetails, subjectClasses: filter });
+      // setSubjectDetails({ ...subjectDetails, subject_classes: filter });
     }
 
     if (selected.action === "select-option") {
-      cloneDetails[key].subjectClasses.push(selected.option.value);
+      cloneDetails[key].subject_classes.push(selected.option.value);
       setSubjectDetails(cloneDetails);
-      // setSubjectDetails({ ...subjectDetails, subjectClasses: classes });
+      // setSubjectDetails({ ...subjectDetails, subject_classes: classes });
     }
   };
 
   const deleteTag = (rowKey, tagKey) => {
     const cloneDetails = clone();
-    let section = cloneDetails[rowKey].subjectClasses;
+    let section = cloneDetails[rowKey].subject_classes;
     section.splice(tagKey, 1);
-    console.log(section);
-    cloneDetails[rowKey].subjectClasses = section;
+
+    cloneDetails[rowKey].subject_classes = section;
     setSubjectDetails(cloneDetails);
   };
 
   const handleSave = () => {
-    subjectDetails.forEach((subject) => {
-      delete subject.editing;
-      // subjectDetails.subjectClasses.map((subClas) => {});
-      subject.subject_classes = subject.subjectClasses.join(" ");
-    });
+    // subjectDetails.forEach((subject) => {
+    //   delete subject.editing;
+    // });
 
     dispatch(addsubjectdetails({ data: subjectDetails }));
   };
@@ -143,7 +161,13 @@ function SubjectEdit({ handleSwitch, configs }) {
           </div>
           <div className="col-lg-6 col-xl-5">
             <div className="float-end">
-              <LargeButton className="btn btn-outline-danger">
+              <LargeButton
+                className="btn btn-outline-danger"
+                name="subjects"
+                onClick={(e) => {
+                  handleSwitch(e);
+                }}
+              >
                 Discard Entries
                 <span className="btn-label">
                   <CancelIcon />
@@ -152,10 +176,9 @@ function SubjectEdit({ handleSwitch, configs }) {
 
               <LargeButton
                 className="btn btn-primary"
-                name="subjectClasses"
+                name="subjects"
                 onClick={(e) => {
                   handleSave();
-                  // handleSwitch(e);
                 }}
               >
                 Save Entries
@@ -184,7 +207,7 @@ function SubjectEdit({ handleSwitch, configs }) {
               className="table-border-bottom-0"
               // style={{ zIndex: 100, position: "relative" }}
             >
-              {subjectDetails.map((detail, key) => {
+              {subjectDetails?.map((detail, key) => {
                 const editField = (value, colName) => {
                   const cloneDetails = clone();
 
@@ -242,18 +265,24 @@ function SubjectEdit({ handleSwitch, configs }) {
                         </div>
                       ) : (
                         <div className="users-list m-0  d-flex flex-wrap border p-0 rounded">
-                          {detail?.subjectClasses?.map((section, tagKey) => (
-                            <TagButton
-                              className="m-1 p-1 rounded text-left d-flex "
-                              key={tagKey}
-                              onClick={() => deleteTag(key, tagKey)}
-                            >
-                              {section}
-                              <div className="icon">
-                                <XIcon />
-                              </div>
-                            </TagButton>
-                          ))}
+                          {detail?.subject_classes?.map((section, tagKey) => {
+                            let classLabel = classList.find((clas) => {
+                              return clas.value === Number(section);
+                            });
+
+                            return (
+                              <TagButton
+                                className="m-1 p-1 rounded text-left d-flex "
+                                key={tagKey}
+                                onClick={() => deleteTag(key, tagKey)}
+                              >
+                                {classLabel?.label}
+                                <div className="icon">
+                                  <XIcon />
+                                </div>
+                              </TagButton>
+                            );
+                          })}
                         </div>
                       )}
                     </td>

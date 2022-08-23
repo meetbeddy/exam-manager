@@ -121,6 +121,10 @@ function SessionEdit({ handleSwitch, data }) {
     dispatch(addsessiondetails(sessionInfo));
   };
 
+  const handleDiscard = (e) => {
+    handleSwitch(e);
+  };
+
   if (isLoading)
     return (
       <BeatLoader
@@ -141,7 +145,11 @@ function SessionEdit({ handleSwitch, data }) {
           </div>
           <div className="col-lg-6 col-xl-5">
             <div className="float-end">
-              <LargeButton className="btn btn-outline-danger">
+              <LargeButton
+                name="session"
+                className="btn btn-outline-danger"
+                onClick={handleDiscard}
+              >
                 Discard Entries
                 <span className="btn-label">
                   <CancelIcon />

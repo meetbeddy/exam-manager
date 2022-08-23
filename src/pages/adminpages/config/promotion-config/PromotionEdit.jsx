@@ -92,7 +92,13 @@ function PromotionEdit({ handleSwitch }) {
           </div>
           <div className="col-lg-6 ">
             <div className="float-end">
-              <LargeButton className="btn btn-outline-danger">
+              <LargeButton
+                className="btn btn-outline-danger"
+                name="promotion"
+                onClick={(e) => {
+                  handleSwitch(e);
+                }}
+              >
                 Discard Entries
                 <span className="btn-label">
                   <CancelIcon />
