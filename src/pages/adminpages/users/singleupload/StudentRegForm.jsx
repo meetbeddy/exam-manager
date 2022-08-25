@@ -24,7 +24,6 @@ function StudentRegForm({ inputValue, error, handleChange, addSubject }) {
       label: `${clas.level}  ${clas.number + clas.denomination}`,
     });
   });
-  console.log(configs);
 
   const [stateData, setStateData] = useState([]);
   const [selectedState, setSelectedState] = useState("");

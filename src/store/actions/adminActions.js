@@ -17,6 +17,23 @@ export const singlestudentupload = (post) => async (dispatch) => {
   }
 };
 
+export const singleteacherupload = (post) => async (dispatch) => {
+  try {
+    dispatch({ type: "START_LOADING" });
+    const { data } = await api.teacherUpload(post);
+
+    // dispatch({ type: "ADD_CONFIG", payload: data });
+    dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+    dispatch({ type: "END_LOADING" });
+  } catch (error) {
+    dispatch({ type: "END_LOADING" });
+    dispatch({
+      type: "GET_ERROR_MSG",
+      payload: error?.response?.data,
+    });
+  }
+};
+
 export const addschooldetails = (post) => async (dispatch) => {
   try {
     dispatch({ type: "START_LOADING" });

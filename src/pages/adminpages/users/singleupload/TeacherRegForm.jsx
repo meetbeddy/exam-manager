@@ -4,13 +4,8 @@ import { Row, Form } from "react-bootstrap";
 import { SwitchButton } from "../../../../components/buttons/buttons";
 import { InputField } from "../../../../components/inputfield/InputField";
 import JsonData from "../../../../Data/data.json";
+import { useSelector } from "react-redux";
 
-const subjects = [
-  { value: "MTH", label: "MTH" },
-  { value: "ENG", label: "ENG" },
-  { value: "CRK", label: "CRK" },
-  { value: "FRN", label: "FRN" },
-];
 function TeacherRegForm({
   inputValue,
   error,
@@ -18,11 +13,31 @@ function TeacherRegForm({
   addSubject,
   deleteSub,
 }) {
+  const { configs } = useSelector((state) => state.config);
+
   const [stateData, setStateData] = React.useState([]);
 
   React.useEffect(() => {
     setStateData(JsonData.NigerianStates);
   }, []);
+
+  let classList = [];
+  let subjectList = [];
+
+  configs.subjects.forEach((sub) => {
+    return subjectList.push({
+      ...sub,
+      value: sub.id,
+      label: sub.name,
+    });
+  });
+  configs.classes.forEach((clas) => {
+    return classList.push({
+      ...clas,
+      value: clas.id,
+      label: `${clas.level}  ${clas.number + clas.denomination}`,
+    });
+  });
 
   return (
     <>
@@ -57,7 +72,7 @@ function TeacherRegForm({
           label="Email"
           type="email"
           name="email"
-          // value={inputValue.schoolName}
+          value={inputValue.email}
           onChange={handleChange}
           placeholder="email@example.com"
           // error={error.schoolName}
@@ -69,7 +84,7 @@ function TeacherRegForm({
           label="Address"
           type="text"
           name="address"
-          // value={inputValue.schoolName}
+          value={inputValue.address}
           onChange={handleChange}
           placeholder="enter address"
           // error={error.schoolName}
@@ -91,18 +106,27 @@ function TeacherRegForm({
           inputMargin={3}
           require={true}
         />
-        <InputField
-          label="State of Residence"
-          type="text"
-          name="state"
-          // value={inputValue.schoolName}
-          onChange={handleChange}
-          placeholder="enter state of residence"
-          // error={error.schoolName}
-          className="col-6"
-          inputMargin={3}
-          require={true}
-        />
+        <Form.Group className="col-6" controlId="exampleForm.ControlInput1">
+          <Form.Label className="mb-0">State of Residence</Form.Label>
+          <Form.Select
+            className="mb-3 p-2"
+            aria-label="Default select example"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            name="state"
+            value={inputValue.state}
+          >
+            <option> select state</option>
+            {stateData?.map((state) => {
+              return (
+                <option key={state.state} value={state.state}>
+                  {state.state}{" "}
+                </option>
+              );
+            })}
+          </Form.Select>
+        </Form.Group>
       </Row>
       <Row>
         <Form.Group className="col-6" controlId="exampleForm.ControlInput1">
@@ -112,13 +136,14 @@ function TeacherRegForm({
             aria-label="Default select example"
             onChange={handleChange}
             name="nationality"
+            value={inputValue.nationality}
           >
             <option>select</option>
             <option value="Nigerian">Nigerian</option>
           </Form.Select>
         </Form.Group>
         <Form.Group className="col-6" controlId="exampleForm.ControlInput1">
-          <Form.Label className="mb-0">State</Form.Label>
+          <Form.Label className="mb-0">State Of Origin</Form.Label>
           <Form.Select
             className="mb-3 p-2"
             aria-label="Default select example"
@@ -143,7 +168,7 @@ function TeacherRegForm({
           label="Spoken and Writing Language"
           type="text"
           name="language"
-          // value={inputValue.schoolName}
+          value={inputValue.language}
           onChange={handleChange}
           placeholder="spoken and writing language"
           // error={error.schoolName}
@@ -157,7 +182,7 @@ function TeacherRegForm({
           <Select
             className="col-12"
             isMulti={true}
-            options={subjects}
+            options={subjectList}
             name="subject_offered"
             onChange={(e, selected) => {
               addSubject(e, selected);
@@ -170,16 +195,16 @@ function TeacherRegForm({
           {<h4 className="fs-5 fw-bold">A Class Teacher?</h4>}
 
           <SwitchButton
-            id="isClassTeacher"
+            id="is_subject_teacher"
             inputType="checkbox"
             label=""
-            checked={inputValue.isClassTeacher}
+            checked={inputValue.is_subject_teacher}
             type="primary"
             handleChange={handleChange}
           />
         </div>
 
-        {inputValue.isClassTeacher && (
+        {inputValue.is_subject_teacher && (
           <Form.Group className="col-3" controlId="exampleForm.ControlInput1">
             <Form.Label className="mb-0">Class</Form.Label>
             <Form.Select
@@ -189,8 +214,9 @@ function TeacherRegForm({
               name="classroom"
             >
               <option>select class</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
+              {classList?.map((clas) => (
+                <option value={clas.value}>{clas.label}</option>
+              ))}
             </Form.Select>
           </Form.Group>
         )}

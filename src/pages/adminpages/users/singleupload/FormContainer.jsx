@@ -5,7 +5,11 @@ import { CancelIcon, SaveIcon } from "../../../../components/icons/icons";
 import StudentRegForm from "./StudentRegForm";
 import TeacherRegForm from "./TeacherRegForm";
 import { useSelector, useDispatch } from "react-redux";
-import { singlestudentreg } from "../../../../store/actions/adminActions";
+import {
+  singlestudentreg,
+  singlestudentupload,
+  singleteacherupload,
+} from "../../../../store/actions/adminActions";
 import { ToastContainer, toast } from "react-toastify";
 import { clearNotifications } from "../../../../store/actions/notificationsActions";
 import json from "highlight.js/lib/languages/json";
@@ -33,10 +37,11 @@ function FormContainer({ userType }) {
     parent_phone: "",
     parent_email: "",
     language: "",
+    state: "",
     classroom: "",
     image: "",
     imageError: "",
-    isClassTeacher: true,
+    is_subject_teacher: true,
   });
 
   const dispatch = useDispatch();
@@ -149,17 +154,17 @@ function FormContainer({ userType }) {
       parent_phone: "",
       parent_email: "",
       language: "",
+      state: "",
       classroom: "",
       image: "",
       imageError: "",
-      isClassTeacher: true,
+      is_subject_teacher: true,
     });
   };
   const {
     address,
     classroom,
-    country,
-    isClassTeacher,
+    is_subject_teacher,
     language,
     email,
     enrollment_number,
@@ -179,6 +184,7 @@ function FormContainer({ userType }) {
     religion,
     state_of_origin,
     student_class,
+    state,
     subjects_offered,
   } = inputValue;
   // const findError = () => {
@@ -237,6 +243,23 @@ function FormContainer({ userType }) {
       formData.append("subjects_offered", subjects_offered.join(","));
       typeof image === "object" && formData.append("image", image);
       dispatch(singlestudentreg(formData));
+    } else {
+      const formData = new FormData();
+      formData.append("first_name", first_name);
+      formData.append("last_name", last_name);
+      formData.append("nationality", nationality);
+      formData.append("gender", gender);
+      formData.append("address", address);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("classroom", classroom);
+      formData.append("language", language);
+      formData.append("is_subject_teacher", is_subject_teacher);
+      formData.append("subjects", subjects_offered.join(","));
+      formData.append("state", state);
+
+      typeof image === "object" && formData.append("image", image);
+      dispatch(singleteacherupload(formData));
     }
   };
 
