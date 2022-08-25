@@ -11,6 +11,7 @@ import {
 import JsonData from "../../../../Data/data.json";
 import {
   addsclassdetails,
+  deletesclass,
   fetchschooldetails,
 } from "../../../../store/actions/adminActions";
 import { BeatLoader } from "react-spinners";
@@ -90,7 +91,8 @@ function ClassRoomEdit({ handleSwitch, configs }) {
 
   const deleteClass = (key) => {
     let cloneDetails = clone();
-    cloneDetails.splice(key, 1);
+    let clas = cloneDetails.splice(key, 1);
+    if (clas[0].id) dispatch(deletesclass(clas[0].id));
     setClassDetails(cloneDetails);
   };
 

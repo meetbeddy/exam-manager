@@ -37,7 +37,9 @@ API.interceptors.request.use((req) => {
 // export const signIn = (formData) => API.post("/user/signin", formData);
 export const signUp = (formData) => API.post("/users/auth/register/", formData);
 export const signIn = (formData) => API.post("/users/auth/login/", formData);
-export const studentUpload = (formData) => API.post("/students/", formData);
+export const singleStudentReg = (formData) => API.post("/students/", formData);
+export const bulkStudentReg = (formData) =>
+  API.post("/students/bulk/", formData);
 export const teacherUpload = (formData) => API.post("/users/", formData);
 export const addSchoolDetails = (formData) => API.patch(`/schools/`, formData);
 export const getSchoolDetails = () => API.get(`/schools/`);

@@ -3,20 +3,29 @@ import { InputField } from "../../../../components/inputfield/InputField";
 import { Row, Form } from "react-bootstrap";
 import Select from "react-select";
 import JsonData from "../../../../Data/data.json";
+import { useSelector } from "react-redux";
 
-const subjects = [
-  { value: "MTH", label: "MTH" },
-  { value: "ENG", label: "ENG" },
-  { value: "CRK", label: "CRK" },
-  { value: "FRN", label: "FRN" },
-];
-function StudentRegForm({
-  inputValue,
-  error,
-  handleChange,
-  addSubject,
-  deleteSub,
-}) {
+function StudentRegForm({ inputValue, error, handleChange, addSubject }) {
+  const { configs } = useSelector((state) => state.config);
+  let classList = [];
+  let subjectList = [];
+
+  configs.subjects.forEach((sub) => {
+    return subjectList.push({
+      ...sub,
+      value: sub.id,
+      label: sub.name,
+    });
+  });
+  configs.classes.forEach((clas) => {
+    return classList.push({
+      ...clas,
+      value: clas.id,
+      label: `${clas.level}  ${clas.number + clas.denomination}`,
+    });
+  });
+  console.log(configs);
+
   const [stateData, setStateData] = useState([]);
   const [selectedState, setSelectedState] = useState("");
   const [lga, setLga] = useState([]);
@@ -58,7 +67,7 @@ function StudentRegForm({
           label="Middle name"
           type="text"
           name="middle_name"
-          value={inputValue.midddle_name}
+          value={inputValue.middle_name}
           onChange={handleChange}
           placeholder="enter middle name"
           // error={error.middleName}
@@ -84,6 +93,7 @@ function StudentRegForm({
             className="mb-3 p-2"
             aria-label="Default select example"
             onChange={handleChange}
+            value={inputValue.gender}
             name="gender"
           >
             <option>select</option>
@@ -137,6 +147,7 @@ function StudentRegForm({
             className="mb-3 p-2"
             aria-label="Default select example"
             onChange={handleChange}
+            value={inputValue.nationality}
             name="nationality"
           >
             <option>select</option>
@@ -148,6 +159,7 @@ function StudentRegForm({
           <Form.Select
             className="mb-3 p-2"
             aria-label="Default select example"
+            value={inputValue.state_of_origin}
             onChange={(e) => {
               handleChange(e);
               handleSetLga(e);
@@ -171,6 +183,7 @@ function StudentRegForm({
             aria-label="Default select example"
             onChange={handleChange}
             name="lga"
+            value={inputValue.lga}
           >
             <option> select your lga</option>
             {lga?.map((lga) => {
@@ -188,12 +201,14 @@ function StudentRegForm({
             className="mb-3 p-2"
             aria-label="Default select example"
             onChange={handleChange}
+            value={inputValue.religion}
             name="religion"
           >
             <option>select</option>
-            <option value="Christainity">Christainity</option>
-            <option value="Islam">Islam</option>
-            <option value="others">others</option>
+            <option value="Christian">Christian</option>
+            <option value="Muslim">Muslim</option>
+            <option value="Atheist">Pagan</option>
+            <option value="Atheist">Atheist</option>
           </Form.Select>
         </Form.Group>
       </Row>
@@ -201,30 +216,22 @@ function StudentRegForm({
         <div className="col-4">
           <h4 className="fs-5 fw-bold">Class</h4>
           <Row>
-            <Form.Group className="col-6" controlId="exampleForm.ControlInput1">
+            <Form.Group
+              className="col-12"
+              controlId="exampleForm.ControlInput1"
+            >
               <Form.Label className="mb-0">Class</Form.Label>
               <Form.Select
                 className="mb-3 p-2"
                 aria-label="Default select example"
                 onChange={handleChange}
+                value={inputValue.student_class}
                 name="student_class"
               >
-                <option>select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group className="col-6" controlId="exampleForm.ControlInput1">
-              <Form.Label className="mb-0">Section</Form.Label>
-              <Form.Select
-                className="mb-3 p-2"
-                aria-label="Default select example"
-                onChange={handleChange}
-                name="section"
-              >
-                <option>select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option>select class</option>
+                {classList?.map((clas) => (
+                  <option value={clas.value}>{clas.label}</option>
+                ))}
               </Form.Select>
             </Form.Group>
           </Row>
@@ -253,8 +260,8 @@ function StudentRegForm({
               <Select
                 className="col-12"
                 isMulti={true}
-                options={subjects}
-                name="subject_offered"
+                options={subjectList}
+                name="subjects_offered"
                 onChange={(e, selected) => {
                   addSubject(e, selected);
                 }}
@@ -296,6 +303,7 @@ function StudentRegForm({
             className="mb-3 p-2"
             aria-label="Default select example"
             onChange={handleChange}
+            value={inputValue.parent_gender}
             name="parent_gender"
           >
             <option>select</option>
@@ -308,8 +316,8 @@ function StudentRegForm({
         <InputField
           label="Phone Number"
           type="number"
-          name="pMobileNum"
-          // value={inputValue.schoolName}
+          name="parent_phone"
+          value={inputValue.parent_phone}
           onChange={handleChange}
           placeholder="enter phone number"
           // error={error.schoolName}
@@ -320,8 +328,8 @@ function StudentRegForm({
         <InputField
           label="Email"
           type="email"
-          name="pEmail"
-          // value={inputValue.schoolName}
+          name="parent_email"
+          value={inputValue.parent_email}
           onChange={handleChange}
           placeholder="enter email"
           // error={error.schoolName}

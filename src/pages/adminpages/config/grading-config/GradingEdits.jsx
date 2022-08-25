@@ -10,6 +10,7 @@ import {
 import { Div } from "../configStyles";
 import {
   addgradedetails,
+  deletegrade,
   fetchschooldetails,
 } from "../../../../store/actions/adminActions";
 import { BeatLoader } from "react-spinners";
@@ -68,7 +69,8 @@ function GradingEdits({ handleSwitch }) {
 
   const deleteInstruction = (key) => {
     let cloneDetails = clone();
-    cloneDetails.splice(key, 1);
+    const grade = cloneDetails.splice(key, 1);
+    if (grade[0].id) dispatch(deletegrade(grade[0].id));
     setGradingDetails(cloneDetails);
   };
 

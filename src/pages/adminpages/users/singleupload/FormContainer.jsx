@@ -4,6 +4,12 @@ import { LargeButton, MedButton } from "../../../../components/buttons/buttons";
 import { CancelIcon, SaveIcon } from "../../../../components/icons/icons";
 import StudentRegForm from "./StudentRegForm";
 import TeacherRegForm from "./TeacherRegForm";
+import { useSelector, useDispatch } from "react-redux";
+import { singlestudentreg } from "../../../../store/actions/adminActions";
+import { ToastContainer, toast } from "react-toastify";
+import { clearNotifications } from "../../../../store/actions/notificationsActions";
+import json from "highlight.js/lib/languages/json";
+import { clear } from "@testing-library/user-event/dist/clear";
 
 function FormContainer({ userType }) {
   const [inputValue, setInputValue] = React.useState({
@@ -11,7 +17,6 @@ function FormContainer({ userType }) {
     middle_name: "",
     first_name: "",
     gender: "",
-    mobileNum: "",
     email: "",
     nationality: "",
     state_of_origin: "",
@@ -20,13 +25,12 @@ function FormContainer({ userType }) {
     address: "",
     religion: "",
     student_class: "",
-    section: "",
     enrollment_number: "",
-    subject_offered: [],
+    subjects_offered: [],
     parent_first_name: "",
     parent_last_name: "",
     parent_gender: "",
-    pMobileNum: "",
+    parent_phone: "",
     parent_email: "",
     language: "",
     classroom: "",
@@ -35,7 +39,8 @@ function FormContainer({ userType }) {
     isClassTeacher: true,
   });
 
-  console.log(inputValue);
+  const dispatch = useDispatch();
+  const notification = useSelector((state) => state.notification);
 
   const [error, setError] = React.useState({});
 
@@ -71,7 +76,7 @@ function FormContainer({ userType }) {
         setInputValue({
           ...inputValue,
           [[e?.target?.name] + "URL"]: URL.createObjectURL(file),
-          [e?.target?.name]: reader.result,
+          [e?.target?.name]: file,
           [[e?.target?.name] + "Error"]: null,
         });
       };
@@ -80,30 +85,102 @@ function FormContainer({ userType }) {
   };
 
   const addSubject = (e, selected) => {
-    const subjects = [...inputValue.subject_offered];
+    const subjects = [...inputValue.subjects_offered];
 
     if (selected.action === "clear") {
-      setInputValue({ ...inputValue, subject_offered: [] });
+      setInputValue({ ...inputValue, subjects_offered: [] });
     }
     if (selected.action === "remove-value") {
       const filter = subjects.filter(
         (subject) => subject !== selected.removedValue.value
       );
-      setInputValue({ ...inputValue, subject_offered: filter });
+      setInputValue({ ...inputValue, subjects_offered: filter });
     }
 
     if (selected.action === "select-option") {
       subjects.push(selected.option.value);
-      setInputValue({ ...inputValue, subject_offered: subjects });
+      setInputValue({ ...inputValue, subjects_offered: subjects });
     }
   };
 
   const deleteSub = (tagKey) => {
-    let subjects = [...inputValue.subject_offered];
+    let subjects = [...inputValue.subjects_offered];
     subjects.splice(tagKey, 1);
-    setInputValue({ ...inputValue, subject_offered: subjects });
+    setInputValue({ ...inputValue, subjects_offered: subjects });
   };
 
+  React.useEffect(() => {
+    if (notification?.success?.message || notification?.success?.status) {
+      toast.success("successful");
+      clearForm();
+      // dispatch(fetchschooldetails());
+    }
+    if (notification?.errors?.message) {
+      const { message } = notification?.errors;
+      toast.error(message);
+    }
+    dispatch(clearNotifications());
+  }, [
+    dispatch,
+    notification?.errors,
+    notification?.success?.message,
+    notification?.success?.status,
+  ]);
+
+  const clearForm = () => {
+    setInputValue({
+      last_name: "",
+      middle_name: "",
+      first_name: "",
+      gender: "",
+      email: "",
+      nationality: "",
+      state_of_origin: "",
+      country: "",
+      lga: "",
+      address: "",
+      religion: "",
+      student_class: "",
+      enrollment_number: "",
+      subjects_offered: [],
+      parent_first_name: "",
+      parent_last_name: "",
+      parent_gender: "",
+      parent_phone: "",
+      parent_email: "",
+      language: "",
+      classroom: "",
+      image: "",
+      imageError: "",
+      isClassTeacher: true,
+    });
+  };
+  const {
+    address,
+    classroom,
+    country,
+    isClassTeacher,
+    language,
+    email,
+    enrollment_number,
+    first_name,
+    gender,
+    image,
+    last_name,
+    lga,
+    middle_name,
+    nationality,
+    parent_email,
+    parent_first_name,
+    parent_gender,
+    parent_last_name,
+    parent_phone,
+    phone,
+    religion,
+    state_of_origin,
+    student_class,
+    subjects_offered,
+  } = inputValue;
   // const findError = () => {
   //   const {
   //     fullName,
@@ -137,7 +214,30 @@ function FormContainer({ userType }) {
   // };
 
   const handleSubmit = () => {
-    console.log();
+    if (userType === "student") {
+      const formData = new FormData();
+      formData.append("first_name", first_name);
+      formData.append("middle_name", middle_name);
+      formData.append("last_name", last_name);
+      formData.append("nationality", nationality);
+      formData.append("state_of_origin", state_of_origin);
+      formData.append("lga", lga);
+      formData.append("gender", gender);
+      formData.append("enrollment_number", enrollment_number);
+      formData.append("religion", religion);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("address", address);
+      formData.append("parent_phone", parent_phone);
+      formData.append("parent_email", parent_email);
+      formData.append("parent_first_name", parent_first_name);
+      formData.append("parent_last_name", parent_last_name);
+      formData.append("parent_gender", parent_gender);
+      formData.append("student_class", student_class);
+      formData.append("subjects_offered", subjects_offered.join(","));
+      typeof image === "object" && formData.append("image", image);
+      dispatch(singlestudentreg(formData));
+    }
   };
 
   return (
@@ -163,13 +263,7 @@ function FormContainer({ userType }) {
                 </span>
               </LargeButton>
 
-              <LargeButton
-                className="btn btn-primary"
-                name="schoolDetails"
-                //   onClick={(e) => {
-                //     handleSave(e);
-                //   }}
-              >
+              <LargeButton className="btn btn-primary" onClick={handleSubmit}>
                 Save Entries
                 <span className="btn-label">
                   <SaveIcon />
@@ -236,6 +330,7 @@ function FormContainer({ userType }) {
           )}
         </div>
       </div>
+      <ToastContainer position="top-right" />
     </Div>
   );
 }

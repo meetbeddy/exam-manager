@@ -37,6 +37,7 @@ const initialSessionInfo = {
 };
 
 function SessionEdit({ handleSwitch, data }) {
+  console.log(data);
   const { info } = data;
   const [sessionInfo, setSessionInfo] = React.useState({
     start: "2022-10-03",

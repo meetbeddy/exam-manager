@@ -2,7 +2,6 @@ import React from "react";
 import SchoolDetailsEdit from "./school-detail-section/SchoolDetailsEdit";
 import SessionEdit from "./session-config/SessionEdit";
 import Session from "./session-config/Session";
-import SessionExamEdit from "./sessionExam/SessionExamEdit";
 import SubjectEdit from "./subject-config/SubjectEdit";
 import ClassRoomEdit from "./classroom-config/ClassRoomEdit";
 import SchoolDetails from "./school-detail-section/SchoolDetails";
@@ -28,7 +27,6 @@ function ConfigPage() {
 
   React.useEffect(() => {
     if (notification?.success?.message || notification?.success?.status) {
-      console.log(notification?.success?.message);
       toast.success("successful");
       dispatch(fetchschooldetails());
     }

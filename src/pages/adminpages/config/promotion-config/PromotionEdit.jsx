@@ -39,11 +39,16 @@ function PromotionEdit({ handleSwitch }) {
   const { isLoading } = useSelector((state) => state.config);
 
   React.useEffect(() => {
-    if (notification.success.message) {
+    if (notification.success.message || notification?.success?.status) {
       dispatch(fetchschooldetails());
       handleSwitch("promotion");
     }
-  }, [dispatch, handleSwitch, notification?.success?.message]);
+  }, [
+    dispatch,
+    handleSwitch,
+    notification.success.message,
+    notification.success?.status,
+  ]);
 
   const clone = () => {
     const details = gradingDetails.map((item) => ({

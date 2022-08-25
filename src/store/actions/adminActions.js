@@ -1,4 +1,22 @@
 import * as api from "../api/index.js";
+
+export const singlestudentupload = (post) => async (dispatch) => {
+  try {
+    dispatch({ type: "START_LOADING" });
+    const { data } = await api.singleStudentReg(post);
+
+    // dispatch({ type: "ADD_CONFIG", payload: data });
+    dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+    dispatch({ type: "END_LOADING" });
+  } catch (error) {
+    dispatch({ type: "END_LOADING" });
+    dispatch({
+      type: "GET_ERROR_MSG",
+      payload: error?.response?.data,
+    });
+  }
+};
+
 export const addschooldetails = (post) => async (dispatch) => {
   try {
     dispatch({ type: "START_LOADING" });
@@ -131,6 +149,38 @@ export const deletegrade = (id) => async (dispatch) => {
   try {
     dispatch({ type: "START_LOADING" });
     const { data } = await api.deleteGrade(id);
+
+    dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+    dispatch({ type: "END_LOADING" });
+  } catch (error) {
+    dispatch({ type: "END_LOADING" });
+    dispatch({
+      type: "GET_ERROR_MSG",
+      payload: error?.response?.data,
+    });
+  }
+};
+
+export const singlestudentreg = (post) => async (dispatch) => {
+  try {
+    dispatch({ type: "START_LOADING" });
+    const { data } = await api.singleStudentReg(post);
+
+    dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+    dispatch({ type: "END_LOADING" });
+  } catch (error) {
+    dispatch({ type: "END_LOADING" });
+    dispatch({
+      type: "GET_ERROR_MSG",
+      payload: error?.response?.data,
+    });
+  }
+};
+
+export const bulkstudentreg = (post) => async (dispatch) => {
+  try {
+    dispatch({ type: "START_LOADING" });
+    const { data } = await api.bulkStudentReg(post);
 
     dispatch({ type: "GET_SUCCESS_MSG", payload: data });
     dispatch({ type: "END_LOADING" });
