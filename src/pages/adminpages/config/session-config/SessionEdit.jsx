@@ -10,9 +10,12 @@ import { CancelIcon, SaveIcon } from "../../../../components/icons/icons";
 import updateLocale from "dayjs/plugin/updateLocale";
 import dayjs from "dayjs";
 import SessionExamEdit from "../sessionExam/SessionExamEdit";
-import { addsessiondetails } from "../../../../store/actions/adminActions";
+import {
+  addsessiondetails,
+  fetchschooldetails,
+} from "../../../../store/actions/adminActions";
 import { BeatLoader } from "react-spinners";
-import { ToastContainer, toast } from "react-toastify";
+
 import { clearNotifications } from "../../../../store/actions/notificationsActions";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -57,6 +60,7 @@ function SessionEdit({ handleSwitch, data }) {
     }
     if (data.type === "edit") {
       setSessionInfo({
+        id: info.id,
         start: info.start,
         end: info.end,
         current: info.active,
@@ -73,18 +77,17 @@ function SessionEdit({ handleSwitch, data }) {
     info?.end,
     info?.start,
     info?.terms,
+    info.id,
   ]);
 
   React.useEffect(() => {
-    if (notification.success.message) {
-      toast.success(notification.success.message);
+    if (notification?.success?.message) {
+      dispatch(fetchschooldetails());
+      handleSwitch("session");
     }
-    if (notification?.errors?.message) {
-      const { message } = notification?.errors;
-      toast.error(message);
-    }
+
     dispatch(clearNotifications());
-  }, [dispatch, notification?.errors, notification.success.message]);
+  }, [dispatch, handleSwitch, notification?.success?.message]);
 
   const handleChange = (e) => {
     if (e.target.type === "checkbox") {
@@ -121,10 +124,6 @@ function SessionEdit({ handleSwitch, data }) {
     dispatch(addsessiondetails(sessionInfo));
   };
 
-  const handleDiscard = (e) => {
-    handleSwitch(e);
-  };
-
   if (isLoading)
     return (
       <BeatLoader
@@ -148,7 +147,7 @@ function SessionEdit({ handleSwitch, data }) {
               <LargeButton
                 name="session"
                 className="btn btn-outline-danger"
-                onClick={handleDiscard}
+                onClick={() => handleSwitch("session")}
               >
                 Discard Entries
                 <span className="btn-label">
@@ -224,7 +223,6 @@ function SessionEdit({ handleSwitch, data }) {
           activeTerm={activeTerm}
         />
       </div>
-      <ToastContainer position="top-right" />
     </Div>
   );
 }

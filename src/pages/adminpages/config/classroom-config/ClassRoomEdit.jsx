@@ -9,7 +9,10 @@ import {
   DeleteIcon,
 } from "../../../../components/icons/icons";
 import JsonData from "../../../../Data/data.json";
-import { addsclassdetails } from "../../../../store/actions/adminActions";
+import {
+  addsclassdetails,
+  fetchschooldetails,
+} from "../../../../store/actions/adminActions";
 import { BeatLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
 import { clearNotifications } from "../../../../store/actions/notificationsActions";
@@ -63,15 +66,16 @@ function ClassRoomEdit({ handleSwitch, configs }) {
   // };
 
   React.useEffect(() => {
-    if (notification.success.message) {
-      toast.success(notification.success.message);
+    if (notification?.success?.message || notification?.success?.status) {
+      handleSwitch("classroom");
+      dispatch(fetchschooldetails());
     }
-    if (notification?.errors?.message) {
-      const { message } = notification?.errors;
-      toast.error(message);
-    }
-    dispatch(clearNotifications());
-  }, [dispatch, notification?.errors, notification.success.message]);
+  }, [
+    dispatch,
+    handleSwitch,
+    notification?.success?.message,
+    notification?.success?.status,
+  ]);
 
   const addClass = () => {
     const cloneDetails = clone();
@@ -120,7 +124,7 @@ function ClassRoomEdit({ handleSwitch, configs }) {
                 className="btn btn-outline-danger"
                 name="classroom"
                 onClick={(e) => {
-                  handleSwitch(e);
+                  handleSwitch("classroom");
                 }}
               >
                 Discard Entries
@@ -134,7 +138,6 @@ function ClassRoomEdit({ handleSwitch, configs }) {
                 name="classroom"
                 onClick={(e) => {
                   handleSave(e);
-                  handleSwitch(e);
                 }}
               >
                 Save Entries
@@ -284,7 +287,6 @@ function ClassRoomEdit({ handleSwitch, configs }) {
           </span>
         </LargeButton>
       </div>
-      <ToastContainer position="top-right" />
     </Div>
   );
 }

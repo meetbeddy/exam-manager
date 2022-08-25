@@ -43,17 +43,11 @@ function GradingEdits({ handleSwitch }) {
   const { isLoading } = useSelector((state) => state.config);
 
   React.useEffect(() => {
-    if (notification.success.message) {
-      toast.success(notification.success.message);
+    if (notification?.success?.message) {
       dispatch(fetchschooldetails());
+      handleSwitch("grading");
     }
-
-    if (notification?.errors?.message) {
-      const { message } = notification?.errors;
-      toast.error(message);
-    }
-    dispatch(clearNotifications());
-  }, [dispatch, notification?.errors, notification.success.message]);
+  }, [dispatch, handleSwitch, notification?.success?.message]);
 
   const clone = () => {
     const details = gradingDetails.map((item) => ({
@@ -104,7 +98,7 @@ function GradingEdits({ handleSwitch }) {
                 className="btn btn-outline-danger"
                 name="grading"
                 onClick={(e) => {
-                  handleSwitch(e);
+                  handleSwitch("grading");
                 }}
               >
                 Discard Entries

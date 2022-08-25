@@ -42,10 +42,14 @@ export const teacherUpload = (formData) => API.post("/users/", formData);
 export const addSchoolDetails = (formData) => API.patch(`/schools/`, formData);
 export const getSchoolDetails = () => API.get(`/schools/`);
 export const addClasses = (formData) => API.post("/classes/", formData);
+export const deleteClass = (id) => API.delete(`/classes/${id}/`);
+
 export const addSession = (formData) => API.post("/sessions/", formData);
 export const addSubjects = (formData) => API.post("/subjects/", formData);
+export const deleteSubject = (id) => API.delete(`/subjects/${id}/`);
 export const addGradeInstruction = (formData) =>
-  API.post("/subject_grades/", formData);
+  API.post("/grade_structures/", formData);
+export const deleteGrade = (id) => API.delete(`/grade_structures/${id}/`);
 
 // export const forgotpassword = (email) =>
 //   API.post("/user/forgotpassword", email);

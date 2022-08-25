@@ -16,7 +16,7 @@ function ClassRoom({ handleSwitch, configs }) {
             <LargeButton
               className="btn btn-primary float-end"
               name="classroom"
-              onClick={(e) => handleSwitch(e)}
+              onClick={(e) => handleSwitch("classroom")}
             >
               Edit Class
             </LargeButton>

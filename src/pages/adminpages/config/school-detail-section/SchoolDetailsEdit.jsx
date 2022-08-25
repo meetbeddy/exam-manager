@@ -3,10 +3,11 @@ import { Div } from "../configStyles";
 import { Row, Form } from "react-bootstrap";
 import { LargeButton, MedButton } from "../../../../components/buttons/buttons";
 import { CancelIcon, SaveIcon } from "../../../../components/icons/icons";
-import { addschooldetails } from "../../../../store/actions/adminActions";
+import {
+  addschooldetails,
+  fetchschooldetails,
+} from "../../../../store/actions/adminActions";
 import { BeatLoader } from "react-spinners";
-import { ToastContainer, toast } from "react-toastify";
-import { clearNotifications } from "../../../../store/actions/notificationsActions";
 import { useSelector, useDispatch } from "react-redux";
 
 import EditForm from "./EditForm";
@@ -69,33 +70,17 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
       reader.readAsDataURL(file);
     }
   };
-  const clearForm = () => {
-    setInputValue({
-      name: "",
-      phone: "",
-      state: "",
-      email: "",
-      address: "",
-      zip_code: "",
-      schoolType: "",
-    });
-  };
 
   React.useEffect(() => {
-    if (notification.success.message) {
-      toast.success(notification.success.message);
-      handleSwitch();
+    if (notification?.success?.message || notification?.success?.status) {
+      dispatch(fetchschooldetails());
+      handleSwitch("schoolDetails");
     }
-    if (notification?.errors?.message) {
-      const { message } = notification?.errors;
-      toast.error(message);
-    }
-    dispatch(clearNotifications());
   }, [
     dispatch,
     handleSwitch,
-    notification?.errors,
-    notification.success.message,
+    notification?.success?.message,
+    notification?.success?.status,
   ]);
 
   const findErrors = () => {
@@ -143,7 +128,7 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
 
       formData.append("name", name);
       formData.append("phone", phone);
-      formData.append("logo", logo);
+      typeof logo === "object" && formData.append("logo", logo);
       formData.append("school_type", school_type);
       formData.append("state", state);
       formData.append("email", email);
@@ -279,7 +264,6 @@ function SchoolDetailsEdit({ handleSwitch, defaultDetail }) {
           />
         </div>
       </div>
-      <ToastContainer position="top-right" />
     </Div>
   );
 }

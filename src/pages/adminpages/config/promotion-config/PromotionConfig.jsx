@@ -26,7 +26,7 @@ function PromotionConfig({ handleSwitch }) {
             <LargeButton
               className="btn btn-primary float-end"
               name="promotion"
-              onClick={(e) => handleSwitch(e)}
+              onClick={(e) => handleSwitch("promotion")}
             >
               Edit Instruction
             </LargeButton>

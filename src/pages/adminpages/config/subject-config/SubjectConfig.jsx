@@ -1,16 +1,20 @@
 import React from "react";
 import { LargeButton } from "../../../../components/buttons/buttons";
 import { Div } from "../configStyles";
+import { useSelector } from "react-redux";
 
-function SubjectConfig({ handleSwitch, configs }) {
-  console.log("subject_config", configs.subjects);
-  const subject = configs.subjects;
+function SubjectConfig({ handleSwitch }) {
+  const { configs } = useSelector((state) => state.config);
 
-  const [subjectDetails, setSubjectDetails] = React.useState();
+  // const subject = configs.subjects;
 
-  React.useEffect(() => {
-    setSubjectDetails(subject);
-  }, [subject]);
+  // const [subjectDetails, setSubjectDetails] = React.useState();
+
+  // React.useEffect(() => {
+  //   setSubjectDetails(configs.subjects);
+  // }, [configs.subjects]);
+
+  const subjectDetails = configs.subjects;
 
   let classList;
 
@@ -25,7 +29,7 @@ function SubjectConfig({ handleSwitch, configs }) {
             <LargeButton
               className="btn btn-primary float-end"
               name="subjects"
-              onClick={(e) => handleSwitch(e)}
+              onClick={(e) => handleSwitch("subjects")}
             >
               Edit Subject
             </LargeButton>
@@ -44,17 +48,18 @@ function SubjectConfig({ handleSwitch, configs }) {
             </thead>
             <tbody className="table-border-bottom-0">
               {subjectDetails?.map((detail, i) => {
-                classList = [];
-                detail?.subject_classes?.forEach((clas) => {
-                  return classList.push(
+                let class_list = [];
+                let classList = detail?.subject_classes?.map((clas) => {
+                  return class_list.push(
                     `${clas?.level}  ${clas?.number + clas?.denomination}`
                   );
                 });
+
                 return (
                   <tr key={i}>
-                    <td>{detail.abbreviation}</td>
-                    <td>{detail.name}</td>
-                    <td>{classList.join(" , ")}</td>
+                    <td>{detail?.abbreviation}</td>
+                    <td>{detail?.name}</td>
+                    <td>{classList?.join(" , ")}</td>
                   </tr>
                 );
               })}

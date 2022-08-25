@@ -9,8 +9,6 @@ const config = (state = { isLoading: false, configs: [] }, action) => {
         ...state,
         configs: action.payload.data,
       };
-    case "ADD_CONFIG":
-      return { ...state, configs: [...state.configs, action.payload] };
 
     default:
       return state;

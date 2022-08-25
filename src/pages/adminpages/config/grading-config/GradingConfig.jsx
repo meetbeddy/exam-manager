@@ -28,7 +28,7 @@ function GradingConfig({ handleSwitch }) {
             <LargeButton
               className="btn btn-primary float-end"
               name="grading"
-              onClick={(e) => handleSwitch(e)}
+              onClick={(e) => handleSwitch("grading")}
             >
               Edit Instruction
             </LargeButton>

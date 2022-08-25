@@ -21,7 +21,7 @@ function SchoolDetails({ handleSwitch, defaultDetail }) {
             <LargeButton
               className="btn btn-primary float-end"
               name="schoolDetails"
-              onClick={(e) => handleSwitch(e)}
+              onClick={(e) => handleSwitch("schoolDetails")}
             >
               Edit School
             </LargeButton>

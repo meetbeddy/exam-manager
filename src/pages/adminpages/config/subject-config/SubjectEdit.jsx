@@ -13,10 +13,10 @@ import {
 import {
   addsubjectdetails,
   fetchschooldetails,
+  deletesubject,
 } from "../../../../store/actions/adminActions";
 import { BeatLoader } from "react-spinners";
-import { ToastContainer, toast } from "react-toastify";
-import { clearNotifications } from "../../../../store/actions/notificationsActions";
+
 import { useSelector, useDispatch } from "react-redux";
 
 const override = {
@@ -25,9 +25,10 @@ const override = {
   borderColor: "yellow",
 };
 
-function SubjectEdit({ handleSwitch, configs }) {
-  const classList = [];
+function SubjectEdit({ handleSwitch }) {
+  const { configs } = useSelector((state) => state.config);
 
+  let classList = [];
   let subject = configs?.subjects;
 
   configs.classes.forEach((clas) => {
@@ -41,20 +42,18 @@ function SubjectEdit({ handleSwitch, configs }) {
   const [subjectDetails, setSubjectDetails] = React.useState([]);
 
   React.useEffect(() => {
-    subject.forEach((sub) => {
+    let formatted = subject.map((sub) => {
       let class_list = [];
-
-      sub?.subject_classes?.forEach((clas) => {
-        // console.log(clas);
-        class_list.push(clas?.id);
+      let classList = sub?.subject_classes?.map((clas) => {
+        return class_list.push(clas?.id);
       });
 
-      sub.subject_classes = class_list;
+      sub.subject_classes = classList;
+      return sub;
     });
-    setSubjectDetails(subject);
-  }, [configs.subjects, subject]);
 
-  // console.log(subjectDetails);
+    setSubjectDetails(formatted);
+  }, [subject]);
 
   const dispatch = useDispatch();
   const notification = useSelector((state) => state.notification);
@@ -63,17 +62,10 @@ function SubjectEdit({ handleSwitch, configs }) {
   // console.log(notification);
   React.useEffect(() => {
     if (notification?.success?.message) {
-      const { message } = notification?.success;
-
-      toast.success(message);
       dispatch(fetchschooldetails());
+      handleSwitch("subjects");
     }
-    if (notification?.errors?.message) {
-      const { message } = notification?.errors;
-      toast.error(message);
-    }
-    dispatch(clearNotifications());
-  }, [dispatch, notification?.errors, notification.success]);
+  }, [dispatch, handleSwitch, notification?.errors, notification?.success]);
 
   const clone = () => {
     const details = subjectDetails.map((item) => ({
@@ -94,7 +86,8 @@ function SubjectEdit({ handleSwitch, configs }) {
 
   const deleteSubject = (key) => {
     let cloneDetails = clone();
-    cloneDetails.splice(key, 1);
+    const subject = cloneDetails.splice(key, 1);
+    if (subject[0].id) dispatch(deletesubject(subject[0].id));
     setSubjectDetails(cloneDetails);
   };
 
@@ -136,9 +129,11 @@ function SubjectEdit({ handleSwitch, configs }) {
   };
 
   const handleSave = () => {
-    // subjectDetails.forEach((subject) => {
-    //   delete subject.editing;
-    // });
+    subjectDetails.forEach((subject) => {
+      delete subject.editing;
+      delete subject.teacher;
+      delete subject.topic;
+    });
 
     dispatch(addsubjectdetails({ data: subjectDetails }));
   };
@@ -165,7 +160,7 @@ function SubjectEdit({ handleSwitch, configs }) {
                 className="btn btn-outline-danger"
                 name="subjects"
                 onClick={(e) => {
-                  handleSwitch(e);
+                  handleSwitch("subjects");
                 }}
               >
                 Discard Entries
@@ -215,6 +210,8 @@ function SubjectEdit({ handleSwitch, configs }) {
 
                   // Trigger re-render
                   setSubjectDetails(cloneDetails);
+
+                  console.log(detail);
                 };
                 return (
                   <tr key={key}>
@@ -267,7 +264,7 @@ function SubjectEdit({ handleSwitch, configs }) {
                         <div className="users-list m-0  d-flex flex-wrap border p-0 rounded">
                           {detail?.subject_classes?.map((section, tagKey) => {
                             let classLabel = classList.find((clas) => {
-                              return clas.value === Number(section);
+                              return clas.value === section;
                             });
 
                             return (
@@ -335,7 +332,6 @@ function SubjectEdit({ handleSwitch, configs }) {
           </span>
         </LargeButton>
       </div>
-      <ToastContainer position="top-right" />
     </Div>
   );
 }

@@ -8,11 +8,12 @@ import {
   CancelIcon,
 } from "../../../../components/icons/icons";
 import { Div } from "../configStyles";
-import { addsclassdetails } from "../../../../store/actions/adminActions";
 import { BeatLoader } from "react-spinners";
-import { ToastContainer, toast } from "react-toastify";
-import { clearNotifications } from "../../../../store/actions/notificationsActions";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  addschooldetails,
+  fetchschooldetails,
+} from "../../../../store/actions/adminActions";
 
 const override = {
   // display: "block",
@@ -39,14 +40,10 @@ function PromotionEdit({ handleSwitch }) {
 
   React.useEffect(() => {
     if (notification.success.message) {
-      toast.success(notification.success.message);
+      dispatch(fetchschooldetails());
+      handleSwitch("promotion");
     }
-    if (notification?.errors?.message) {
-      const { message } = notification?.errors;
-      toast.error(message);
-    }
-    dispatch(clearNotifications());
-  }, [dispatch, notification?.errors, notification.success.message]);
+  }, [dispatch, handleSwitch, notification?.success?.message]);
 
   const clone = () => {
     const details = gradingDetails.map((item) => ({
@@ -71,7 +68,11 @@ function PromotionEdit({ handleSwitch }) {
   };
 
   const handleSubmit = () => {
-    dispatch();
+    const formData = new FormData();
+
+    formData.append("promotion_condition", JSON.stringify(gradingDetails));
+
+    dispatch(addschooldetails(formData));
   };
 
   if (isLoading)
@@ -96,7 +97,7 @@ function PromotionEdit({ handleSwitch }) {
                 className="btn btn-outline-danger"
                 name="promotion"
                 onClick={(e) => {
-                  handleSwitch(e);
+                  handleSwitch("promotion");
                 }}
               >
                 Discard Entries
@@ -109,7 +110,7 @@ function PromotionEdit({ handleSwitch }) {
                 className="btn btn-primary"
                 name="promotion"
                 onClick={(e) => {
-                  handleSwitch(e);
+                  handleSubmit();
                 }}
               >
                 Save Entries
@@ -282,7 +283,6 @@ function PromotionEdit({ handleSwitch }) {
           </span>
         </LargeButton>
       </div>
-      <ToastContainer position="top-right" />
     </Div>
   );
 }

@@ -16,12 +16,33 @@ import PromotionEdit from "./promotion-config/PromotionEdit";
 import PromotionConfig from "./promotion-config/PromotionConfig";
 import { fetchschooldetails } from "../../../store/actions/adminActions";
 import { useSelector, useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import { clearNotifications } from "../../../store/actions/notificationsActions";
 
 function ConfigPage() {
+  const notification = useSelector((state) => state.notification);
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(fetchschooldetails());
   }, [dispatch]);
+
+  React.useEffect(() => {
+    if (notification?.success?.message || notification?.success?.status) {
+      console.log(notification?.success?.message);
+      toast.success("successful");
+      dispatch(fetchschooldetails());
+    }
+    if (notification?.errors?.message) {
+      const { message } = notification?.errors;
+      toast.error(message);
+    }
+    dispatch(clearNotifications());
+  }, [
+    dispatch,
+    notification?.errors,
+    notification?.success?.message,
+    notification?.success?.status,
+  ]);
   const { configs } = useSelector((state) => state.config);
 
   const [switchView, setView] = React.useState({
@@ -35,10 +56,17 @@ function ConfigPage() {
   const [sessionData, setSessionData] = React.useState({ type: "", info: {} });
 
   const handleSwitch = (e, data) => {
-    if (data) setSessionData({ ...sessionData, type: e.target.id, info: data });
+    if (data) {
+      setSessionData({ ...sessionData, type: e.target.id, info: data });
+      setView({
+        ...switchView,
+        [e.target.name]: !switchView[`${e.target.name}`],
+      });
+      return;
+    }
     setView({
       ...switchView,
-      [e.target.name]: !switchView[`${e.target.name}`],
+      [e]: !switchView[`${e}`],
     });
   };
 
@@ -79,9 +107,9 @@ function ConfigPage() {
       )}
       {/* <SessionExamEdit /> */}
       {switchView.subjects ? (
-        <SubjectEdit handleSwitch={handleSwitch} configs={configs} />
+        <SubjectEdit handleSwitch={handleSwitch} />
       ) : (
-        <SubjectConfig handleSwitch={handleSwitch} configs={configs} />
+        <SubjectConfig handleSwitch={handleSwitch} />
       )}
 
       {switchView.classroom ? (
@@ -99,6 +127,7 @@ function ConfigPage() {
       ) : (
         <PromotionConfig handleSwitch={handleSwitch} configs={configs} />
       )}
+      <ToastContainer position="top-right" />
     </>
   );
 }
