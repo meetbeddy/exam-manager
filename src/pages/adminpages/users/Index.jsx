@@ -5,10 +5,38 @@ import { MenuUserIcon } from "../../../components/icons/icons";
 import { LargeButton } from "../../../components/buttons/buttons";
 import StudentTable from "./tables/StudentTable";
 import UploadModal from "./UploadModal";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchstudents,
+  fetchteachers,
+} from "../../../store/actions/adminActions";
+import TeacherTable from "./tables/TeacherTable";
 
 function Index() {
   const [userType, setUserType] = React.useState("student");
   const [uploadType, setUploadType] = React.useState("");
+
+  const dispatch = useDispatch();
+  const { students } = useSelector((state) => state.student);
+  const { teachers } = useSelector((state) => state.teacher);
+
+  const allStudents = [...students];
+  const allTeachers = [...teachers];
+
+  allStudents?.forEach((student) => {
+    student.name = `${student?.first_name} ${student?.middle_name} ${student?.last_name}`;
+    student.class = `${student?.student_class?.level} ${student?.student_class?.number} ${student?.student_class?.denomination}`;
+  });
+
+  allTeachers?.forEach((teacher) => {
+    teacher.name = `${teacher?.first_name}  ${teacher?.last_name}`;
+    // teacher.class = `${teacher?.student_class?.level} ${teacher?.student_class?.number} ${teacher?.student_class?.denomination}`;
+  });
+
+  React.useEffect(() => {
+    dispatch(fetchstudents());
+    dispatch(fetchteachers());
+  }, [dispatch]);
 
   const handleChange = (e) => {
     setUserType(e.target.value);
@@ -159,7 +187,11 @@ function Index() {
             </div>
 
             <div className="card-body">
-              <StudentTable studentInfo={[]} />
+              {userType === "student" ? (
+                <StudentTable studentInfo={allStudents} />
+              ) : (
+                <TeacherTable teacherInfo={allTeachers} />
+              )}
             </div>
           </div>
         </div>

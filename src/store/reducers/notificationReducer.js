@@ -3,7 +3,6 @@ const initialState = {
   success: {},
 };
 const notificationReducer = (state = initialState, action) => {
-  console.log(action.payload);
   switch (action.type) {
     case "GET_ERROR_MSG":
       return {

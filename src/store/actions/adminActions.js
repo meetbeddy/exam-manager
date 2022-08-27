@@ -34,6 +34,59 @@ export const singleteacherupload = (post) => async (dispatch) => {
   }
 };
 
+export const bulkteacherupload = (post) => async (dispatch) => {
+  try {
+    dispatch({ type: "START_LOADING" });
+    const { data } = await api.teacherBulk(post);
+
+    // dispatch({ type: "ADD_CONFIG", payload: data });
+    dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+    dispatch({ type: "END_LOADING" });
+  } catch (error) {
+    dispatch({ type: "END_LOADING" });
+    dispatch({
+      type: "GET_ERROR_MSG",
+      payload: error?.response?.data,
+    });
+  }
+};
+
+export const fetchstudents = () => async (dispatch) => {
+  try {
+    dispatch({ type: "START_LOADING" });
+
+    const { data } = await api.getStudents();
+
+    dispatch({ type: "FETCH_STUDENTS", payload: data });
+    // dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+    dispatch({ type: "END_LOADING" });
+  } catch (error) {
+    dispatch({ type: "END_LOADING" });
+    dispatch({
+      type: "GET_ERROR_MSG",
+      payload: error?.response?.data,
+    });
+  }
+};
+
+export const fetchteachers = () => async (dispatch) => {
+  try {
+    dispatch({ type: "START_LOADING" });
+
+    const { data } = await api.getTeachers();
+
+    dispatch({ type: "FETCH_TEACHERS", payload: data });
+    // dispatch({ type: "GET_SUCCESS_MSG", payload: data });
+    dispatch({ type: "END_LOADING" });
+  } catch (error) {
+    dispatch({ type: "END_LOADING" });
+    dispatch({
+      type: "GET_ERROR_MSG",
+      payload: error?.response?.data,
+    });
+  }
+};
+
 export const addschooldetails = (post) => async (dispatch) => {
   try {
     dispatch({ type: "START_LOADING" });

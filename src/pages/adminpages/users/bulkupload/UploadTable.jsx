@@ -5,161 +5,285 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 
-function UploadTable({ proceed, setData, data, onClear, onSubmit }) {
-  const columns = [
-    {
-      dataField: "surname",
-      text: "Surname",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+const teacher = [
+  {
+    dataField: "last_name",
+    text: "Last Name",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "otherNames",
-      text: "Other Names",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "first_name",
+    text: "First Name",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "email",
-      text: "email",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "email",
+    text: "Email",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "password",
-      text: "Password",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "nationality",
+    text: "nationality",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "bankName",
-      text: "BankName",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "gender",
+    text: "Gender",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "tellerNumber",
-      text: "Teller",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "address",
+    text: "Address",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "status",
-      text: "Status",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "language",
+    text: "Teacher Language",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "phone",
-      text: "Phone",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "phone",
+    text: "Phone",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "gender",
-      text: "Gender",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "classroom",
+    text: "Teacher Language",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "icanCode",
-      text: "ICAN Code",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "subjects",
+    text: "Subjects",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "tshirtSize",
-      text: "Shirt Size",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "state",
+    text: "State",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "memberStatus",
-      text: "Member Status",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "state_of_origin",
+    text: "State Of Origin",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "amount",
-      text: "Amount",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "country",
+    text: "Country",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "confirmedPayment",
-      text: "Confirmed",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+];
+const student = [
+  {
+    dataField: "last_name",
+    text: "Last Name",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "memberCategory",
-      text: "Category",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "middle_name",
+    text: "Middle Name",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "memberAcronym",
-      text: "Acronym",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "first_name",
+    text: "First Name",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "nameOfSociety",
-      text: "Society",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "email",
+    text: "Email",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "role",
-      text: "role",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "nationality",
+    text: "nationality",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-    {
-      dataField: "venue",
-      text: "venue",
-      headerStyle: {
-        backgroundColor: "#8592a3",
-        width: "200px",
-      },
+  },
+  {
+    dataField: "state_of_origin",
+    text: "State Of Origin",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
     },
-  ];
+  },
+  {
+    dataField: "state",
+    text: "State",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "country",
+    text: "Country",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "lga",
+    text: "LGA",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "address",
+    text: "Address",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "gender",
+    text: "Gender",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "religion",
+    text: "Religion",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "student_class",
+    text: "Student Class",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "enrollment_number",
+    text: "Enrollment Number",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "subjects_offered",
+    text: "Subjects Offered",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "parent_first_name",
+    text: "Parents First Name",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "parent_last_name",
+    text: "Parent Last Name",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "parent_gender",
+    text: "Parent's Gender",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "parent_phone",
+    text: "Parent's Phone",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "parent_email",
+    text: "Parent's Email",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+  {
+    dataField: "phone",
+    text: "Phone",
+    headerStyle: {
+      backgroundColor: "#8592a3",
+      width: "200px",
+    },
+  },
+];
+
+function UploadTable({ proceed, data, onClear, onSubmit, userType }) {
+  const columns = userType === "student" ? student : teacher;
 
   const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total">
@@ -209,6 +333,11 @@ function UploadTable({ proceed, setData, data, onClear, onSubmit }) {
           {" "}
           submit
         </button>
+        <button className="btn btn-danger my-4 ms-4" onClick={onClear}>
+          {" "}
+          cancel
+        </button>
+
         <p className="text-primary "> double click on col to edit then enter</p>
       </div>
       <BootstrapTable

@@ -1,7 +1,7 @@
 import React from "react";
 import Profile from "../profile/Profile";
 
-function StudentTable({ studentInfo }) {
+function TeacherTable({ teacherInfo }) {
   const [show, setShow] = React.useState(false);
   const [profile, setProfile] = React.useState();
 
@@ -18,28 +18,22 @@ function StudentTable({ studentInfo }) {
         <thead className="table-light-gray">
           <tr>
             <th>no</th>
-            <th>Student Name</th>
-            <th>Erl. No.</th>
+            <th>Teacher Name</th>
             <th>Gender</th>
             <th>Class</th>
-            {/* <th>Subject Offered</th> */}
+            <th>Subject</th>
           </tr>
         </thead>
         <tbody className="table-border-bottom-0">
-          {studentInfo.length > 0 ? (
-            studentInfo.map((detail, i) => {
+          {teacherInfo?.length > 0 ? (
+            teacherInfo?.map((detail, i) => {
               return (
                 <tr key={i}>
                   <td>{i + 1}</td>
                   <td>{detail?.name}</td>
-                  <td>{detail?.enrollment_number}</td>
                   <td>{detail?.gender}</td>
                   <td>{detail?.class}</td>
-                  {/* <td>
-                    {detail?.subjects_offered?.map((subject) => {
-                      return subject.name;
-                    })}
-                  </td> */}
+                  <td>{detail?.subject_offered}</td>
                   <td>
                     <span
                       style={{
@@ -65,10 +59,10 @@ function StudentTable({ studentInfo }) {
         handleShow={handleShow}
         handleClose={handleClose}
         profile={profile}
-        userType="student"
+        userType="educator"
       />
     </div>
   );
 }
 
-export default StudentTable;
+export default TeacherTable;

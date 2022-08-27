@@ -229,7 +229,9 @@ function StudentRegForm({ inputValue, error, handleChange, addSubject }) {
               >
                 <option>select class</option>
                 {classList?.map((clas) => (
-                  <option value={clas.value}>{clas.label}</option>
+                  <option value={clas.value} key={clas.value}>
+                    {clas.label}
+                  </option>
                 ))}
               </Form.Select>
             </Form.Group>

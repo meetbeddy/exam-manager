@@ -6,6 +6,15 @@ import readCSVFile from "papaparse";
 import styled from "styled-components";
 import MultiChoice from "./MultiChoice";
 import UploadTable from "./UploadTable";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  bulkstudentreg,
+  bulkteacherupload,
+  singlestudentreg,
+  singleteacherupload,
+} from "../../../../store/actions/adminActions";
+import { ToastContainer, toast } from "react-toastify";
+import { clearNotifications } from "../../../../store/actions/notificationsActions";
 
 const DropZone = styled.div`
   text-align: center;
@@ -20,32 +29,71 @@ const initialUser = {
   body: [],
 };
 
-function BulkUpload() {
+const teacher = [
+  { value: "last_name", label: "Last Name" },
+  { value: "first_name", label: "First Name" },
+  { value: "email", label: "Email" },
+  { value: "nationality", label: "nationality" },
+  { value: "gender", label: "Gender" },
+  { value: "address", label: "Address" },
+  { value: "language", label: "Teacher Language" },
+  { value: "phone", label: "Phone" },
+  { value: "classroom", label: "Teacher Language" },
+  { value: "subjects", label: "Subjects" },
+  { value: "state", label: "State" },
+  { value: "state_of_origin", label: "State Of Origin" },
+  { value: "country", label: "Country" },
+];
+
+const student = [
+  { value: "last_name", label: "Last Name" },
+  { value: "middle_name", label: "Middle Name" },
+  { value: "first_name", label: "First Name" },
+  { value: "email", label: "Email" },
+  { value: "nationality", label: "nationality" },
+  { value: "state_of_origin", label: "State Of Origin" },
+  { value: "country", label: "Country" },
+  { value: "lga", label: "LGA" },
+  { value: "address", label: "Address" },
+  { value: "gender", label: "Gender" },
+  { value: "religion", label: "Religion" },
+  { value: "student_class", label: "Student Class" },
+  { value: "enrollment_number", label: "Enrollment Number" },
+  { value: "subjects_offered", label: "Subjects Offered" },
+  { value: "parent_first_name", label: "Parents First Name" },
+  { value: "parent_last_name", label: "Parent Last Name" },
+  { value: "parent_gender", label: "Parent's Gender" },
+  { value: "parent_phone", label: "Parent's Phone" },
+  { value: "parent_email", label: "Parent's Email" },
+  { value: "phone", label: "Phone" },
+  { value: "state", label: "State" },
+];
+
+function BulkUpload({ userType }) {
+  const notification = useSelector((state) => state.notification);
+  const dispatch = useDispatch();
   const initialMatch = {
-    ours: [
-      { value: "surname", label: "Surname" },
-      { value: "otherNames", label: "Other Names" },
-      { value: "email", label: "email" },
-      { value: "password", label: "Password" },
-      { value: "bankName", label: "BankName" },
-      { value: "tellerNumber", label: "Teller" },
-      { value: "tellerDate", label: "Date" },
-      { value: "status", label: "Status" },
-      { value: "phone", label: "Phone" },
-      { value: "gender", label: "Gender" },
-      { value: "icanCode", label: "ICAN Code" },
-      { value: "tshirtSize", label: "Shirt Size" },
-      { value: "memberStatus", label: "Member Status" },
-      { value: "amount", label: "Amount" },
-      { value: "confirmedPayment", label: "Confirmed" },
-      { value: "memberCategory", label: "Category" },
-      { value: "memberAcronym", label: "Acronym" },
-      { value: "nameOfSociety", label: "Society" },
-      { value: "role", label: "role" },
-      { value: "venue", label: "venue" },
-    ],
+    ours: userType === "student" ? student : teacher,
     theirs: [],
   };
+
+  React.useEffect(() => {
+    if (notification?.success?.message || notification?.success?.status) {
+      toast.success("successful");
+
+      // dispatch(fetchschooldetails());
+    }
+    if (notification?.errors?.message) {
+      const { message } = notification?.errors;
+      toast.error(message);
+    }
+    dispatch(clearNotifications());
+  }, [
+    dispatch,
+    notification?.errors,
+    notification?.success?.message,
+    notification?.success?.status,
+  ]);
 
   const [user, setUser] = React.useState(initialUser);
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
@@ -142,7 +190,9 @@ function BulkUpload() {
   };
 
   const onSubmit = () => {
-    console.log(processedUser);
+    userType === "student"
+      ? dispatch(bulkstudentreg({ students: processedUser }))
+      : dispatch(bulkteacherupload({ users: processedUser }));
   };
 
   return (
@@ -201,7 +251,10 @@ function BulkUpload() {
         proceed={proceed}
         setData={setProceed}
         data={processedUser}
+        userType={userType}
+        onClear={onClear}
       />
+      <ToastContainer position="top-right" />
     </Container>
   );
 }

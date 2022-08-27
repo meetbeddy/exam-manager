@@ -6,17 +6,7 @@ import { useSelector } from "react-redux";
 function SubjectConfig({ handleSwitch }) {
   const { configs } = useSelector((state) => state.config);
 
-  // const subject = configs.subjects;
-
-  // const [subjectDetails, setSubjectDetails] = React.useState();
-
-  // React.useEffect(() => {
-  //   setSubjectDetails(configs.subjects);
-  // }, [configs.subjects]);
-
   const subjectDetails = configs.subjects;
-
-  let classList;
 
   return (
     <Div className="mt-4">
@@ -49,9 +39,9 @@ function SubjectConfig({ handleSwitch }) {
             <tbody className="table-border-bottom-0">
               {subjectDetails?.map((detail, i) => {
                 let class_list = [];
-                let classList = detail?.subject_classes?.map((clas) => {
+                detail?.subject_classes?.map((clas) => {
                   return class_list.push(
-                    `${clas?.level}  ${clas?.number + clas?.denomination}`
+                    `${clas?.level}  ${clas?.number}  ${clas?.denomination}`
                   );
                 });
 
@@ -59,7 +49,7 @@ function SubjectConfig({ handleSwitch }) {
                   <tr key={i}>
                     <td>{detail?.abbreviation}</td>
                     <td>{detail?.name}</td>
-                    <td>{classList?.join(" , ")}</td>
+                    <td>{class_list?.join(" , ")}</td>
                   </tr>
                 );
               })}

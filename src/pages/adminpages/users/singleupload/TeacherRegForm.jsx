@@ -24,14 +24,14 @@ function TeacherRegForm({
   let classList = [];
   let subjectList = [];
 
-  configs.subjects.forEach((sub) => {
+  configs?.subjects?.forEach((sub) => {
     return subjectList.push({
       ...sub,
       value: sub.id,
       label: sub.name,
     });
   });
-  configs.classes.forEach((clas) => {
+  configs?.classes?.forEach((clas) => {
     return classList.push({
       ...clas,
       value: clas.id,
@@ -107,24 +107,19 @@ function TeacherRegForm({
           require={true}
         />
         <Form.Group className="col-6" controlId="exampleForm.ControlInput1">
-          <Form.Label className="mb-0">State of Residence</Form.Label>
+          <Form.Label className="mb-0">Gender</Form.Label>
           <Form.Select
             className="mb-3 p-2"
             aria-label="Default select example"
             onChange={(e) => {
               handleChange(e);
             }}
-            name="state"
-            value={inputValue.state}
+            name="gender"
+            value={inputValue.gender}
           >
-            <option> select state</option>
-            {stateData?.map((state) => {
-              return (
-                <option key={state.state} value={state.state}>
-                  {state.state}{" "}
-                </option>
-              );
-            })}
+            <option> select gender</option>
+            <option value="Male"> Male</option>
+            <option value="Female">Female</option>
           </Form.Select>
         </Form.Group>
       </Row>
@@ -164,6 +159,27 @@ function TeacherRegForm({
         </Form.Group>
       </Row>
       <Row>
+        <Form.Group className="col-6" controlId="exampleForm.ControlInput1">
+          <Form.Label className="mb-0">State of Residence</Form.Label>
+          <Form.Select
+            className="mb-3 p-2"
+            aria-label="Default select example"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            name="state"
+            value={inputValue.state}
+          >
+            <option> select state</option>
+            {stateData?.map((state) => {
+              return (
+                <option key={state.state} value={state.state}>
+                  {state.state}{" "}
+                </option>
+              );
+            })}
+          </Form.Select>
+        </Form.Group>
         <InputField
           label="Spoken and Writing Language"
           type="text"

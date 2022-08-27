@@ -35,7 +35,7 @@ function SubjectEdit({ handleSwitch }) {
     return classList.push({
       ...clas,
       value: clas.id,
-      label: `${clas.level}  ${clas.number + clas.denomination}`,
+      label: `${clas.level}  ${clas.number} ${clas.denomination}`,
     });
   });
 
@@ -44,11 +44,11 @@ function SubjectEdit({ handleSwitch }) {
   React.useEffect(() => {
     let formatted = subject.map((sub) => {
       let class_list = [];
-      let classList = sub?.subject_classes?.map((clas) => {
+      sub?.subject_classes?.map((clas) => {
         return class_list.push(clas?.id);
       });
 
-      sub.subject_classes = classList;
+      sub.subject_classes_new = class_list;
       return sub;
     });
 
@@ -99,7 +99,7 @@ function SubjectEdit({ handleSwitch }) {
     const classes = [...subject.subject_classes];
 
     if (selected.action === "clear") {
-      cloneDetails[key].subject_classes = [];
+      cloneDetails[key].subject_classes_new = [];
 
       setSubjectDetails(cloneDetails);
     }
@@ -107,24 +107,22 @@ function SubjectEdit({ handleSwitch }) {
       const filter = classes.filter(
         (name) => name !== selected.removedValue.value
       );
-      cloneDetails[key].subject_classes = filter;
+      cloneDetails[key].subject_classes_new = filter;
       setSubjectDetails(cloneDetails);
-      // setSubjectDetails({ ...subjectDetails, subject_classes: filter });
     }
 
     if (selected.action === "select-option") {
-      cloneDetails[key].subject_classes.push(selected.option.value);
+      cloneDetails[key].subject_classes_new.push(selected.option.value);
       setSubjectDetails(cloneDetails);
-      // setSubjectDetails({ ...subjectDetails, subject_classes: classes });
     }
   };
 
   const deleteTag = (rowKey, tagKey) => {
     const cloneDetails = clone();
-    let section = cloneDetails[rowKey].subject_classes;
+    let section = cloneDetails[rowKey].subject_classes_new;
     section.splice(tagKey, 1);
 
-    cloneDetails[rowKey].subject_classes = section;
+    cloneDetails[rowKey].subject_classes_new = section;
     setSubjectDetails(cloneDetails);
   };
 
@@ -133,6 +131,7 @@ function SubjectEdit({ handleSwitch }) {
       delete subject.editing;
       delete subject.teacher;
       delete subject.topic;
+      subject.subject_classes = [...subject.subject_classes_new];
     });
 
     dispatch(addsubjectdetails({ data: subjectDetails }));
@@ -262,47 +261,47 @@ function SubjectEdit({ handleSwitch }) {
                         </div>
                       ) : (
                         <div className="users-list m-0  d-flex flex-wrap border p-0 rounded">
-                          {detail?.subject_classes?.map((section, tagKey) => {
-                            let classLabel = classList.find((clas) => {
-                              return clas.value === section;
-                            });
+                          {detail?.subject_classes_new?.map(
+                            (section, tagKey) => {
+                              let classLabel = classList.find((clas) => {
+                                return clas.value === section;
+                              });
 
-                            return (
-                              <TagButton
-                                className="m-1 p-1 rounded text-left d-flex "
-                                key={tagKey}
-                                onClick={() => deleteTag(key, tagKey)}
-                              >
-                                {classLabel?.label}
-                                <div className="icon">
-                                  <XIcon />
-                                </div>
-                              </TagButton>
-                            );
-                          })}
+                              return (
+                                <TagButton
+                                  className="m-1 p-1 rounded text-left d-flex "
+                                  key={tagKey}
+                                  onClick={() => deleteTag(key, tagKey)}
+                                >
+                                  {classLabel?.label}
+                                  <div className="icon">
+                                    <XIcon />
+                                  </div>
+                                </TagButton>
+                              );
+                            }
+                          )}
                         </div>
                       )}
                     </td>
                     <td>
-                      {
-                        <span
-                          style={{
-                            cursor: "pointer",
-                          }}
-                          onClick={() => {
-                            const details = subjectDetails.map((i) => ({
-                              ...i,
-                              editing: detail.editing && i === detail,
-                            }));
+                      <span
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          const details = subjectDetails.map((i) => ({
+                            ...i,
+                            editing: detail.editing && i === detail,
+                          }));
 
-                            details[key].editing = true;
+                          details[key].editing = true;
 
-                            setSubjectDetails(details);
-                          }}
-                        >
-                          <i className="bx bx-edit"></i>
-                        </span>
-                      }
+                          setSubjectDetails(details);
+                        }}
+                      >
+                        <i className="bx bx-edit"></i>
+                      </span>
                     </td>
 
                     <td>

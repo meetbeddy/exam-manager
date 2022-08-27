@@ -11,9 +11,9 @@ function UploadModal({ show, handleClose, title, uploadType, userType }) {
       </Modal.Header>
       <Modal.Body>
         {uploadType === "singleReg" ? (
-          <FormContainer userType={userType} />
+          <FormContainer userType={userType} handleClose={handleClose} />
         ) : (
-          <BulkUpload />
+          <BulkUpload userType={userType} />
         )}
       </Modal.Body>
     </Modal>
